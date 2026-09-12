@@ -359,30 +359,70 @@
             border-color: var(--accent-color);
         }
 
-        /* FAQ 樣式 */
+        /* FAQ 折疊展開 (Accordion) 樣式 */
         .faq-list {
             text-align: left;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 12px;
         }
 
-        .faq-item h3 {
-            font-size: 1.05rem;
+        .faq-item {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: background 0.2s;
+        }
+
+        .faq-question {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
             color: var(--accent-color);
-            margin-bottom: 6px;
+            font-size: 1.05rem;
         }
 
-        .faq-item p {
-            font-size: 0.95rem;
+        .faq-question:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        body.dark-mode .faq-question:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .faq-arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 20px;
             color: var(--text-main);
+            font-size: 0.95rem;
             line-height: 1.5;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 20px 16px 20px;
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
         }
 
         .faq-small {
             font-size: 0.8rem;
             color: var(--text-sub);
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         /* 留言板樣式 */
@@ -893,27 +933,46 @@
         </div>
     </div>
 
+    <!-- 常見問題卡片 (Accordion 折疊展開互動) -->
     <div class="container" id="faq">
         <div class="dashboard-header">
             <h2>❓ 常見問題</h2>
         </div>
-        <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">新手上路常見疑問解答</p>
+        <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">點擊問題標題即可展開或收合解答</p>
+        
         <div class="faq-list">
             <div class="faq-item">
-                <h3>Q1. 為什麼我不能說話？</h3>
-                <p>請到須知進行驗證</p>
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Q1. 為什麼我不能說話？</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>請到須知進行驗證</p>
+                </div>
             </div>
+
             <div class="faq-item">
-                <h3>Q2. 為什麼我看不到其他頻道？</h3>
-                <p>請到頻道與身分組領取身分組<br>
-                需領取E/I身分組方可解鎖基本頻道<br>
-                若想看遊戲頻道，需領取遊戲身分組</p>
-                <div class="faq-small">（可額外領取對應的遊戲獨立身分組解鎖專屬頻道）</div>
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Q2. 為什麼我看不到其他頻道？</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>請到頻道與身分組領取身分組<br>
+                    需領取E/I身分組方可解鎖基本頻道<br>
+                    若想看遊戲頻道，需領取遊戲身分組</p>
+                    <div class="faq-small">（可額外領取對應的遊戲獨立身分組解鎖專屬頻道）</div>
+                </div>
             </div>
+
             <div class="faq-item">
-                <h3>Q3. 遇到成員違規、騷擾或紛爭怎麼辦?</h3>
-                <p>可到客服中心開啟臨時頻道聯繫處理<br>
-                若有紛爭，可選擇移步至吃瓜與吵架頻道</p>
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Q3. 遇到成員違規、騷擾或紛爭怎麼辦?</span>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>可到客服中心開啟臨時頻道聯繫處理<br>
+                    若有紛爭，可選擇移步至吃瓜與吵架頻道</p>
+                </div>
             </div>
         </div>
     </div>
@@ -1096,6 +1155,12 @@
             event.currentTarget.classList.add('active');
         }
 
+        // FAQ 折疊展開互動
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            item.classList.toggle('active');
+        }
+
         // 一鍵複製 Discord 邀請連結
         function copyInviteLink() {
             const link = "https://discord.gg/ie31inviteyou";
@@ -1121,14 +1186,11 @@
             const toast = document.getElementById('energyToast');
             const resultText = document.getElementById('energyResultText');
             
-            // 隨機抽選結果
             const randomResult = energyLevels[Math.floor(Math.random() * energyLevels.length)];
             resultText.innerHTML = randomResult;
             
-            // 顯示動畫
             toast.classList.add('show');
             
-            // 重置計時器，4秒後自動隱藏
             clearTimeout(toastTimeout);
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
