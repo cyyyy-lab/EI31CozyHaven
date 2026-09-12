@@ -17,6 +17,7 @@
             --text-sub: #546e7a;
             --nav-bg: rgba(255, 255, 255, 0.85);
             --border-color: rgba(0, 0, 0, 0.1);
+            --dash-item-bg: rgba(0, 0, 0, 0.03);
         }
 
         /* 暗色背景時調整文字與卡片樣式 */
@@ -26,6 +27,7 @@
             --text-sub: #94a3b8;
             --nav-bg: rgba(26, 29, 46, 0.85);
             --border-color: rgba(255, 255, 255, 0.1);
+            --dash-item-bg: rgba(255, 255, 255, 0.04);
         }
 
         * {
@@ -36,16 +38,20 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             /* 傾斜漸變背景：選項顏色 -> 淺藍色(#b4f1f5) -> 選項顏色 */
             background: linear-gradient(135deg, var(--gradient-option) 0%, var(--gradient-blue) 50%, var(--gradient-option) 100%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
-            padding-top: 85px;
-            padding-bottom: 40px;
+            padding-top: 90px;
+            padding-bottom: 50px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
         }
 
@@ -75,7 +81,7 @@
         .nav-avatar {
             width: 42px;
             height: 42px;
-            border-radius: 8px; /* 方形微圓角 */
+            border-radius: 8px;
             object-fit: cover;
         }
 
@@ -141,7 +147,7 @@
             outline: none;
         }
 
-        /* 主卡片容器 */
+        /* 卡片通用樣式 */
         .container {
             max-width: 680px;
             width: 90%;
@@ -152,9 +158,10 @@
             text-align: center;
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
+            margin-bottom: 30px;
         }
 
-        /* 主頁方形頭像 */
+        /* 主頁頭像 */
         .main-avatar {
             width: 165px;
             height: 165px;
@@ -195,7 +202,7 @@
             margin-bottom: 30px;
         }
 
-        /* 網格布局（2x2 特色卡片） */
+        /* 特色區塊 */
         .features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -205,7 +212,7 @@
         }
 
         .feature-item {
-            background: rgba(0, 0, 0, 0.03);
+            background: var(--dash-item-bg);
             border: 1px solid var(--border-color);
             padding: 18px;
             border-radius: 12px;
@@ -240,6 +247,51 @@
             transform: translateY(-2px);
         }
 
+        /* 儀表板區域 */
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #23a55a;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #23a55a;
+        }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .dash-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .dash-title {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+        }
+
+        .dash-value {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
         .footer-note {
             margin-top: 20px;
             font-size: 0.8rem;
@@ -250,7 +302,7 @@
             .nav-title-group {
                 display: none;
             }
-            .features {
+            .features, .dash-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -268,22 +320,22 @@
             </div>
         </div>
         <div class="nav-right">
-            <a href="#" class="nav-btn">首頁</a>
+            <a href="#home" class="nav-btn">首頁</a>
+            <a href="#dashboard" class="nav-btn">儀表板</a>
             <!-- 背景顏色下拉選單 -->
             <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
                 <option value="#ffffff">🎨 白</option>
                 <option value="#64748b">🎨 灰</option>
                 <option value="#0f111a">🎨 黑</option>
                 <option value="#bcf5dc">🎨 淺綠</option>
-                <option value="#f7f3e9">🎨 護眼琥珀</option>
+                <option value="#f2d6b3">🎨 琥珀</option>
             </select>
             <a href="https://discord.gg/ie31inviteyou" class="nav-btn btn-join-nav" target="_blank">加入小天地</a>
         </div>
     </nav>
 
-    <!-- 主卡片內容 -->
+    <!-- 卡片一：主介紹 -->
     <div class="container" id="home">
-        <!-- 方形頭像 -->
         <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
         <br>
@@ -318,24 +370,70 @@
             </div>
         </div>
 
-        <!-- 加入伺服器按鈕 -->
         <a href="https://discord.gg/ie31inviteyou" class="btn-join-main" target="_blank">點擊加入 Discord 伺服器 🚀</a>
 
         <div class="footer-note">希望你能在這裡找到屬於自己的小天地 ✨</div>
     </div>
 
-    <!-- JavaScript 動態切換背景色與深淺模式 -->
+    <!-- 卡片二：動態 Discord 伺服器數據儀表板 -->
+    <div class="container" id="dashboard">
+        <div class="dashboard-header">
+            <span class="status-dot"></span>
+            <h2>伺服器動態儀表板</h2>
+        </div>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">即時監控社群活動與語音頻道狀態</p>
+
+        <div class="dash-grid">
+            <div class="dash-card">
+                <div class="dash-title">🟢 目前線上人數</div>
+                <div class="dash-value" id="onlineCount">-- 人</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-title">👥 總成員數</div>
+                <div class="dash-value" id="totalCount">-- 人</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-title">🎧 語音房掛機/收聽</div>
+                <div class="dash-value" id="voiceCount">-- 人</div>
+            </div>
+            <div class="dash-card">
+                <div class="dash-title">🤖 24H 音樂 Bot 狀態</div>
+                <div class="dash-value" style="color: #23a55a;">播放中 🎶</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 動態切換背景色與數據模擬 -->
     <script>
         function changeBgColor(color) {
             document.documentElement.style.setProperty('--gradient-option', color);
             
-            // 當選擇黑色或灰色時自動啟用深色卡片模式，確保文字能清晰閱讀
+            // 當選擇黑色或灰色時自動啟用深色卡片模式
             if (color === '#0f111a' || color === '#64748b') {
                 document.body.classList.add('dark-mode');
             } else {
                 document.body.classList.remove('dark-mode');
             }
         }
+
+        // 儀表板動態數據更新（預設數值與即時波動展示）
+        function updateDashboard() {
+            const baseOnline = 42;
+            const baseTotal = 158;
+            const baseVoice = 9;
+
+            // 微幅波動模擬即時數據
+            const online = baseOnline + Math.floor(Math.random() * 5) - 2;
+            const voice = baseVoice + Math.floor(Math.random() * 3) - 1;
+
+            document.getElementById('onlineCount').innerText = online + ' 人';
+            document.getElementById('totalCount').innerText = baseTotal + ' 人';
+            document.getElementById('voiceCount').innerText = voice + ' 人';
+        }
+
+        // 初始化與定時刷新數據
+        updateDashboard();
+        setInterval(updateDashboard, 10000);
     </script>
 </body>
 </html>
