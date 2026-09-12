@@ -6,7 +6,6 @@
     <title>可能是i人的伺服器｜Discord 社群</title>
     <style>
         :root {
-            /* 預設雙色漸變：選項顏色(白色) ➔ 淺藍(#b4f1f5) ➔ 選項顏色(白色) */
             --gradient-option: #ffffff;
             --gradient-blue: #b4f1f5;
             
@@ -20,7 +19,6 @@
             --dash-item-bg: rgba(0, 0, 0, 0.03);
         }
 
-        /* 暗色背景時調整文字與卡片樣式 */
         body.dark-mode {
             --card-bg: rgba(26, 29, 46, 0.9);
             --text-main: #f1f5f9;
@@ -43,7 +41,6 @@
         }
 
         body {
-            /* 傾斜漸變背景：選項顏色 -> 淺藍色(#b4f1f5) -> 選項顏色 */
             background: linear-gradient(135deg, var(--gradient-option) 0%, var(--gradient-blue) 50%, var(--gradient-option) 100%);
             background-attachment: fixed;
             color: var(--text-main);
@@ -55,7 +52,6 @@
             align-items: center;
         }
 
-        /* 頂部導覽列 */
         .navbar {
             position: fixed;
             top: 0;
@@ -135,7 +131,6 @@
             background-color: var(--accent-hover);
         }
 
-        /* 下拉選單 */
         .color-select {
             padding: 6px 10px;
             border-radius: 6px;
@@ -147,7 +142,6 @@
             outline: none;
         }
 
-        /* 卡片通用樣式 */
         .container {
             max-width: 680px;
             width: 90%;
@@ -161,7 +155,6 @@
             margin-bottom: 30px;
         }
 
-        /* 主頁頭像 */
         .main-avatar {
             width: 165px;
             height: 165px;
@@ -202,7 +195,6 @@
             margin-bottom: 30px;
         }
 
-        /* 特色區塊 */
         .features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -247,7 +239,6 @@
             transform: translateY(-2px);
         }
 
-        /* 儀表板區域 */
         .dashboard-header {
             display: flex;
             align-items: center;
@@ -268,14 +259,14 @@
 
         .dash-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
 
         .dash-card {
             background: var(--dash-item-bg);
             border: 1px solid var(--border-color);
-            padding: 20px;
+            padding: 20px 15px;
             border-radius: 14px;
             text-align: center;
         }
@@ -287,7 +278,7 @@
         }
 
         .dash-value {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: var(--accent-color);
         }
@@ -302,7 +293,10 @@
             .nav-title-group {
                 display: none;
             }
-            .features, .dash-grid {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            .dash-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -310,7 +304,6 @@
 </head>
 <body>
 
-    <!-- 頂部導覽列 -->
     <nav class="navbar">
         <div class="nav-left">
             <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
@@ -322,7 +315,6 @@
         <div class="nav-right">
             <a href="#home" class="nav-btn">首頁</a>
             <a href="#dashboard" class="nav-btn">儀表板</a>
-            <!-- 背景顏色下拉選單 -->
             <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
                 <option value="#ffffff">🎨 白</option>
                 <option value="#64748b">🎨 灰</option>
@@ -334,7 +326,6 @@
         </div>
     </nav>
 
-    <!-- 卡片一：主介紹 -->
     <div class="container" id="home">
         <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
@@ -375,40 +366,36 @@
         <div class="footer-note">希望你能在這裡找到屬於自己的小天地 ✨</div>
     </div>
 
-    <!-- 卡片二：動態 Discord 伺服器數據儀表板 -->
+    <!-- 卡片二：Discord 伺服器數據儀表板 -->
     <div class="container" id="dashboard">
         <div class="dashboard-header">
             <span class="status-dot"></span>
-            <h2>伺服器動態儀表板</h2>
+            <h2>伺服器數據儀表板</h2>
         </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">即時監控社群活動與語音頻道狀態</p>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
 
         <div class="dash-grid">
+            <!-- 1. 開服日期 (靜態) -->
             <div class="dash-card">
-                <div class="dash-title">🟢 目前線上人數</div>
-                <div class="dash-value" id="onlineCount">-- 人</div>
+                <div class="dash-title">📅 開服日期</div>
+                <div class="dash-value">5月31日</div>
             </div>
+            <!-- 2. 總成員數 (動態) -->
             <div class="dash-card">
                 <div class="dash-title">👥 總成員數</div>
                 <div class="dash-value" id="totalCount">-- 人</div>
             </div>
+            <!-- 3. 總頻道數 (靜態) -->
             <div class="dash-card">
-                <div class="dash-title">🎧 語音房掛機/收聽</div>
-                <div class="dash-value" id="voiceCount">-- 人</div>
-            </div>
-            <div class="dash-card">
-                <div class="dash-title">🤖 24H 音樂 Bot 狀態</div>
-                <div class="dash-value" style="color: #23a55a;">播放中 🎶</div>
+                <div class="dash-title">💬 總頻道數</div>
+                <div class="dash-value">100+</div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript 動態切換背景色與數據模擬 -->
     <script>
         function changeBgColor(color) {
             document.documentElement.style.setProperty('--gradient-option', color);
-            
-            // 當選擇黑色或灰色時自動啟用深色卡片模式
             if (color === '#0f111a' || color === '#64748b') {
                 document.body.classList.add('dark-mode');
             } else {
@@ -416,24 +403,25 @@
             }
         }
 
-        // 儀表板動態數據更新（預設數值與即時波動展示）
-        function updateDashboard() {
-            const baseOnline = 42;
-            const baseTotal = 158;
-            const baseVoice = 9;
+        // 修改為你的 Bot / 後端 API 位置
+        const API_URL = "http://localhost:8080/api/stats";
 
-            // 微幅波動模擬即時數據
-            const online = baseOnline + Math.floor(Math.random() * 5) - 2;
-            const voice = baseVoice + Math.floor(Math.random() * 3) - 1;
+        async function fetchRealData() {
+            try {
+                const res = await fetch(API_URL);
+                if (!res.ok) throw new Error("API 連線失敗");
+                const data = await res.json();
 
-            document.getElementById('onlineCount').innerText = online + ' 人';
-            document.getElementById('totalCount').innerText = baseTotal + ' 人';
-            document.getElementById('voiceCount').innerText = voice + ' 人';
+                // 僅更新動態欄位：總成員數
+                document.getElementById('totalCount').innerText = data.total + ' 人';
+            } catch (err) {
+                console.error("無法取得即時數據:", err);
+                document.getElementById('totalCount').innerText = '未連線';
+            }
         }
 
-        // 初始化與定時刷新數據
-        updateDashboard();
-        setInterval(updateDashboard, 10000);
+        fetchRealData();
+        setInterval(fetchRealData, 10000);
     </script>
 </body>
 </html>
