@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>可能是i人的伺服器！｜Discord 社群</title>
+    <title>可能是i人的伺服器｜Discord 社群</title>
     <style>
         :root {
-            /* 預設雙色漸變：選項顏色(白色) ➔ 淺湖水藍 ➔ 選項顏色(白色) */
+            /* 預設雙色漸變：選項顏色(白色) ➔ 淺藍(#b4f1f5) ➔ 選項顏色(白色) */
             --gradient-option: #ffffff;
-            --gradient-sea-blue: #e0f7fa;
+            --gradient-blue: #b4f1f5;
             
             --card-bg: rgba(255, 255, 255, 0.9);
             --accent-color: #5b73c7;
@@ -37,12 +37,12 @@
         }
 
         body {
-            /* 傾斜漸變背景：選項顏色 -> 淺湖水藍 -> 選項顏色 */
-            background: linear-gradient(135deg, var(--gradient-option) 0%, var(--gradient-sea-blue) 50%, var(--gradient-option) 100%);
+            /* 傾斜漸變背景：選項顏色 -> 淺藍色(#b4f1f5) -> 選項顏色 */
+            background: linear-gradient(135deg, var(--gradient-option) 0%, var(--gradient-blue) 50%, var(--gradient-option) 100%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
-            padding-top: 80px;
+            padding-top: 85px;
             padding-bottom: 40px;
             display: flex;
             justify-content: center;
@@ -55,7 +55,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 65px;
+            height: 70px;
             background: var(--nav-bg);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
@@ -73,22 +73,34 @@
         }
 
         .nav-avatar {
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
             border-radius: 8px; /* 方形微圓角 */
             object-fit: cover;
         }
 
+        .nav-title-group {
+            display: flex;
+            flex-direction: column;
+        }
+
         .nav-title {
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .nav-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            letter-spacing: 0.5px;
         }
 
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .nav-btn {
@@ -142,14 +154,14 @@
             border: 1px solid var(--border-color);
         }
 
-        /* 主頁方形頭像（加大） */
+        /* 主頁方形頭像（再放大些許） */
         .main-avatar {
-            width: 140px;
-            height: 140px;
-            border-radius: 18px; /* 方形樣式 */
+            width: 165px;
+            height: 165px;
+            border-radius: 20px; /* 方形樣式 */
             object-fit: cover;
             border: 4px solid var(--accent-color);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
         }
 
@@ -227,7 +239,7 @@
         }
 
         @media (max-width: 600px) {
-            .nav-title {
+            .nav-title-group {
                 display: none; /* 手機版隱藏標題避免擠壓 */
             }
         }
@@ -239,17 +251,20 @@
     <nav class="navbar">
         <div class="nav-left">
             <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
-            <span class="nav-title">可能是i人的伺服器！</span>
+            <div class="nav-title-group">
+                <span class="nav-title">可能是i人的伺服器</span>
+                <span class="nav-subtitle">EI Cozy Haven</span>
+            </div>
         </div>
         <div class="nav-right">
             <a href="#" class="nav-btn">首頁</a>
             <!-- 背景顏色下拉選單 -->
             <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
-                <option value="#ffffff">🎨 背景：白</option>
-                <option value="#64748b">🎨 背景：中灰</option>
-                <option value="#0f111a">🎨 背景：黑</option>
-                <option value="#e8f5e9">🎨 背景：淺綠</option>
-                <option value="#fff8e1">🎨 背景：淺琥珀</option>
+                <option value="#ffffff">🎨 白</option>
+                <option value="#64748b">🎨 灰</option>
+                <option value="#0f111a">🎨 黑</option>
+                <option value="#bcf5dc">🎨 淺綠</option>
+                <option value="#ffe7c4">🎨 琥珀</option>
             </select>
             <a href="https://discord.gg/ie31inviteyou" class="nav-btn btn-join-nav" target="_blank">加入小天地</a>
         </div>
@@ -257,7 +272,7 @@
 
     <!-- 主卡片內容 -->
     <div class="container" id="home">
-        <!-- 方形頭像（較大） -->
+        <!-- 方形頭像（放大至165px） -->
         <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
         <br>
@@ -295,7 +310,7 @@
         function changeBgColor(color) {
             document.documentElement.style.setProperty('--gradient-option', color);
             
-            // 當選擇黑色或中灰時自動啟用深色卡片模式，確保文字能看清
+            // 當選擇黑色或灰色時自動啟用深色卡片模式，確保文字能清晰閱讀
             if (color === '#0f111a' || color === '#64748b') {
                 document.body.classList.add('dark-mode');
             } else {
