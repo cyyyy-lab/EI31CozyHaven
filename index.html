@@ -102,21 +102,22 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .nav-btn {
             text-decoration: none;
             color: var(--text-main);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             transition: background 0.2s;
             cursor: pointer;
             border: none;
             background: transparent;
+            white-space: nowrap;
         }
 
         .nav-btn:hover {
@@ -154,7 +155,7 @@
         }
 
         .color-select {
-            padding: 6px 10px;
+            padding: 6px 8px;
             border-radius: 6px;
             border: 1px solid var(--border-color);
             background: var(--card-bg);
@@ -495,6 +496,61 @@
             word-break: break-all;
         }
 
+        /* 管理團隊小卡片專屬樣式 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            text-align: left;
+        }
+
+        .team-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .team-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow: hidden;
+        }
+
+        .team-role {
+            font-size: 0.8rem;
+            color: #3b82f6; /* 藍色字 */
+            font-weight: bold;
+        }
+
+        .team-name {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .team-desc {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            line-height: 1.3;
+        }
+
         /* 彈跳視窗 (Modal) 樣式 */
         .modal-overlay {
             position: fixed;
@@ -669,7 +725,7 @@
             .nav-title-group {
                 display: none;
             }
-            .features, .dash-grid {
+            .features, .dash-grid, .team-grid {
                 grid-template-columns: 1fr;
             }
             .energy-toast.show {
@@ -699,6 +755,10 @@
             <a href="#home" class="nav-btn">首頁</a>
             <a href="#dashboard" class="nav-btn">儀表板</a>
             <a href="#rules" class="nav-btn">規則</a>
+            <a href="#faq" class="nav-btn">常見問題</a>
+            <a href="#guestbook" class="nav-btn">訪客簽到</a>
+            <a href="#story" class="nav-btn">起源故事</a>
+            <a href="#team" class="nav-btn">管理團隊</a>
             <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
                 <option value="#ffffff" selected>🎨 白</option>
                 <option value="#64748b">🎨 灰</option>
@@ -833,7 +893,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="faq">
         <div class="dashboard-header">
             <h2>❓ 常見問題</h2>
         </div>
@@ -858,7 +918,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="guestbook">
         <div class="dashboard-header">
             <h2>💬 訪客簽到與打氣留言板</h2>
         </div>
@@ -877,7 +937,7 @@
     </div>
 
     <!-- 起源故事卡片 -->
-    <div class="container">
+    <div class="container" id="story">
         <div class="dashboard-header">
             <h2>📖 起源故事</h2>
         </div>
@@ -898,6 +958,80 @@
             <p style="margin-top: 12px;">
                 為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
             </p>
+        </div>
+    </div>
+
+    <!-- 管理團隊卡片 -->
+    <div class="container" id="team">
+        <div class="dashboard-header">
+            <h2>🛡️ 管理團隊</h2>
+        </div>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">守護這個溫馨小天地的幕后功臣們</p>
+        
+        <div class="team-grid">
+            <!-- 吉 -->
+            <div class="team-card">
+                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548405837997940886/avatar.png?ex=6aa6f0cf&is=6aa59f4f&hm=f2bac829c31a49c8481b48c4efd648994ef337f0cb39a2d47f4a07788caf8e25&" alt="吉" class="team-avatar">
+                <div class="team-info">
+                    <span class="team-role">群主</span>
+                    <span class="team-name">吉</span>
+                    <span class="team-desc">AI很好用。</span>
+                </div>
+            </div>
+            <!-- 魚板 -->
+            <div class="team-card">
+                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406409979236402/avatar.png?ex=6aa6f158&is=6aa59fd8&hm=860d46b6b2d92e7f60b12569fbafb80b24afd6093cb32033e8a1ef8ccdc00eab&" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
+                <div class="team-info">
+                    <span class="team-role">管理員</span>
+                    <span class="team-name">ᴗ̈ᴗ̈ᴗ̈魚板。</span>
+                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                </div>
+            </div>
+            <!-- oboe蜥蜴 -->
+            <div class="team-card">
+                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406786891980950/avatar.png?ex=6aa6f1b2&is=6aa5a032&hm=af5f6c514521ce637252fa7071ff2bded5983103b1a29569552df1bda3d7f1ca&" alt="oboe蜥蜴" class="team-avatar">
+                <div class="team-info">
+                    <span class="team-role">管理員</span>
+                    <span class="team-name">oboe蜥蜴</span>
+                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                </div>
+            </div>
+            <!-- 禾 -->
+            <div class="team-card">
+                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407027548553296/avatar.png?ex=6aa6f1eb&is=6aa5a06b&hm=fb0560e4867b49f3c86d0d90565add16dd9b7900ab058d1a958aa2ef3831f013&" alt="禾" class="team-avatar">
+                <div class="team-info">
+                    <span class="team-role">管理員</span>
+                    <span class="team-name">禾</span>
+                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                </div>
+            </div>
+            <!-- muly沐漓 -->
+            <div class="team-card">
+                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407208209944657/avatar.png?ex=6aa6f216&is=6aa5a096&hm=2eb7f07714c44e069dab13043cdc3866e2f8469285f5eb623c1256c484bcf067&" alt="muly沐漓" class="team-avatar">
+                <div class="team-info">
+                    <span class="team-role">管理員</span>
+                    <span class="team-name">muly沐漓</span>
+                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                </div>
+            </div>
+            <!-- 辰 -->
+            <div class="team-card">
+                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407570849472583/avatar.png?ex=6aa6f26c&is=6aa5a0ec&hm=9e7c2ff10d73b879971bc173e248b53b344b827d74f25af7b747dd30af265fb2&" alt="辰" class="team-avatar">
+                <div class="team-info">
+                    <span class="team-role">管理員</span>
+                    <span class="team-name">辰</span>
+                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                </div>
+            </div>
+            <!-- 球 -->
+            <div class="team-card">
+                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407700495405196/avatar.png?ex=6aa6f28b&is=6aa5a10b&hm=d1b6ec6094f30bd2bb85dd1f91535db18945a36dbeaba3cabd7846751531e79a&" alt="球" class="team-avatar">
+                <div class="team-info">
+                    <span class="team-role">管理員</span>
+                    <span class="team-name">球</span>
+                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                </div>
+            </div>
         </div>
     </div>
 
