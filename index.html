@@ -114,6 +114,9 @@
             padding: 6px 12px;
             border-radius: 6px;
             transition: background 0.2s;
+            cursor: pointer;
+            border: none;
+            background: transparent;
         }
 
         .nav-btn:hover {
@@ -289,11 +292,11 @@
         }
 
         .rules-section {
-            margin-bottom: 25px;
+            display: none;
         }
 
-        .rules-section:last-child {
-            margin-bottom: 0;
+        .rules-section.active {
+            display: block;
         }
 
         .rules-section h3 {
@@ -321,6 +324,18 @@
             color: var(--text-sub);
             margin-bottom: 12px;
             line-height: 1.5;
+        }
+
+        .tab-btn {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: #ffffff;
+            border-color: var(--accent-color);
         }
 
         .footer-note {
@@ -404,13 +419,6 @@
         <div class="footer-note">希望你能在這裡找到屬於自己的小天地 ✨</div>
     </div>
 
-    <!-- 第二大卡片下面開新卡片 -->
-    <div class="container">
-        <p class="subtitle" style="margin-bottom: 0; font-size: 1.05rem; line-height: 1.6;">
-            請遵守我們的伺服器規則，共同維護舒適的交流環境 。我們希望每個人都能在這裡度過一段美好的時光
-        </p>
-    </div>
-
     <div class="container" id="dashboard">
         <div class="dashboard-header">
             <span class="status-dot"></span>
@@ -434,24 +442,26 @@
         </div>
     </div>
 
-    <!-- 第三大卡片：伺服器規則與獨立導覽列按鈕 -->
+    <!-- 第三大卡片：伺服器規範 -->
     <div class="container" id="rules">
         <div class="dashboard-header">
-            <h2>📜 伺服器規則與規範</h2>
+            <h2>📜 伺服器規範</h2>
         </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">請點選下方分類查看詳細內容</p>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">
+            請遵守我們的伺服器規則，共同維護舒適的交流環境 。我們希望每個人都能在這裡度過一段美好的時光
+        </p>
 
-        <!-- 獨立導覽列按鈕 -->
+        <!-- 切換顯示按鈕 -->
         <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 30px;">
-            <a href="#basic-rules" class="nav-btn" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">基本規則</a>
-            <a href="#voice-rules" class="nav-btn" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">語音禮儀</a>
-            <a href="#prohibited" class="nav-btn" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">禁止事項</a>
-            <a href="#punishments" class="nav-btn" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">處罰分級</a>
+            <button class="nav-btn tab-btn active" onclick="switchTab('basic-rules', event)">基本規則</button>
+            <button class="nav-btn tab-btn" onclick="switchTab('voice-rules', event)">語音禮儀</button>
+            <button class="nav-btn tab-btn" onclick="switchTab('prohibited', event)">禁止事項</button>
+            <button class="nav-btn tab-btn" onclick="switchTab('punishments', event)">處罰分級</button>
         </div>
 
         <div class="rules-container">
             <!-- 基本規則 -->
-            <div class="rules-section" id="basic-rules">
+            <div class="rules-section active" id="basic-rules">
                 <h3>基本規則</h3>
                 <ol class="rules-list">
                     <li>保持禮貌、尊重與包容，遵守各頻道主題發言</li>
@@ -508,6 +518,20 @@
             } else {
                 document.body.classList.remove('dark-mode');
             }
+        }
+
+        function switchTab(targetId, event) {
+            // 隱藏所有規則區塊
+            const sections = document.querySelectorAll('.rules-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // 移除所有按鈕的 active 狀態
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // 顯示目標區塊並將點擊的按鈕設為 active
+            document.getElementById(targetId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
     </script>
 </body>
