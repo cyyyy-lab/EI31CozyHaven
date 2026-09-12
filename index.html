@@ -377,7 +377,8 @@
             </div>
             <div class="dash-card">
                 <div class="dash-title">👥 總成員數</div>
-                <div class="dash-value" id="totalCount">載入中...</div>
+                <!-- 已經改為靜態文字 3000+ -->
+                <div class="dash-value">3000+</div>
             </div>
             <div class="dash-card">
                 <div class="dash-title">💬 總頻道數</div>
@@ -395,38 +396,6 @@
                 document.body.classList.remove('dark-mode');
             }
         }
-
-        const GUILD_ID = "1510333452958830614";
-        // 伺服器 Bot API 連線位置
-        const BOT_API_URL = "http://localhost:8080/api/total-members";
-
-        async function fetchTotalMembers() {
-            try {
-                // 優先嘗試從自己的 Python Bot 抓取總成員數
-                const res = await fetch(BOT_API_URL);
-                if (res.ok) {
-                    const data = await res.json();
-                    document.getElementById('totalCount').innerText = data.total + ' 人';
-                    return;
-                }
-            } catch (e) {
-                // 若連線失敗，自動改向 Discord Widget 取得線上即時人數顯示
-                try {
-                    const widgetRes = await fetch(`https://discord.com/api/guilds/${GUILD_ID}/widget.json`);
-                    if (widgetRes.ok) {
-                        const widgetData = await widgetRes.json();
-                        document.getElementById('totalCount').innerText = widgetData.presence_count + ' 人 (線上)';
-                        return;
-                    }
-                } catch (err) {
-                    console.error("無法取得數據:", err);
-                }
-            }
-            document.getElementById('totalCount').innerText = '伺服器連線中';
-        }
-
-        fetchTotalMembers();
-        setInterval(fetchTotalMembers, 10000);
     </script>
 </body>
 </html>
