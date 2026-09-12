@@ -236,6 +236,8 @@
             font-size: 1.1rem;
             font-weight: bold;
             transition: background 0.2s ease, transform 0.1s ease;
+            cursor: pointer;
+            border: none;
         }
 
         .btn-join-main:hover {
@@ -364,6 +366,149 @@
             margin-top: 4px;
         }
 
+        /* 留言板樣式 */
+        .guestbook-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .guestbook-input, .guestbook-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .guestbook-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .guestbook-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .guestbook-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .message-list {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .message-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .message-user {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+
+        .message-text {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            word-break: break-all;
+        }
+
+        /* 彈跳視窗 (Modal) 樣式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.show .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-box h3 {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+        }
+
+        .modal-box p {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* 頁尾樣式 */
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
         /* 返回頂部按鈕樣式 */
         .back-to-top {
             position: fixed;
@@ -432,7 +577,7 @@
                 <option value="#bcf5dc">🎨 淺綠</option>
                 <option value="#f2d6b3">🎨 琥珀</option>
             </select>
-            <a href="https://discord.gg/ie31inviteyou" class="nav-btn btn-join-nav" target="_blank">加入小天地</a>
+            <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
         </div>
     </nav>
 
@@ -471,7 +616,7 @@
             </div>
         </div>
 
-        <a href="https://discord.gg/ie31inviteyou" class="btn-join-main" target="_blank">點擊加入 Discord 伺服器 🚀</a>
+        <a href="#" onclick="openModal(event)" class="btn-join-main">點擊加入 Discord 伺服器 🚀</a>
 
         <div class="footer-note">希望你能在這裡找到屬於自己的小天地 ✨</div>
     </div>
@@ -594,17 +739,58 @@
         </div>
     </div>
 
+    <!-- 互動簽到打氣留言板卡片 -->
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>💬 訪客簽到與打氣留言板</h2>
+        </div>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">留下你的簽到或打氣，跟大家打個招呼吧！</p>
+
+        <form class="guestbook-form" id="guestbookForm" onsubmit="addMessage(event)">
+            <input type="text" id="senderName" class="guestbook-input" placeholder="你的暱稱 / 稱呼" required maxlength="20">
+            <textarea id="senderMessage" class="guestbook-textarea" placeholder="寫下你的簽到或打氣留言..." required maxlength="100"></textarea>
+            <button type="submit" class="guestbook-btn">送出留言</button>
+        </form>
+
+        <div class="message-list" id="messageList">
+            <div class="message-card">
+                <div class="message-user">小葵</div>
+                <div class="message-text">伺服器氣氛超棒，大家一起來玩鴨！✨</div>
+            </div>
+        </div>
+    </div>
+
     <!-- 最後加入的大卡片 -->
     <div class="container">
         <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
         <div style="display: flex; gap: 15px; margin-top: 25px;">
-            <a href="https://discord.gg/ie31inviteyou" class="btn-join-main" style="flex: 1; text-align: center;" target="_blank">加入伺服器 🚀</a>
+            <a href="#" onclick="openModal(event)" class="btn-join-main" style="flex: 1; text-align: center;">加入伺服器 🚀</a>
             <button class="btn-join-main" style="flex: 1; background-color: #94a3b8; cursor: pointer; border: none;" onclick="alert('沒關係，期待下次再見！')">不要</button>
         </div>
     </div>
 
+    <!-- 頁尾版權與社交連結 -->
+    <footer class="footer">
+        <div>© 2026 可能是i人的伺服器. All Rights Reserved.</div>
+        <div>
+            追蹤我們的 Threads：<a href="https://www.threads.com/@qlz__zlp.314" target="_blank">@qlz__zlp.314</a>
+        </div>
+    </footer>
+
     <!-- 返回頂部按鈕 -->
     <a href="#home" class="back-to-top" id="backToTopBtn" title="返回頂部">▲</a>
+
+    <!-- 加入伺服器 Modal 彈跳視窗 -->
+    <div class="modal-overlay" id="joinModal">
+        <div class="modal-box">
+            <h3>🎉 歡迎來到可能是i人的伺服器！</h3>
+            <p>感謝你對本社群的喜愛與支持！即將帶領你前往我們的 Discord 溫馨小天地，準備好展開美好的交流了嗎？</p>
+            <div style="display: flex; gap: 10px;">
+                <a href="https://discord.gg/ie31inviteyou" target="_blank" class="btn-join-main" style="flex: 1; text-align: center; text-decoration: none;" onclick="closeModal()">確認前往 🚀</a>
+                <button class="btn-join-main" style="flex: 1; background-color: #94a3b8;" onclick="closeModal()">取消</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         function changeBgColor(color) {
@@ -634,6 +820,50 @@
                 backToTopBtn.classList.add('show');
             } else {
                 backToTopBtn.classList.remove('show');
+            }
+        });
+
+        // 互動留言板功能
+        function addMessage(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('senderName');
+            const messageInput = document.getElementById('senderMessage');
+            const messageList = document.getElementById('messageList');
+
+            const name = nameInput.value.trim();
+            const text = messageInput.value.trim();
+
+            if(name && text) {
+                const card = document.createElement('div');
+                card.className = 'message-card';
+                card.innerHTML = `
+                    <div class="message-user">${escapeHtml(name)}</div>
+                    <div class="message-text">${escapeHtml(text)}</div>
+                `;
+                messageList.prepend(card);
+                messageInput.value = '';
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // 彈跳視窗 Modal 控制
+        const joinModal = document.getElementById('joinModal');
+        function openModal(event) {
+            event.preventDefault();
+            joinModal.classList.add('show');
+        }
+        function closeModal() {
+            joinModal.classList.remove('show');
+        }
+        // 點擊彈跳視窗外部也能關閉
+        joinModal.addEventListener('click', (e) => {
+            if (e.target === joinModal) {
+                closeModal();
             }
         });
     </script>
