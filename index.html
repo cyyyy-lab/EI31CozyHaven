@@ -135,6 +135,24 @@
             background-color: var(--accent-hover);
         }
 
+        .btn-copy-nav {
+            background-color: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-copy-nav:hover {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .btn-copy-nav:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
         .color-select {
             padding: 6px 10px;
             border-radius: 6px;
@@ -578,6 +596,7 @@
                 <option value="#f2d6b3">🎨 琥珀</option>
             </select>
             <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
+            <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">📋 複製邀請連結</button>
         </div>
     </nav>
 
@@ -612,7 +631,7 @@
             </div>
             <div class="feature-item">
                 <h3>🤖 各式機器人</h3>
-                <p>提供動態語音頻道與多種便利機器人互動。</p>
+                <p>提供動態語音頻道與多種便利機器人互動，伺服器更設有專屬御用機器人！</p>
             </div>
         </div>
 
@@ -760,6 +779,22 @@
         </div>
     </div>
 
+    <!-- 起源故事卡片 -->
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>📖 起源故事</h2>
+        </div>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">屬於這個小天地的誕生與溫暖歷程</p>
+        <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
+            <p style="margin-bottom: 12px;">
+                故事始於5月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的熱烈共鳴與支持。
+            </p>
+            <p>
+                為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
+            </p>
+        </div>
+    </div>
+
     <!-- 最後加入的大卡片 -->
     <div class="container">
         <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
@@ -813,6 +848,16 @@
             event.currentTarget.classList.add('active');
         }
 
+        // 一鍵複製 Discord 邀請連結
+        function copyInviteLink() {
+            const link = "https://discord.gg/ie31inviteyou";
+            navigator.clipboard.writeText(link).then(() => {
+                alert("已成功複製 Discord 邀請連結！");
+            }).catch(() => {
+                prompt("請複製以下連結：", link);
+            });
+        }
+
         // 控制返回頂部按鈕的顯示與隱藏
         const backToTopBtn = document.getElementById('backToTopBtn');
         window.addEventListener('scroll', () => {
@@ -860,7 +905,7 @@
         function closeModal() {
             joinModal.classList.remove('show');
         }
-        // 點擊彈跳視窗外部也能關閉
+        // 點擊彈跳視窗外部關閉
         joinModal.addEventListener('click', (e) => {
             if (e.target === joinModal) {
                 closeModal();
