@@ -143,7 +143,7 @@
 
         /* 主卡片容器 */
         .container {
-            max-width: 650px;
+            max-width: 680px;
             width: 90%;
             background-color: var(--card-bg);
             border-radius: 20px;
@@ -154,11 +154,11 @@
             border: 1px solid var(--border-color);
         }
 
-        /* 主頁方形頭像（再放大些許） */
+        /* 主頁方形頭像 */
         .main-avatar {
             width: 165px;
             height: 165px;
-            border-radius: 20px; /* 方形樣式 */
+            border-radius: 20px;
             object-fit: cover;
             border: 4px solid var(--accent-color);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
@@ -177,8 +177,15 @@
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
+            line-height: 1.4;
             margin-bottom: 14px;
+        }
+
+        .h1-en {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-weight: 600;
         }
 
         .subtitle {
@@ -188,9 +195,10 @@
             margin-bottom: 30px;
         }
 
+        /* 網格布局（2x2 特色卡片） */
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-bottom: 35px;
             text-align: left;
@@ -240,7 +248,10 @@
 
         @media (max-width: 600px) {
             .nav-title-group {
-                display: none; /* 手機版隱藏標題避免擠壓 */
+                display: none;
+            }
+            .features {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -264,7 +275,7 @@
                 <option value="#64748b">🎨 灰</option>
                 <option value="#0f111a">🎨 黑</option>
                 <option value="#bcf5dc">🎨 淺綠</option>
-                <option value="#ffe7c4">🎨 琥珀</option>
+                <option value="#f7f3e9">🎨 護眼琥珀</option>
             </select>
             <a href="https://discord.gg/ie31inviteyou" class="nav-btn btn-join-nav" target="_blank">加入小天地</a>
         </div>
@@ -272,13 +283,17 @@
 
     <!-- 主卡片內容 -->
     <div class="container" id="home">
-        <!-- 方形頭像（放大至165px） -->
+        <!-- 方形頭像 -->
         <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
         <br>
         <div class="badge">🏷️ 伺服器標籤：和 i 可親</div>
         
-        <h1>歡迎來到 可能是i人的伺服器！</h1>
+        <h1>
+            歡迎來到<br>
+            可能是i人的伺服器<br>
+            <span class="h1-en">EI Cozy Haven</span>
+        </h1>
         <p class="subtitle">
             這是一個集結了許多「i 人」的 Discord 社群。<br>
             不論你是I人還是E人，都能在這裡盡情和別人聊天、玩遊戲、掛語音，找到最舒服的社交步調。
@@ -290,12 +305,16 @@
                 <p>想聊天就聊，不想說話也可以安靜潛水打卡。</p>
             </div>
             <div class="feature-item">
-                <h3>🎮 組隊打台</h3>
+                <h3>🎮 組隊開場</h3>
                 <p>輕鬆開團找隊友，沒有壓力一起玩遊戲。</p>
             </div>
             <div class="feature-item">
                 <h3>📻 24H 音樂</h3>
                 <p>常設 Lofi 音樂語音房，一個人掛機也不孤單。</p>
+            </div>
+            <div class="feature-item">
+                <h3>🤖 各式機器人</h3>
+                <p>提供動態語音頻道與多種便利機器人互動。</p>
             </div>
         </div>
 
