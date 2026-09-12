@@ -453,6 +453,48 @@
             word-break: break-all;
         }
 
+        /* Threads 貼文卡片樣式 */
+        .threads-link-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            margin: 20px 0;
+            transition: transform 0.2s, background 0.2s;
+            color: var(--text-main);
+        }
+
+        .threads-link-card:hover {
+            transform: translateY(-2px);
+            background: rgba(91, 115, 199, 0.08);
+        }
+
+        .threads-icon {
+            font-size: 2rem;
+        }
+
+        .threads-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .threads-title {
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1rem;
+        }
+
+        .threads-url {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            word-break: break-all;
+        }
+
         /* 彈跳視窗 (Modal) 樣式 */
         .modal-overlay {
             position: fixed;
@@ -558,6 +600,65 @@
             background-color: var(--accent-hover);
         }
 
+        /* 社交能量檢測儀 */
+        .energy-detector-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            z-index: 999;
+            transition: transform 0.2s, background-color 0.2s, color 0.2s;
+        }
+
+        .energy-detector-btn:hover {
+            transform: scale(1.1);
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .energy-toast {
+            position: fixed;
+            bottom: -150px;
+            left: 30px;
+            background: var(--card-bg);
+            border-left: 5px solid var(--accent-color);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 300px;
+            transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+        }
+
+        .energy-toast.show {
+            bottom: 100px;
+        }
+
+        .energy-toast-title {
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .energy-toast-text {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
         .footer-note {
             margin-top: 20px;
             font-size: 0.8rem;
@@ -570,6 +671,16 @@
             }
             .features, .dash-grid {
                 grid-template-columns: 1fr;
+            }
+            .energy-toast.show {
+                bottom: 100px;
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+            .energy-detector-btn {
+                bottom: 30px;
+                left: 20px;
             }
         }
     </style>
@@ -663,7 +774,6 @@
         </div>
     </div>
 
-    <!-- 第三大卡片：伺服器規範 -->
     <div class="container" id="rules">
         <div class="dashboard-header">
             <h2>📜 伺服器規範</h2>
@@ -672,7 +782,6 @@
             請遵守我們的伺服器規則，共同維護舒適的交流環境 。我們希望每個人都能在這裡度過一段美好的時光
         </p>
 
-        <!-- 切換顯示按鈕 -->
         <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 30px;">
             <button class="nav-btn tab-btn active" onclick="switchTab('basic-rules', event)">基本規則</button>
             <button class="nav-btn tab-btn" onclick="switchTab('voice-rules', event)">語音禮儀</button>
@@ -681,7 +790,6 @@
         </div>
 
         <div class="rules-container">
-            <!-- 基本規則 -->
             <div class="rules-section active" id="basic-rules">
                 <h3>基本規則</h3>
                 <ol class="rules-list">
@@ -691,8 +799,6 @@
                     <li>有關伺服器問題，如非無法使用⁠客服中心 ，請不要私訊群主或管理員</li>
                 </ol>
             </div>
-
-            <!-- 語音禮儀 -->
             <div class="rules-section" id="voice-rules">
                 <h3>語音禮儀</h3>
                 <ol class="rules-list">
@@ -701,8 +807,6 @@
                     <li>勿打斷他人唱歌</li>
                 </ol>
             </div>
-
-            <!-- 禁止事項 -->
             <div class="rules-section" id="prohibited">
                 <h3>禁止事項</h3>
                 <ol class="rules-list">
@@ -712,8 +816,6 @@
                     <li>發表政治/仇恨/歧視/騷擾/辱罵/人身攻擊等言論</li>
                 </ol>
             </div>
-
-            <!-- 處罰分級 -->
             <div class="rules-section" id="punishments">
                 <h3>處罰分級</h3>
                 <p class="rules-desc">
@@ -731,13 +833,11 @@
         </div>
     </div>
 
-    <!-- 常見問題卡片 -->
     <div class="container">
         <div class="dashboard-header">
             <h2>❓ 常見問題</h2>
         </div>
         <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">新手上路常見疑問解答</p>
-
         <div class="faq-list">
             <div class="faq-item">
                 <h3>Q1. 為什麼我不能說話？</h3>
@@ -758,19 +858,16 @@
         </div>
     </div>
 
-    <!-- 互動簽到打氣留言板卡片 -->
     <div class="container">
         <div class="dashboard-header">
             <h2>💬 訪客簽到與打氣留言板</h2>
         </div>
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">留下你的簽到或打氣，跟大家打個招呼吧！</p>
-
         <form class="guestbook-form" id="guestbookForm" onsubmit="addMessage(event)">
             <input type="text" id="senderName" class="guestbook-input" placeholder="你的暱稱 / 稱呼" required maxlength="20">
             <textarea id="senderMessage" class="guestbook-textarea" placeholder="寫下你的簽到或打氣留言..." required maxlength="100"></textarea>
             <button type="submit" class="guestbook-btn">送出留言</button>
         </form>
-
         <div class="message-list" id="messageList">
             <div class="message-card">
                 <div class="message-user">小葵</div>
@@ -787,9 +884,18 @@
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">屬於這個小天地的誕生與溫暖歷程</p>
         <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
             <p style="margin-bottom: 12px;">
-                故事始於5月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的熱烈共鳴與支持。
+                故事始於 5 月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i 人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的熱烈共鳴與支持。
             </p>
-            <p>
+            
+            <a href="https://www.threads.com/share/BAVGu1Ib5B/" target="_blank" class="threads-link-card">
+                <div class="threads-icon">📱</div>
+                <div class="threads-info">
+                    <div class="threads-title">查看最初的那篇 Threads 貼文</div>
+                    <div class="threads-url">https://www.threads.com/share/BAVGu1Ib5B/</div>
+                </div>
+            </a>
+
+            <p style="margin-top: 12px;">
                 為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
             </p>
         </div>
@@ -804,13 +910,21 @@
         </div>
     </div>
 
-    <!-- 頁尾版權與社交連結 -->
     <footer class="footer">
         <div>© 2026 可能是i人的伺服器. All Rights Reserved.</div>
         <div>
             追蹤我們的 Threads：<a href="https://www.threads.com/@qlz__zlp.314" target="_blank">@qlz__zlp.314</a>
         </div>
     </footer>
+
+    <!-- 社交能量檢測儀按鈕 -->
+    <div class="energy-detector-btn" onclick="testEnergy()" title="測試今日社交能量">🔋</div>
+
+    <!-- 社交能量檢測儀提示視窗 -->
+    <div class="energy-toast" id="energyToast">
+        <div class="energy-toast-title">⚡ 今日社交能量檢測</div>
+        <div class="energy-toast-text" id="energyResultText"></div>
+    </div>
 
     <!-- 返回頂部按鈕 -->
     <a href="#home" class="back-to-top" id="backToTopBtn" title="返回頂部">▲</a>
@@ -858,7 +972,36 @@
             });
         }
 
-        // 控制返回頂部按鈕的顯示與隱藏
+        // 社交能量檢測儀邏輯
+        const energyLevels = [
+            "🔋 今日能量 10%：大腦已關機，適合在 Lofi 語音房潛水聽歌。 🎧",
+            "🔋 今日能量 30%：只想當個小透明，偶爾在文字頻道回個貼圖。 🦦",
+            "🔋 今日能量 50%：處於薛丁格的社交狀態，可以掛網也可以稍微聊兩句。 ☕",
+            "🔋 今日能量 70%：精神不錯！適合跟群友組隊玩個兩把遊戲。 🎮",
+            "🔋 今日能量 90%：社交牛逼症發作！立刻出發尋找遊戲隊友或開麥大聊！ 🚀",
+            "🔋 今日能量 100%：E人魂覺醒！今天的你簡直是伺服器裡的氣氛發電機！ ✨"
+        ];
+        
+        let toastTimeout;
+        function testEnergy() {
+            const toast = document.getElementById('energyToast');
+            const resultText = document.getElementById('energyResultText');
+            
+            // 隨機抽選結果
+            const randomResult = energyLevels[Math.floor(Math.random() * energyLevels.length)];
+            resultText.innerHTML = randomResult;
+            
+            // 顯示動畫
+            toast.classList.add('show');
+            
+            // 重置計時器，4秒後自動隱藏
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4500);
+        }
+
+        // 控制返回頂部按鈕
         const backToTopBtn = document.getElementById('backToTopBtn');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
@@ -868,7 +1011,7 @@
             }
         });
 
-        // 互動留言板功能
+        // 互動留言板
         function addMessage(event) {
             event.preventDefault();
             const nameInput = document.getElementById('senderName');
@@ -896,7 +1039,7 @@
             );
         }
 
-        // 彈跳視窗 Modal 控制
+        // Modal 彈跳視窗
         const joinModal = document.getElementById('joinModal');
         function openModal(event) {
             event.preventDefault();
@@ -905,7 +1048,6 @@
         function closeModal() {
             joinModal.classList.remove('show');
         }
-        // 點擊彈跳視窗外部關閉
         joinModal.addEventListener('click', (e) => {
             if (e.target === joinModal) {
                 closeModal();
