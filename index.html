@@ -6,12 +6,26 @@
     <title>可能是i人的伺服器！｜Discord 社群</title>
     <style>
         :root {
-            --bg-color: #0f111a;
-            --card-bg: #1a1d2e;
-            --accent-color: #7289da;
-            --accent-hover: #5b73c7;
-            --text-main: #e0e6ed;
+            /* 預設雙色漸變：選項顏色(白色) ➔ 淺湖水藍 ➔ 選項顏色(白色) */
+            --gradient-option: #ffffff;
+            --gradient-sea-blue: #e0f7fa;
+            
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --accent-color: #5b73c7;
+            --accent-hover: #485cb5;
+            --text-main: #2c3e50;
+            --text-sub: #546e7a;
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* 暗色背景時調整文字與卡片樣式 */
+        body.dark-mode {
+            --card-bg: rgba(26, 29, 46, 0.9);
+            --text-main: #f1f5f9;
             --text-sub: #94a3b8;
+            --nav-bg: rgba(26, 29, 46, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -19,41 +33,129 @@
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         body {
-            background-color: var(--bg-color);
+            /* 傾斜漸變背景：選項顏色 -> 淺湖水藍 -> 選項顏色 */
+            background: linear-gradient(135deg, var(--gradient-option) 0%, var(--gradient-sea-blue) 50%, var(--gradient-option) 100%);
+            background-attachment: fixed;
             color: var(--text-main);
+            min-height: 100vh;
+            padding-top: 80px;
+            padding-bottom: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
         }
 
+        /* 頂部導覽列 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px; /* 方形微圓角 */
+            object-fit: cover;
+        }
+
+        .nav-title {
+            font-weight: bold;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-join-nav {
+            background-color: var(--accent-color);
+            color: #ffffff !important;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .btn-join-nav:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* 下拉選單 */
+        .color-select {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 0.85rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* 主卡片容器 */
         .container {
             max-width: 650px;
-            width: 100%;
+            width: 90%;
             background-color: var(--card-bg);
             border-radius: 20px;
             padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
         }
 
-        .server-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
+        /* 主頁方形頭像（加大） */
+        .main-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 18px; /* 方形樣式 */
             object-fit: cover;
-            border: 3px solid var(--accent-color);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            margin-bottom: 15px;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
         }
 
         .badge {
             display: inline-block;
-            background: rgba(114, 137, 218, 0.15);
+            background: rgba(91, 115, 199, 0.15);
             color: var(--accent-color);
             padding: 6px 16px;
             border-radius: 20px;
@@ -63,9 +165,8 @@
         }
 
         h1 {
-            font-size: 2.1rem;
+            font-size: 2rem;
             margin-bottom: 14px;
-            color: #ffffff;
         }
 
         .subtitle {
@@ -84,8 +185,8 @@
         }
 
         .feature-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
             padding: 18px;
             border-radius: 12px;
         }
@@ -93,7 +194,6 @@
         .feature-item h3 {
             font-size: 1rem;
             margin-bottom: 6px;
-            color: #ffffff;
         }
 
         .feature-item p {
@@ -102,7 +202,7 @@
             line-height: 1.4;
         }
 
-        .btn-join {
+        .btn-join-main {
             display: inline-block;
             width: 100%;
             background-color: var(--accent-color);
@@ -115,7 +215,7 @@
             transition: background 0.2s ease, transform 0.1s ease;
         }
 
-        .btn-join:hover {
+        .btn-join-main:hover {
             background-color: var(--accent-hover);
             transform: translateY(-2px);
         }
@@ -125,20 +225,47 @@
             font-size: 0.8rem;
             color: var(--text-sub);
         }
+
+        @media (max-width: 600px) {
+            .nav-title {
+                display: none; /* 手機版隱藏標題避免擠壓 */
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- 伺服器頭像 -->
-        <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="server-avatar">
+    <!-- 頂部導覽列 -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
+            <span class="nav-title">可能是i人的伺服器！</span>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="nav-btn">首頁</a>
+            <!-- 背景顏色下拉選單 -->
+            <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
+                <option value="#ffffff">🎨 背景：白</option>
+                <option value="#64748b">🎨 背景：中灰</option>
+                <option value="#0f111a">🎨 背景：黑</option>
+                <option value="#e8f5e9">🎨 背景：淺綠</option>
+                <option value="#fff8e1">🎨 背景：淺琥珀</option>
+            </select>
+            <a href="https://discord.gg/ie31inviteyou" class="nav-btn btn-join-nav" target="_blank">加入小天地</a>
+        </div>
+    </nav>
+
+    <!-- 主卡片內容 -->
+    <div class="container" id="home">
+        <!-- 方形頭像（較大） -->
+        <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
         <br>
         <div class="badge">🏷️ 伺服器標籤：和 i 可親</div>
         
         <h1>歡迎來到 可能是i人的伺服器！</h1>
         <p class="subtitle">
-            這是一個集結了許多「i人」的 Discord 社群。<br>
+            這是一個集結了許多「i 人」的 Discord 社群。<br>
             不論你是I人還是E人，都能在這裡盡情和別人聊天、玩遊戲、掛語音，找到最舒服的社交步調。
         </p>
 
@@ -157,11 +284,24 @@
             </div>
         </div>
 
-        <!-- Discord 邀請連結 -->
-        <a href="https://discord.gg/ie31inviteyou" class="btn-join" target="_blank">點擊加入 Discord 伺服器 🚀</a>
+        <!-- 加入伺服器按鈕 -->
+        <a href="https://discord.gg/ie31inviteyou" class="btn-join-main" target="_blank">點擊加入 Discord 伺服器 🚀</a>
 
         <div class="footer-note">希望你能在這裡找到屬於自己的小天地 ✨</div>
     </div>
 
+    <!-- JavaScript 動態切換背景色與深淺模式 -->
+    <script>
+        function changeBgColor(color) {
+            document.documentElement.style.setProperty('--gradient-option', color);
+            
+            // 當選擇黑色或中灰時自動啟用深色卡片模式，確保文字能看清
+            if (color === '#0f111a' || color === '#64748b') {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+    </script>
 </body>
 </html>
