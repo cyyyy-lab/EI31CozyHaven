@@ -6,7 +6,7 @@
     <title>可能是i人的伺服器｜Discord 社群</title>
     <style>
         :root {
-            --gradient-option: #f2d6b3;
+            --gradient-option: #ffffff;
             --gradient-blue: #b4f1f5;
             
             --card-bg: rgba(255, 255, 255, 0.9);
@@ -369,11 +369,11 @@
             <a href="#dashboard" class="nav-btn">儀表板</a>
             <a href="#rules" class="nav-btn">規則</a>
             <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
-                <option value="#ffffff">🎨 白</option>
+                <option value="#ffffff" selected>🎨 白</option>
                 <option value="#64748b">🎨 灰</option>
                 <option value="#0f111a">🎨 黑</option>
                 <option value="#bcf5dc">🎨 淺綠</option>
-                <option value="#f2d6b3" selected>🎨 琥珀</option>
+                <option value="#f2d6b3">🎨 琥珀</option>
             </select>
             <a href="https://discord.gg/ie31inviteyou" class="nav-btn btn-join-nav" target="_blank">加入小天地</a>
         </div>
@@ -507,6 +507,15 @@
                     <li>同一成員違規第三次時，移出群組</li>
                 </ol>
             </div>
+        </div>
+    </div>
+
+    <!-- 最後加入的大卡片 -->
+    <div class="container">
+        <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
+        <div style="display: flex; gap: 15px; margin-top: 25px;">
+            <a href="https://discord.gg/ie31inviteyou" class="btn-join-main" style="flex: 1; text-align: center;" target="_blank">加入伺服器 🚀</a>
+            <button class="btn-join-main" style="flex: 1; background-color: #94a3b8; cursor: pointer; border: none;" onclick="alert('沒關係，期待下次再見！')">不要</button>
         </div>
     </div>
 
