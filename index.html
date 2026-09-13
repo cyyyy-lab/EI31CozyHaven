@@ -47,7 +47,7 @@
         }
 
         body {
-            background: radial-gradient(circle at center, var(--gradient-blue) 0%, var(--gradient-option) 70%);
+            background: linear-gradient(135deg, var(--gradient-blue) 0%, var(--gradient-option) 60%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
@@ -856,7 +856,8 @@
 </head>
 <body>
 
-    <nav class="navbar">
+    <!-- 主頁面導覽列 -->
+    <nav class="navbar" id="mainNavbar">
         <div class="nav-row-1">
             <div class="nav-left">
                 <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
@@ -873,10 +874,11 @@
                 <a href="#to-rules" class="nav-btn" onclick="switchPage('main')">規則</a>
                 <a href="#to-faq" class="nav-btn" onclick="switchPage('main')">問答</a>
                 <a href="#to-story" class="nav-btn" onclick="switchPage('main')">起源</a>
+                <a href="#whats-inside" class="nav-btn" onclick="switchPage('main')">裡面有</a>
                 <a href="#to-milestones" class="nav-btn" onclick="switchPage('main')">里程</a>
                 <a href="#to-bot" class="nav-btn" onclick="switchPage('main')">機器人</a>
                 <a href="#to-team" class="nav-btn" onclick="switchPage('main')">團隊</a>
-                <a href="#whats-inside" class="nav-btn" onclick="switchPage('main')">裡面有</a>
+                <a href="#to-support" class="nav-btn" onclick="switchPage('main')">支持</a>
             </div>
             <div class="nav-tools-group">
                 <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
@@ -887,6 +889,32 @@
                 </select>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">複製邀請連結</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 新頁面導覽列 -->
+    <nav class="navbar" id="subNavbar" style="display: none;">
+        <div class="nav-row-1">
+            <div class="nav-left">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
+                <div class="nav-name-group">
+                    <span class="nav-title">可能是i人的伺服器</span>
+                    <span class="nav-subtitle">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
+                </div>
+            </div>
+        </div>
+        <div class="nav-row-2" style="justify-content: center;">
+            <div class="nav-tools-group">
+                <button class="nav-btn" onclick="switchPage('main')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
+                <select class="color-select" onchange="changeBgColor(this.value)">
+                    <option value="#ffffff" selected>🎨 白</option>
+                    <option value="#64748b">🎨 灰</option>
+                    <option value="#0f111a">🎨 黑</option>
+                    <option value="#f2d6b3">🎨 琥珀</option>
+                </select>
+                <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入</a>
+                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">連結</button>
             </div>
         </div>
     </nav>
@@ -1089,7 +1117,7 @@
             </div>
         </div>
 
-        <!-- 新增：「伺服器裡有什麼？」卡片 -->
+        <!-- 伺服器裡有什麼？卡片 -->
         <div id="whats-inside" class="section-anchor"></div>
 
         <div class="container">
@@ -1274,6 +1302,8 @@
             </div>
         </div>
 
+        <div id="to-support" class="section-anchor"></div>
+
         <div class="container">
             <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
             <div style="display: flex; gap: 15px; margin-top: 25px;">
@@ -1281,37 +1311,28 @@
                 <button class="btn-join-main" style="flex: 1; background-color: #94a3b8; cursor: pointer; border: none;" onclick="handleDecline()">不要</button>
             </div>
         </div>
+
+        <!-- 新增：「如果你想支持我們的話」卡片 -->
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>如果你想支持我們的話</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">你的每一次支持，都是我們繼續維護與經營社群的最大動力！</p>
+            <a href="#" onclick="openModal(event)" class="btn-join-main">給我們點個贊吧！</a>
+        </div>
     </div>
 
-    <!-- 新頁面容器 (導覽列一行：頭像、名字、返回、背景顏色、加入、連結) -->
+    <!-- 新頁面容器 -->
     <div id="subPageView" class="page-view">
-        <div style="width: 100%; background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; z-index: 1001; gap: 10px; overflow-x: auto;">
-            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
-                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;">
-                <span style="font-weight: bold; font-size: 0.9rem; color: var(--text-main); white-space: nowrap;">可能是i人的伺服器</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-                <button class="nav-btn" onclick="switchPage('main')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
-                <select class="color-select" onchange="changeBgColor(this.value)">
-                    <option value="#ffffff" selected>🎨 白</option>
-                    <option value="#64748b">🎨 灰</option>
-                    <option value="#0f111a">🎨 黑</option>
-                    <option value="#f2d6b3">🎨 琥珀</option>
-                </select>
-                <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav" style="white-space: nowrap;">加入</a>
-                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav" style="white-space: nowrap;">連結</button>
-            </div>
-        </div>
-
         <div class="container" style="margin-top: 40px;">
             <div class="dashboard-header">
-                <h2>新頁面：詳細說明與介紹</h2>
+                <h2>詳細說明與介紹</h2>
             </div>
-            <p class="subtitle">這裡展示更多關於伺服器的深度資訊、活動花絮與說明。</p>
+            <p class="subtitle" style="font-size: 0.85rem; margin-bottom: 10px;">這裡展示更多關於伺服器的資訊與說明。</p>
             <div style="text-align: left; line-height: 1.8; color: var(--text-main);">
-                <p style="margin-bottom: 15px;">感謝你點擊進入新頁面！本伺服器致力於為所有喜愛安靜、舒適交流的「i人」打造一個完全無壓力的避風港。</p>
+                <p style="margin-bottom: 15px;">感謝你點擊進入頁面！本伺服器致力於為所有喜愛安靜、舒適交流的「i人」打造一個完全無壓力的避風港。</p>
                 <p style="margin-bottom: 15px;">在這裡，你可以參與定期舉辦的線上遊戲同樂會、語音聊天馬拉松，或是單純在深夜聽著 Lofi 頻道放鬆身心。</p>
-                <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 20px;">返回首頁</button>
+                <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 20px;">返回按鈕</button>
             </div>
         </div>
     </div>
@@ -1384,13 +1405,20 @@
         function switchPage(page) {
             const mainView = document.getElementById('mainPageView');
             const subView = document.getElementById('subPageView');
+            const mainNav = document.getElementById('mainNavbar');
+            const subNav = document.getElementById('subNavbar');
+
             if (page === 'sub') {
                 mainView.classList.remove('active');
                 subView.classList.add('active');
+                mainNav.style.display = 'none';
+                subNav.style.display = 'flex';
                 window.scrollTo(0, 0);
             } else {
                 subView.classList.remove('active');
                 mainView.classList.add('active');
+                subNav.style.display = 'none';
+                mainNav.style.display = 'flex';
                 window.scrollTo(0, 0);
             }
         }
