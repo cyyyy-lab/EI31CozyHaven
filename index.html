@@ -9,7 +9,7 @@
             --gradient-option: #ffffff;
             --gradient-blue: #b4f1f5;
             
-            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-bg: rgba(255, 255, 255, 0.5);
             --accent-color: #5b73c7;
             --accent-hover: #485cb5;
             --text-main: #2c3e50;
@@ -21,7 +21,7 @@
         }
 
         body.dark-mode {
-            --card-bg: rgba(26, 29, 46, 0.75);
+            --card-bg: rgba(26, 29, 46, 0.5);
             --text-main: #f1f5f9;
             --text-sub: #94a3b8;
             --nav-bg: rgba(26, 29, 46, 0.75);
@@ -857,6 +857,46 @@
             color: var(--footer-text-color);
         }
 
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-1px, -2px) rotate(-1deg); }
+            40% { transform: translate(-3px, 0px) rotate(1deg); }
+            60% { transform: translate(3px, 2px) rotate(0deg); }
+            80% { transform: translate(1px, -1px) rotate(1deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+
+        .shake-effect {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .toast-msg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 20px 30px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .toast-msg.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
         @media (max-width: 600px) {
             body {
                 padding-top: 145px;
@@ -902,7 +942,7 @@
                     <option value="#f2d6b3">🎨 琥珀</option>
                 </select>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
-                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">📋 複製邀請連結</button>
+                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">複製邀請連結</button>
             </div>
         </div>
     </nav>
@@ -942,7 +982,7 @@
             </div>
         </div>
 
-        <a href="#" onclick="openModal(event)" class="btn-join-main">點擊加入 Discord 伺服器 🚀</a>
+        <a href="#" onclick="openModal(event)" class="btn-join-main">點擊加入 Discord 伺服器</a>
 
         <div class="footer-note">✨ 希望你能在這裡找到屬於自己的小天地 ✨</div>
     </div>
@@ -957,15 +997,15 @@
 
         <div class="dash-grid">
             <div class="dash-card">
-                <div class="dash-title">📅 開服日期</div>
+                <div class="dash-title">📅 開服日期 📅</div>
                 <div class="dash-value">5月31日</div>
             </div>
             <div class="dash-card">
-                <div class="dash-title">👥 總成員數</div>
+                <div class="dash-title">👥 總成員數 👥</div>
                 <div class="dash-value">3000+</div>
             </div>
             <div class="dash-card">
-                <div class="dash-title">💬 總頻道數</div>
+                <div class="dash-title">💬 總頻道數 💬</div>
                 <div class="dash-value">100+</div>
             </div>
         </div>
@@ -1128,6 +1168,13 @@
             </div>
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
+                <div class="timeline-date">7月26日</div>
+                <div class="timeline-content">
+                    御用機器人正式加入，為社群帶來更多豐富互動！ 🤖
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
                 <div class="timeline-date">8月1日</div>
                 <div class="timeline-content">
                     Threads 貼文再次迎來一波流量關注。
@@ -1266,7 +1313,7 @@
         <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
         <div style="display: flex; gap: 15px; margin-top: 25px;">
             <a href="#" onclick="openModal(event)" class="btn-join-main" style="flex: 1; text-align: center;">加入伺服器 🚀</a>
-            <button class="btn-join-main" style="flex: 1; background-color: #94a3b8; cursor: pointer; border: none;" onclick="alert('沒關係，期待下次再見！')">不要</button>
+            <button class="btn-join-main" style="flex: 1; background-color: #94a3b8; cursor: pointer; border: none;" onclick="handleDecline()">不要</button>
         </div>
     </div>
 
@@ -1316,23 +1363,21 @@
         </div>
     </div>
 
+    <div class="toast-msg" id="customToast"></div>
+
     <script>
         function changeBgColor(color) {
             document.documentElement.style.setProperty('--gradient-option', color);
             
-            // 移除所有模式 class
             document.body.classList.remove('dark-mode', 'gray-mode');
 
             if (color === '#0f111a') {
-                // 黑背景
                 document.documentElement.style.setProperty('--gradient-blue', '#9fc1ff');
                 document.body.classList.add('dark-mode');
             } else if (color === '#64748b') {
-                // 灰背景
                 document.documentElement.style.setProperty('--gradient-blue', '#b4f1f5');
                 document.body.classList.add('gray-mode');
             } else {
-                // 其他預設背景
                 document.documentElement.style.setProperty('--gradient-blue', '#b4f1f5');
             }
         }
@@ -1424,6 +1469,28 @@
                 closeModal();
             }
         });
+
+        function handleDecline() {
+            document.body.classList.add('shake-effect');
+            setTimeout(() => {
+                document.body.classList.remove('shake-effect');
+            }, 400);
+
+            const toast = document.getElementById('customToast');
+            toast.textContent = "真的不要嗎🥺";
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.textContent = "沒關係，期待下次再見！";
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 1500);
+                }, 300);
+            }, 1500);
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
             let visits = localStorage.getItem('page_visits');
