@@ -314,6 +314,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
+            margin-bottom: 25px;
         }
 
         .dash-card {
@@ -334,6 +335,22 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--accent-color);
+        }
+
+        .discord-widget-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .discord-widget-iframe {
+            width: 100%;
+            max-width: 350px;
+            height: 500px;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .rules-container {
@@ -858,13 +875,13 @@
     <!-- 首頁與儀表板之間的錨點 -->
     <div id="to-dashboard" class="section-anchor"></div>
 
-    <!-- 數據儀表板卡片 -->
+    <!-- 數據儀表板與即時語音狀態卡片 -->
     <div class="container" id="dashboard">
         <div class="dashboard-header">
             <span class="status-dot"></span>
-            <h2>數據儀表板</h2>
+            <h2>數據儀表板與即時狀態</h2>
         </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與 Discord 即時在線狀況</p>
 
         <div class="dash-grid">
             <div class="dash-card">
@@ -879,6 +896,11 @@
                 <div class="dash-title">💬 總頻道數</div>
                 <div class="dash-value">100+</div>
             </div>
+        </div>
+
+        <!-- 嵌入的 Discord Live Widget -->
+        <div class="discord-widget-wrapper">
+            <iframe class="discord-widget-iframe" src="https://discord.com/widget?id=1510333452958830614&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
     </div>
 
