@@ -52,6 +52,11 @@
             align-items: center;
         }
 
+        /* 錨點定位修正：讓內容不會被固定導覽列遮擋 */
+        .section-anchor {
+            scroll-margin-top: 140px;
+        }
+
         .navbar {
             position: fixed;
             top: 0;
@@ -69,7 +74,7 @@
 
         .nav-row-1 {
             display: flex;
-            justify-content: center; /* 置中頭像與名字部份 */
+            justify-content: center;
             align-items: center;
             width: 100%;
         }
@@ -785,15 +790,15 @@
                 </div>
             </div>
         </div>
-        <!-- 第二行：按鈕與工具 (移除訪客留言按鈕) -->
+        <!-- 第二行：按鈕與工具 (導覽按鈕對應至兩卡片之間) -->
         <div class="nav-row-2">
             <div class="nav-links-group">
                 <a href="#home" class="nav-btn">首頁</a>
-                <a href="#dashboard" class="nav-btn">儀表板</a>
-                <a href="#rules" class="nav-btn">規則</a>
-                <a href="#faq" class="nav-btn">常見問題</a>
-                <a href="#story" class="nav-btn">起源故事</a>
-                <a href="#team" class="nav-btn">管理團隊</a>
+                <a href="#to-dashboard" class="nav-btn">儀表板</a>
+                <a href="#to-rules" class="nav-btn">規則</a>
+                <a href="#to-faq" class="nav-btn">常見問題</a>
+                <a href="#to-story" class="nav-btn">起源故事</a>
+                <a href="#to-team" class="nav-btn">管理團隊</a>
             </div>
             <div class="nav-tools-group">
                 <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
@@ -809,6 +814,7 @@
         </div>
     </nav>
 
+    <!-- 首頁卡片 -->
     <div class="container" id="home">
         <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
@@ -849,6 +855,10 @@
         <div class="footer-note">希望你能在這裡找到屬於自己的小天地 ✨</div>
     </div>
 
+    <!-- 首頁與儀表板之間的錨點 -->
+    <div id="to-dashboard" class="section-anchor"></div>
+
+    <!-- 數據儀表板卡片 -->
     <div class="container" id="dashboard">
         <div class="dashboard-header">
             <span class="status-dot"></span>
@@ -872,6 +882,10 @@
         </div>
     </div>
 
+    <!-- 儀表板與規則之間的錨點 -->
+    <div id="to-rules" class="section-anchor"></div>
+
+    <!-- 伺服器規範卡片 -->
     <div class="container" id="rules">
         <div class="dashboard-header">
             <h2>📜 伺服器規範</h2>
@@ -931,6 +945,9 @@
         </div>
     </div>
 
+    <!-- 規則與常見問題之間的錨點 -->
+    <div id="to-faq" class="section-anchor"></div>
+
     <!-- 常見問題卡片 (Accordion 折疊展開互動) -->
     <div class="container" id="faq">
         <div class="dashboard-header">
@@ -975,6 +992,9 @@
         </div>
     </div>
 
+    <!-- 常見問題與起源故事之間的錨點 -->
+    <div id="to-story" class="section-anchor"></div>
+
     <!-- 起源故事卡片 -->
     <div class="container" id="story">
         <div class="dashboard-header">
@@ -999,6 +1019,9 @@
             </p>
         </div>
     </div>
+
+    <!-- 起源故事與管理團隊之間的錨點 -->
+    <div id="to-team" class="section-anchor"></div>
 
     <!-- 管理團隊卡片 -->
     <div class="container" id="team">
