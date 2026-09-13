@@ -47,7 +47,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--gradient-option) 0%, var(--gradient-blue) 50%, var(--gradient-option) 100%);
+            background: radial-gradient(circle at center, var(--gradient-blue) 0%, var(--gradient-option) 70%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
@@ -553,74 +553,6 @@
             font-family: monospace;
         }
 
-        .guestbook-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .guestbook-input, .guestbook-textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            color: var(--text-main);
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        .guestbook-textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .guestbook-btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .guestbook-btn:hover {
-            background-color: var(--accent-hover);
-        }
-
-        .message-list {
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-
-        .message-card {
-            background: var(--dash-item-bg);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        .message-user {
-            font-weight: bold;
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            margin-bottom: 4px;
-        }
-
-        .message-text {
-            font-size: 0.9rem;
-            color: var(--text-main);
-            word-break: break-all;
-        }
-
         .threads-link-card {
             display: flex;
             align-items: center;
@@ -897,6 +829,17 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
+        .page-view {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-view.active {
+            display: flex;
+        }
+
         @media (max-width: 600px) {
             body {
                 padding-top: 145px;
@@ -925,14 +868,15 @@
         </div>
         <div class="nav-row-2">
             <div class="nav-links-group">
-                <a href="#home" class="nav-btn">首頁</a>
-                <a href="#to-dashboard" class="nav-btn">儀表板</a>
-                <a href="#to-rules" class="nav-btn">規則</a>
-                <a href="#to-faq" class="nav-btn">常見問題</a>
-                <a href="#to-story" class="nav-btn">起源故事</a>
-                <a href="#to-milestones" class="nav-btn">里程碑</a>
-                <a href="#to-bot" class="nav-btn">專屬機器人</a>
-                <a href="#to-team" class="nav-btn">管理團隊</a>
+                <a href="#home" class="nav-btn" onclick="switchPage('main')">首頁</a>
+                <a href="#to-dashboard" class="nav-btn" onclick="switchPage('main')">儀表板</a>
+                <a href="#to-rules" class="nav-btn" onclick="switchPage('main')">規則</a>
+                <a href="#to-faq" class="nav-btn" onclick="switchPage('main')">問答</a>
+                <a href="#to-story" class="nav-btn" onclick="switchPage('main')">起源</a>
+                <a href="#to-milestones" class="nav-btn" onclick="switchPage('main')">里程</a>
+                <a href="#to-bot" class="nav-btn" onclick="switchPage('main')">機器人</a>
+                <a href="#to-team" class="nav-btn" onclick="switchPage('main')">團隊</a>
+                <a href="#whats-inside" class="nav-btn" onclick="switchPage('main')">裡面有</a>
             </div>
             <div class="nav-tools-group">
                 <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
@@ -947,373 +891,428 @@
         </div>
     </nav>
 
-    <div class="container" id="home">
-        <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
+    <!-- 主頁面容器 -->
+    <div id="mainPageView" class="page-view active">
+        <div class="container" id="home">
+            <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
-        <br>
-        <div class="badge">🏷️ 伺服器標籤：和 i 可親 🏷️</div>
-        
-        <h1>
-            歡迎來到<br>
-            可能是i人的伺服器<br>
-            <span class="h1-en">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
-        </h1>
-        <p class="subtitle">
-            這是一個集結了許多「i人」的 Discord 社群。<br>
-            不論你是I人還是E人，都能在這裡盡情和別人聊天、玩遊戲、掛語音，找到最舒服的社交步調。
-        </p>
-
-        <div class="features">
-            <div class="feature-item">
-                <h3>💬 隨心交流</h3>
-                <p>想聊天就聊，不想說話也可以安靜潛水打卡。</p>
-            </div>
-            <div class="feature-item">
-                <h3>🎮 組隊開場</h3>
-                <p>輕鬆開團找隊友，沒有壓力一起玩遊戲。</p>
-            </div>
-            <div class="feature-item">
-                <h3>📻 24小時音樂</h3>
-                <p>常設 Lofi 音樂語音房，一個人掛機也不孤單。</p>
-            </div>
-            <div class="feature-item">
-                <h3>🤖 各式機器人</h3>
-                <p>提供動態語音頻道與多種便利機器人互動，伺服器更設有專屬御用機器人！</p>
-            </div>
-        </div>
-
-        <a href="#" onclick="openModal(event)" class="btn-join-main">點擊加入 Discord 伺服器</a>
-
-        <div class="footer-note">✨ 希望你能在這裡找到屬於自己的小天地 ✨</div>
-    </div>
-
-    <div id="to-dashboard" class="section-anchor"></div>
-
-    <div class="container" id="dashboard">
-        <div class="dashboard-header">
-            <h2>數據儀表板</h2>
-        </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
-
-        <div class="dash-grid">
-            <div class="dash-card">
-                <div class="dash-title">📅 開服日期 📅</div>
-                <div class="dash-value">5月31日</div>
-            </div>
-            <div class="dash-card">
-                <div class="dash-title">👥 總成員數 👥</div>
-                <div class="dash-value">3000+</div>
-            </div>
-            <div class="dash-card">
-                <div class="dash-title">💬 總頻道數 💬</div>
-                <div class="dash-value">100+</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="to-rules" class="section-anchor"></div>
-
-    <div class="container" id="rules">
-        <div class="dashboard-header">
-            <h2>伺服器規範</h2>
-        </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">
-            請遵守我們的伺服器規則，共同維護舒適的交流環境 。我們希望每個人都能在這裡度過一段美好的時光
-        </p>
-
-        <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 30px;">
-            <button class="nav-btn tab-btn active" onclick="switchTab('basic-rules', event)">基本規則</button>
-            <button class="nav-btn tab-btn" onclick="switchTab('voice-rules', event)">語音禮儀</button>
-            <button class="nav-btn tab-btn" onclick="switchTab('prohibited', event)">禁止事項</button>
-            <button class="nav-btn tab-btn" onclick="switchTab('punishments', event)">處罰分級</button>
-        </div>
-
-        <div class="rules-container">
-            <div class="rules-section active" id="basic-rules">
-                <h3>基本規則</h3>
-                <ol class="rules-list">
-                    <li>保持禮貌、尊重與包容，遵守各頻道主題發言</li>
-                    <li>請不要隨意和未經他人允許披露個人資訊</li>
-                    <li>若有紛爭請到⁠吃瓜與吵架頻道，勿影響他人及其他頻道</li>
-                    <li>有關伺服器問題，如非無法使用⁠客服中心 ，請不要私訊群主或管理員</li>
-                </ol>
-            </div>
-            <div class="rules-section" id="voice-rules">
-                <h3>語音禮儀</h3>
-                <ol class="rules-list">
-                    <li>避免使用音效板/噪音/尖叫/錄音而造成他人困擾</li>
-                    <li>請勿未經允許更改他人語音狀態</li>
-                    <li>勿打斷他人唱歌</li>
-                </ol>
-            </div>
-            <div class="rules-section" id="prohibited">
-                <h3>禁止事項</h3>
-                <ol class="rules-list">
-                    <li>宣傳私人群組及進行交易買賣</li>
-                    <li>於福利頻道以外發送及討論色情</li>
-                    <li>刷頻/冒充他人/經常亂入或打斷對話</li>
-                    <li>發表政治/仇恨/歧視/騷擾/辱罵/人身攻擊等言論</li>
-                </ol>
-            </div>
-            <div class="rules-section" id="punishments">
-                <h3>處罰分級</h3>
-                <p class="rules-desc">
-                    本群規則會持續更新<br>
-                    若認為處罰有誤，可到客服中心進行申訴
-                </p>
-                <ol class="rules-list">
-                    <li>有不當行為時，新增規則與移除相關訊息，若影響多位成員則@出該成員</li>
-                    <li>特殊處罰，影響多位成員或無需說明時發出</li>
-                    <li>違反以上規則，或同一成員作出第三次不當行為時，@出該成員並移除相關訊息</li>
-                    <li>同一成員違規第二次時，禁言一週</li>
-                    <li>同一成員違規第三次時，移出群組</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-
-    <div id="to-faq" class="section-anchor"></div>
-
-    <div class="container" id="faq">
-        <div class="dashboard-header">
-            <h2>常見問題</h2>
-        </div>
-        <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">點擊問題標題即可展開或收合解答</p>
-        
-        <div class="faq-list">
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Q1. 為什麼我不能說話？</span>
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>請到須知進行驗證</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Q2. 為什麼我看不到其他頻道？</span>
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>請到頻道與身分組領取身分組<br>
-                    需領取E/I身分組方可解鎖基本頻道<br>
-                    若想看遊戲頻道，需領取遊戲身分組</p>
-                    <div class="faq-small">（可額外領取對應的遊戲獨立身分組解鎖專屬頻道）</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Q3. 遇到成員違規、騷擾或紛爭怎麼辦?</span>
-                    <span class="faq-arrow">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>可到客服中心開啟臨時頻道聯繫處理<br>
-                    若有紛爭，可選擇移步至吃瓜與吵架頻道</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="to-story" class="section-anchor"></div>
-
-    <div class="container" id="story">
-        <div class="dashboard-header">
-            <h2>起源故事</h2>
-        </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">屬於這個小天地的誕生</p>
-        <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
-            <p style="margin-bottom: 12px;">
-                故事始於5月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的前來。
-            </p>
+            <br>
+            <div class="badge">🏷️ 伺服器標籤：和 i 可親 🏷️</div>
             
-            <a href="https://www.threads.com/share/BAVGu1Ib5B/" target="_blank" class="threads-link-card">
-                <div class="threads-icon">📱</div>
-                <div class="threads-info">
-                    <div class="threads-title">查看最初的那篇 Threads 貼文</div>
-                    <div class="threads-url">https://www.threads.com/share/BAVGu1Ib5B/</div>
-                </div>
-            </a>
-
-            <p style="margin-top: 12px;">
-                為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
+            <h1>
+                歡迎來到<br>
+                可能是i人的伺服器<br>
+                <span class="h1-en">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
+            </h1>
+            <p class="subtitle">
+                這是一個集結了許多「i人」的 Discord 社群。<br>
+                不論你是I人還是E人，都能在這裡盡情和別人聊天、玩遊戲、掛語音，找到最舒服的社交步調。
             </p>
+
+            <div class="features">
+                <div class="feature-item">
+                    <h3>💬 隨心交流</h3>
+                    <p>想聊天就聊，不想說話也可以安靜潛水打卡。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎮 組隊開場</h3>
+                    <p>輕鬆開團找隊友，沒有壓力一起玩遊戲。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>📻 24小時音樂</h3>
+                    <p>常設 Lofi 音樂語音房，一個人掛機也不孤單。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🤖 各式機器人</h3>
+                    <p>提供動態語音頻道與多種便利機器人互動，伺服器更設有專屬御用機器人！</p>
+                </div>
+            </div>
+
+            <a href="#" onclick="openModal(event)" class="btn-join-main">點擊加入 Discord 伺服器</a>
+
+            <div class="footer-note">✨ 希望你能在這裡找到屬於自己的小天地 ✨</div>
+        </div>
+
+        <div id="to-dashboard" class="section-anchor"></div>
+
+        <div class="container" id="dashboard">
+            <div class="dashboard-header">
+                <h2>數據儀表板</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
+
+            <div class="dash-grid">
+                <div class="dash-card">
+                    <div class="dash-title">📅 開服日期 📅</div>
+                    <div class="dash-value">5月31日</div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-title">👥 總成員數 👥</div>
+                    <div class="dash-value">3000+</div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-title">💬 總頻道數 💬</div>
+                    <div class="dash-value">100+</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-rules" class="section-anchor"></div>
+
+        <div class="container" id="rules">
+            <div class="dashboard-header">
+                <h2>伺服器規範</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">
+                請遵守我們的伺服器規則，共同維護舒適的交流環境 。我們希望每個人都能在這裡度過一段美好的時光
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 30px;">
+                <button class="nav-btn tab-btn active" onclick="switchTab('basic-rules', event)">基本規則</button>
+                <button class="nav-btn tab-btn" onclick="switchTab('voice-rules', event)">語音禮儀</button>
+                <button class="nav-btn tab-btn" onclick="switchTab('prohibited', event)">禁止事項</button>
+                <button class="nav-btn tab-btn" onclick="switchTab('punishments', event)">處罰分級</button>
+            </div>
+
+            <div class="rules-container">
+                <div class="rules-section active" id="basic-rules">
+                    <h3>基本規則</h3>
+                    <ol class="rules-list">
+                        <li>保持禮貌、尊重與包容，遵守各頻道主題發言</li>
+                        <li>請不要隨意和未經他人允許披露個人資訊</li>
+                        <li>若有紛爭請到⁠吃瓜與吵架頻道，勿影響他人及其他頻道</li>
+                        <li>有關伺服器問題，如非無法使用⁠客服中心 ，請不要私訊群主或管理員</li>
+                    </ol>
+                </div>
+                <div class="rules-section" id="voice-rules">
+                    <h3>語音禮儀</h3>
+                    <ol class="rules-list">
+                        <li>避免使用音效板/噪音/尖叫/錄音而造成他人困擾</li>
+                        <li>請勿未經允許更改他人語音狀態</li>
+                        <li>勿打斷他人唱歌</li>
+                    </ol>
+                </div>
+                <div class="rules-section" id="prohibited">
+                    <h3>禁止事項</h3>
+                    <ol class="rules-list">
+                        <li>宣傳私人群組及進行交易買賣</li>
+                        <li>於福利頻道以外發送及討論色情</li>
+                        <li>刷頻/冒充他人/經常亂入或打斷對話</li>
+                        <li>發表政治/仇恨/歧視/騷擾/辱罵/人身攻擊等言論</li>
+                    </ol>
+                </div>
+                <div class="rules-section" id="punishments">
+                    <h3>處罰分級</h3>
+                    <p class="rules-desc">
+                        本群規則會持續更新<br>
+                        若認為處罰有誤，可到客服中心進行申訴
+                    </p>
+                    <ol class="rules-list">
+                        <li>有不當行為時，新增規則與移除相關訊息，若影響多位成員則@出該成員</li>
+                        <li>特殊處罰，影響多位成員或無需說明時發出</li>
+                        <li>違反以上規則，或同一成員作出第三次不當行為時，@出該成員並移除相關訊息</li>
+                        <li>同一成員違規第二次時，禁言一週</li>
+                        <li>同一成員違規第三次時，移出群組</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-faq" class="section-anchor"></div>
+
+        <div class="container" id="faq">
+            <div class="dashboard-header">
+                <h2>常見問題</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">點擊問題標題即可展開或收合解答</p>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q1. 為什麼我不能說話？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>請到須知進行驗證</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q2. 為什麼我看不到其他頻道？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>請到頻道與身分組領取身分組<br>
+                        需領取E/I身分組方可解鎖基本頻道<br>
+                        若想看遊戲頻道，需領取遊戲身分組</p>
+                        <div class="faq-small">（可額外領取對應的遊戲獨立身分組解鎖專屬頻道）</div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q3. 遇到成員違規、騷擾或紛爭怎麼辦?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>可到客服中心開啟臨時頻道聯繫處理<br>
+                        若有紛爭，可選擇移步至吃瓜與吵架頻道</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-story" class="section-anchor"></div>
+
+        <div class="container" id="story">
+            <div class="dashboard-header">
+                <h2>起源故事</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">屬於這個小天地的誕生</p>
+            <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
+                <p style="margin-bottom: 12px;">
+                    故事始於5月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的前來。
+                </p>
+                
+                <a href="https://www.threads.com/share/BAVGu1Ib5B/" target="_blank" class="threads-link-card">
+                    <div class="threads-icon">📱</div>
+                    <div class="threads-info">
+                        <div class="threads-title">查看最初的那篇 Threads 貼文</div>
+                        <div class="threads-url">https://www.threads.com/share/BAVGu1Ib5B/</div>
+                    </div>
+                </a>
+
+                <p style="margin-top: 12px;">
+                    為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
+                </p>
+            </div>
+        </div>
+
+        <!-- 新增：「伺服器裡有什麼？」卡片 -->
+        <div id="whats-inside" class="section-anchor"></div>
+
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>伺服器裡有什麼？</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">探索豐富多元的頻道與社群內容</p>
+            <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
+                <ul class="rules-list" style="margin-bottom: 20px;">
+                    <li><strong>多樣遊戲天地：</strong>各類熱門手遊與電腦遊戲專屬開黑頻道。</li>
+                    <li><strong>日常心情分享：</strong>提供美食、寵物、日常廢文與心情抒發專區。</li>
+                    <li><strong>24小時音樂陪伴：</strong>隨時點歌或掛網聽歌的放鬆角落。</li>
+                    <li><strong>專屬互動小幫手：</strong>獨家機器人提供抽卡、打卡、PK等多樣化趣味功能。</li>
+                </ul>
+                <button class="btn-join-main" onclick="switchPage('sub')">進入新頁面瀏覽詳細資訊</button>
+            </div>
+        </div>
+
+        <div id="to-milestones" class="section-anchor"></div>
+
+        <div class="container" id="milestones">
+            <div class="dashboard-header">
+                <h2>發展里程碑</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">記錄這個小天地一路走來的點點滴滴</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">5月30日</div>
+                    <div class="timeline-content">
+                        那篇引起廣大共鳴的 Threads 貼文發布。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">5月31日</div>
+                    <div class="timeline-content">
+                        伺服器正式成立！初具規模，當天即突破 1000 人！ 🎉
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">7月26日</div>
+                    <div class="timeline-content">
+                        御用機器人正式加入，為社群帶來更多豐富互動！ 🤖
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">8月1日</div>
+                    <div class="timeline-content">
+                        Threads 貼文再次迎來一波流量關注。
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">8月16日</div>
+                    <div class="timeline-content">
+                        伺服器成員人數突破 2000 人！ 🎉
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">9月10日</div>
+                    <div class="timeline-content">
+                        伺服器成員人數突破 3000 人！ 🎉
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">9月13日</div>
+                    <div class="timeline-content">
+                        建立專屬社群宣傳網站！ ✨
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-bot" class="section-anchor"></div>
+
+        <div class="container" id="bot">
+            <div class="dashboard-header">
+                <h2>御用機器人</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化小管家，帶來滿滿陪伴與樂趣</p>
+
+            <div class="bot-grid">
+                <div class="bot-feature-card">
+                    <h3>📅 打卡與個人名片</h3>
+                    <p>追蹤個人發言與語音經驗值，連續打卡 30 天可解鎖活躍身分組。</p>
+                    <span class="bot-cmd-tag">!打卡 / !profile</span>
+                </div>
+                <div class="bot-feature-card">
+                    <h3>⚔️ 趣味 PK 決鬥</h3>
+                    <p>與群友進行搞笑回合制卡牌對決，記錄累積勝率與勝敗戰績。</p>
+                    <span class="bot-cmd-tag">!PK @成員</span>
+                </div>
+                <div class="bot-feature-card">
+                    <h3>🎴 歐皇體質抽卡</h3>
+                    <p>挑戰 10 種稀有度卡牌，幸運抽中最高階 SEC 可解鎖尊爵身分組！</p>
+                    <span class="bot-cmd-tag">!抽卡</span>
+                </div>
+                <div class="bot-feature-card">
+                    <h3>🎮 娛樂互動樂園</h3>
+                    <p>包含 21點對決、猜拳、餵食/摸頭小寵物，以及管理員爆笑金句庫。</p>
+                    <span class="bot-cmd-tag">!21 / !出來玩 / !管理員說</span>
+                </div>
+                <div class="bot-feature-card" style="grid-column: span 2;">
+                    <h3>⏰ 溫馨定時廣播與倒數提醒</h3>
+                    <p>每日凌晨 02:00 晚安提醒、早上 09:00 早安招呼，以及每週一 18:00 活躍排行榜自動結算！還能幫你設定個人專屬倒數提醒。</p>
+                    <span class="bot-cmd-tag">!提醒 10m 記得喝水</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-team" class="section-anchor"></div>
+
+        <div class="container" id="team">
+            <div class="dashboard-header">
+                <h2>🛡️ 管理團隊</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">守護這個溫馨小天地的幕后功臣們</p>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548405837997940886/avatar.png?ex=6aa6f0cf&is=6aa59f4f&hm=f2bac829c31a49c8481b48c4efd648994ef337f0cb39a2d47f4a07788caf8e25&" alt="吉" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">群主</span>
+                        <span class="team-name">吉</span>
+                        <span class="team-desc">AI很好用。</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406409979236402/avatar.png?ex=6aa6f158&is=6aa59fd8&hm=860d46b6b2d92e7f60b12569fbafb80b24afd6093cb32033e8a1ef8ccdc00eab&" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">ᴗ̈ᴗ̈ᴗ̈魚板。</span>
+                        <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051276333086/BackgroundEraser_20260913_131715399.png?ex=6aa78428&is=6aa632a8&hm=35b7435ae9d74a807660fba04c042fe22f51f0c046375c4f65db56d2233566bc&" alt="簽名檔" class="team-desc-img"></span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406786891980950/avatar.png?ex=6aa6f1b2&is=6aa5a032&hm=af5f6c514521ce637252fa7071ff2bded5983103b1a29569552df1bda3d7f1ca&" alt="oboe蜥蜴" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">oboe蜥蜴</span>
+                        <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051590914158/BackgroundEraser_20260913_131911795.png?ex=6aa78428&is=6aa632a8&hm=b2778db47fa02dda94c60f7376bc839f409f99136be2238baa1ca894ccfb8461&" alt="簽名檔" class="team-desc-img"></span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407027548553296/avatar.png?ex=6aa6f1eb&is=6aa5a06b&hm=fb0560e4867b49f3c86d0d90565add16dd9b7900ab058d1a958aa2ef3831f013&" alt="禾" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">禾</span>
+                        <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548573654995046441/Screenshot_20260913_134035_Discord.png?ex=6aa78d1a&is=6aa63b9a&hm=0a8b6f4ac476c995a4e7dc2a325d3bae58f83518afa8f08300159a3f143546bd&" alt="簽名檔" class="team-desc-img"></span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407208209944657/avatar.png?ex=6aa6f216&is=6aa5a096&hm=2eb7f07714c44e069dab13043cdc3866e2f8469285f5eb623c1256c484bcf067&" alt="muly沐漓" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">muly沐漓</span>
+                        <span class="team-desc">這個人還沒有留下痕跡</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407570849472583/avatar.png?ex=6aa6f26c&is=6aa5a0ec&hm=9e7c2ff10d73b879971bc173e248b53b344b827d74f25af7b747dd30af265fb2&" alt="辰" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">辰</span>
+                        <span class="team-desc">這個人還沒有留下痕跡</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407700495405196/avatar.png?ex=6aa6f28b&is=6aa5a10b&hm=d1b6ec6094f30bd2bb85dd1f91535db18945a36dbeaba3cabd7846751531e79a&" alt="球" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">球</span>
+                        <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564050940661810/BackgroundEraser_20260913_131639376.png?ex=6aa78428&is=6aa632a8&hm=5a50c0858751b32ed4c79f555c1fc440c1eb34c2baf8589f7dd633f97881767c&" alt="簽名檔" class="team-desc-img"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <a href="#" onclick="openModal(event)" class="btn-join-main" style="flex: 1; text-align: center;">加入伺服器</a>
+                <button class="btn-join-main" style="flex: 1; background-color: #94a3b8; cursor: pointer; border: none;" onclick="handleDecline()">不要</button>
+            </div>
         </div>
     </div>
 
-    <div id="to-milestones" class="section-anchor"></div>
-
-    <div class="container" id="milestones">
-        <div class="dashboard-header">
-            <h2>發展里程碑</h2>
-        </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">記錄這個小天地一路走來的點點滴滴</p>
-        
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">5月30日</div>
-                <div class="timeline-content">
-                    那篇引起廣大共鳴的 Threads 貼文發布。
-                </div>
+    <!-- 新頁面容器 (導覽列一行：頭像、名字、返回、背景顏色、加入、連結) -->
+    <div id="subPageView" class="page-view">
+        <div style="width: 100%; background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; z-index: 1001; gap: 10px; overflow-x: auto;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover;">
+                <span style="font-weight: bold; font-size: 0.9rem; color: var(--text-main); white-space: nowrap;">可能是i人的伺服器</span>
             </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">5月31日</div>
-                <div class="timeline-content">
-                    伺服器正式成立！初具規模，當天即突破 1000 人！ 🎉
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">7月26日</div>
-                <div class="timeline-content">
-                    御用機器人正式加入，為社群帶來更多豐富互動！ 🤖
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">8月1日</div>
-                <div class="timeline-content">
-                    Threads 貼文再次迎來一波流量關注。
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">8月16日</div>
-                <div class="timeline-content">
-                    伺服器成員人數突破 2000 人！ 🎉
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">9月10日</div>
-                <div class="timeline-content">
-                    伺服器成員人數突破 3000 人！ 🎉
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">9月13日</div>
-                <div class="timeline-content">
-                    建立專屬社群宣傳網站！ ✨
-                </div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                <button class="nav-btn" onclick="switchPage('main')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
+                <select class="color-select" onchange="changeBgColor(this.value)">
+                    <option value="#ffffff" selected>🎨 白</option>
+                    <option value="#64748b">🎨 灰</option>
+                    <option value="#0f111a">🎨 黑</option>
+                    <option value="#f2d6b3">🎨 琥珀</option>
+                </select>
+                <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav" style="white-space: nowrap;">加入</a>
+                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav" style="white-space: nowrap;">連結</button>
             </div>
         </div>
-    </div>
 
-    <div id="to-bot" class="section-anchor"></div>
-
-    <div class="container" id="bot">
-        <div class="dashboard-header">
-            <h2>御用機器人</h2>
-        </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化小管家，帶來滿滿陪伴與樂趣</p>
-
-        <div class="bot-grid">
-            <div class="bot-feature-card">
-                <h3>📅 打卡與個人名片</h3>
-                <p>追蹤個人發言與語音經驗值，連續打卡 30 天可解鎖活躍身分組。</p>
-                <span class="bot-cmd-tag">!打卡 / !profile</span>
+        <div class="container" style="margin-top: 40px;">
+            <div class="dashboard-header">
+                <h2>新頁面：詳細說明與介紹</h2>
             </div>
-            <div class="bot-feature-card">
-                <h3>⚔️ 趣味 PK 決鬥</h3>
-                <p>與群友進行搞笑回合制卡牌對決，記錄累積勝率與勝敗戰績。</p>
-                <span class="bot-cmd-tag">!PK @成員</span>
+            <p class="subtitle">這裡展示更多關於伺服器的深度資訊、活動花絮與說明。</p>
+            <div style="text-align: left; line-height: 1.8; color: var(--text-main);">
+                <p style="margin-bottom: 15px;">感謝你點擊進入新頁面！本伺服器致力於為所有喜愛安靜、舒適交流的「i人」打造一個完全無壓力的避風港。</p>
+                <p style="margin-bottom: 15px;">在這裡，你可以參與定期舉辦的線上遊戲同樂會、語音聊天馬拉松，或是單純在深夜聽著 Lofi 頻道放鬆身心。</p>
+                <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 20px;">返回首頁</button>
             </div>
-            <div class="bot-feature-card">
-                <h3>🎴 歐皇體質抽卡</h3>
-                <p>挑戰 10 種稀有度卡牌，幸運抽中最高階 SEC 可解鎖尊爵身分組！</p>
-                <span class="bot-cmd-tag">!抽卡</span>
-            </div>
-            <div class="bot-feature-card">
-                <h3>🎮 娛樂互動樂園</h3>
-                <p>包含 21點對決、猜拳、餵食/摸頭小寵物，以及管理員爆笑金句庫。</p>
-                <span class="bot-cmd-tag">!21 / !出來玩 / !管理員說</span>
-            </div>
-            <div class="bot-feature-card" style="grid-column: span 2;">
-                <h3>⏰ 溫馨定時廣播與倒數提醒</h3>
-                <p>每日凌晨 02:00 晚安提醒、早上 09:00 早安招呼，以及每週一 18:00 活躍排行榜自動結算！還能幫你設定個人專屬倒數提醒。</p>
-                <span class="bot-cmd-tag">!提醒 10m 記得喝水</span>
-            </div>
-        </div>
-    </div>
-
-    <div id="to-team" class="section-anchor"></div>
-
-    <div class="container" id="team">
-        <div class="dashboard-header">
-            <h2>🛡️ 管理團隊</h2>
-        </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">守護這個溫馨小天地的幕后功臣們</p>
-        
-        <div class="team-grid">
-            <div class="team-card">
-                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548405837997940886/avatar.png?ex=6aa6f0cf&is=6aa59f4f&hm=f2bac829c31a49c8481b48c4efd648994ef337f0cb39a2d47f4a07788caf8e25&" alt="吉" class="team-avatar">
-                <div class="team-info">
-                    <span class="team-role">群主</span>
-                    <span class="team-name">吉</span>
-                    <span class="team-desc">AI很好用。</span>
-                </div>
-            </div>
-            <div class="team-card">
-                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406409979236402/avatar.png?ex=6aa6f158&is=6aa59fd8&hm=860d46b6b2d92e7f60b12569fbafb80b24afd6093cb32033e8a1ef8ccdc00eab&" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
-                <div class="team-info">
-                    <span class="team-role">管理員</span>
-                    <span class="team-name">ᴗ̈ᴗ̈ᴗ̈魚板。</span>
-                    <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051276333086/BackgroundEraser_20260913_131715399.png?ex=6aa78428&is=6aa632a8&hm=35b7435ae9d74a807660fba04c042fe22f51f0c046375c4f65db56d2233566bc&" alt="簽名檔" class="team-desc-img"></span>
-                </div>
-            </div>
-            <div class="team-card">
-                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406786891980950/avatar.png?ex=6aa6f1b2&is=6aa5a032&hm=af5f6c514521ce637252fa7071ff2bded5983103b1a29569552df1bda3d7f1ca&" alt="oboe蜥蜴" class="team-avatar">
-                <div class="team-info">
-                    <span class="team-role">管理員</span>
-                    <span class="team-name">oboe蜥蜴</span>
-                    <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051590914158/BackgroundEraser_20260913_131911795.png?ex=6aa78428&is=6aa632a8&hm=b2778db47fa02dda94c60f7376bc839f409f99136be2238baa1ca894ccfb8461&" alt="簽名檔" class="team-desc-img"></span>
-                </div>
-            </div>
-            <div class="team-card">
-                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407027548553296/avatar.png?ex=6aa6f1eb&is=6aa5a06b&hm=fb0560e4867b49f3c86d0d90565add16dd9b7900ab058d1a958aa2ef3831f013&" alt="禾" class="team-avatar">
-                <div class="team-info">
-                    <span class="team-role">管理員</span>
-                    <span class="team-name">禾</span>
-                    <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548573654995046441/Screenshot_20260913_134035_Discord.png?ex=6aa78d1a&is=6aa63b9a&hm=0a8b6f4ac476c995a4e7dc2a325d3bae58f83518afa8f08300159a3f143546bd&" alt="簽名檔" class="team-desc-img"></span>
-                </div>
-            </div>
-            <div class="team-card">
-                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407208209944657/avatar.png?ex=6aa6f216&is=6aa5a096&hm=2eb7f07714c44e069dab13043cdc3866e2f8469285f5eb623c1256c484bcf067&" alt="muly沐漓" class="team-avatar">
-                <div class="team-info">
-                    <span class="team-role">管理員</span>
-                    <span class="team-name">muly沐漓</span>
-                    <span class="team-desc">這個人還沒有留下痕跡</span>
-                </div>
-            </div>
-            <div class="team-card">
-                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407570849472583/avatar.png?ex=6aa6f26c&is=6aa5a0ec&hm=9e7c2ff10d73b879971bc173e248b53b344b827d74f25af7b747dd30af265fb2&" alt="辰" class="team-avatar">
-                <div class="team-info">
-                    <span class="team-role">管理員</span>
-                    <span class="team-name">辰</span>
-                    <span class="team-desc">這個人還沒有留下痕跡</span>
-                </div>
-            </div>
-            <div class="team-card">
-                <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407700495405196/avatar.png?ex=6aa6f28b&is=6aa5a10b&hm=d1b6ec6094f30bd2bb85dd1f91535db18945a36dbeaba3cabd7846751531e79a&" alt="球" class="team-avatar">
-                <div class="team-info">
-                    <span class="team-role">管理員</span>
-                    <span class="team-name">球</span>
-                    <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564050940661810/BackgroundEraser_20260913_131639376.png?ex=6aa78428&is=6aa632a8&hm=5a50c0858751b32ed4c79f555c1fc440c1eb34c2baf8589f7dd633f97881767c&" alt="簽名檔" class="team-desc-img"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
-        <div style="display: flex; gap: 15px; margin-top: 25px;">
-            <a href="#" onclick="openModal(event)" class="btn-join-main" style="flex: 1; text-align: center;">加入伺服器 🚀</a>
-            <button class="btn-join-main" style="flex: 1; background-color: #94a3b8; cursor: pointer; border: none;" onclick="handleDecline()">不要</button>
         </div>
     </div>
 
@@ -1372,13 +1371,27 @@
             document.body.classList.remove('dark-mode', 'gray-mode');
 
             if (color === '#0f111a') {
-                document.documentElement.style.setProperty('--gradient-blue', '#9fc1ff');
+                document.documentElement.style.setProperty('--gradient-blue', '#7d9acd');
                 document.body.classList.add('dark-mode');
             } else if (color === '#64748b') {
                 document.documentElement.style.setProperty('--gradient-blue', '#b4f1f5');
                 document.body.classList.add('gray-mode');
             } else {
                 document.documentElement.style.setProperty('--gradient-blue', '#b4f1f5');
+            }
+        }
+
+        function switchPage(page) {
+            const mainView = document.getElementById('mainPageView');
+            const subView = document.getElementById('subPageView');
+            if (page === 'sub') {
+                mainView.classList.remove('active');
+                subView.classList.add('active');
+                window.scrollTo(0, 0);
+            } else {
+                subView.classList.remove('active');
+                mainView.classList.add('active');
+                window.scrollTo(0, 0);
             }
         }
 
