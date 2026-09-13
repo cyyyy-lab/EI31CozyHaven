@@ -895,7 +895,7 @@
 
     <!-- 新頁面導覽列 -->
     <nav class="navbar" id="subNavbar" style="display: none;">
-        <div class="nav-row-1">
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
             <div class="nav-left">
                 <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
                 <div class="nav-name-group">
@@ -903,8 +903,6 @@
                     <span class="nav-subtitle">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
                 </div>
             </div>
-        </div>
-        <div class="nav-row-2" style="justify-content: center;">
             <div class="nav-tools-group">
                 <button class="nav-btn" onclick="switchPage('main')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
                 <select class="color-select" onchange="changeBgColor(this.value)">
@@ -1091,6 +1089,7 @@
             </div>
         </div>
 
+        <!-- 起源故事 (調整後順序) -->
         <div id="to-story" class="section-anchor"></div>
 
         <div class="container" id="story">
@@ -1103,6 +1102,10 @@
                     故事始於5月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的前來。
                 </p>
                 
+                <p style="margin-top: 12px; margin-bottom: 12px;">
+                    為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
+                </p>
+
                 <a href="https://www.threads.com/share/BAVGu1Ib5B/" target="_blank" class="threads-link-card">
                     <div class="threads-icon">📱</div>
                     <div class="threads-info">
@@ -1110,10 +1113,6 @@
                         <div class="threads-url">https://www.threads.com/share/BAVGu1Ib5B/</div>
                     </div>
                 </a>
-
-                <p style="margin-top: 12px;">
-                    為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
-                </p>
             </div>
         </div>
 
@@ -1132,7 +1131,7 @@
                     <li><strong>24小時音樂陪伴：</strong>隨時點歌或掛網聽歌的放鬆角落。</li>
                     <li><strong>專屬互動小幫手：</strong>獨家機器人提供抽卡、打卡、PK等多樣化趣味功能。</li>
                 </ul>
-                <button class="btn-join-main" onclick="switchPage('sub')">進入新頁面瀏覽詳細資訊</button>
+                <button class="btn-join-main" onclick="switchPage('sub')">詳細資訊</button>
             </div>
         </div>
 
@@ -1312,13 +1311,13 @@
             </div>
         </div>
 
-        <!-- 新增：「如果你想支持我們的話」卡片 -->
+        <!-- 點贊支持卡片 -->
         <div class="container">
             <div class="dashboard-header">
                 <h2>如果你想支持我們的話</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">你的每一次支持，都是我們繼續維護與經營社群的最大動力！</p>
-            <a href="#" onclick="openModal(event)" class="btn-join-main">給我們點個贊吧！</a>
+            <a href="#" onclick="handleLike(event)" class="btn-join-main">給我們點個贊吧！👍 (<span id="likeCount">0</span>)</a>
         </div>
     </div>
 
@@ -1331,7 +1330,6 @@
             <p class="subtitle" style="font-size: 0.85rem; margin-bottom: 10px;">這裡展示更多關於伺服器的資訊與說明。</p>
             <div style="text-align: left; line-height: 1.8; color: var(--text-main);">
                 <p style="margin-bottom: 15px;">感謝你點擊進入頁面！本伺服器致力於為所有喜愛安靜、舒適交流的「i人」打造一個完全無壓力的避風港。</p>
-                <p style="margin-bottom: 15px;">在這裡，你可以參與定期舉辦的線上遊戲同樂會、語音聊天馬拉松，或是單純在深夜聽著 Lofi 頻道放鬆身心。</p>
                 <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 20px;">返回按鈕</button>
             </div>
         </div>
@@ -1533,6 +1531,20 @@
             }, 1500);
         }
 
+        function handleLike(event) {
+            event.preventDefault();
+            let likes = parseInt(localStorage.getItem('server_likes') || '0') + 1;
+            localStorage.setItem('server_likes', likes);
+            document.getElementById('likeCount').textContent = likes;
+
+            const toast = document.getElementById('customToast');
+            toast.textContent = "感謝你的點贊！❤️ (點贊次數: " + likes + ")";
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 1500);
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             let visits = localStorage.getItem('page_visits');
             if (!visits) {
@@ -1545,6 +1557,12 @@
             const visitCountElem = document.getElementById('visitCount');
             if (visitCountElem) {
                 visitCountElem.textContent = `👁️ 本頁累積造訪：${visits}`;
+            }
+
+            let likes = localStorage.getItem('server_likes') || '0';
+            const likeCountElem = document.getElementById('likeCount');
+            if (likeCountElem) {
+                likeCountElem.textContent = likes;
             }
         });
     </script>
