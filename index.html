@@ -1412,7 +1412,7 @@
                     <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548672064641040484/Screenshot_20260913_190635_Discord.jpg?ex=6aa7e8c1&is=6aa69741&hm=bf0fc2740624720752ccfb3dc7887690ba5f506eb6ba9eb38b9e66a58fe52134&" alt="表符 2" class="emoji-img">
                 </div>
                 <div class="emoji-card">
-                    <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548672065052352564/Screenshot_20260913_190640_Discord.jpg?ex=6aa7e8c1&is=6aa69741&hm=0d4b827146fee0689f6665a6d9f45344a23b6a3e77639ba48c383990c&" alt="表符 3" class="emoji-img">
+                    <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548682550866870404/Screenshot_20260913_190640_Discord.jpg?ex=6aa7f285&is=6aa6a105&hm=df36450fc3b9a123860eedb3ee3b6f5c5b3eba2f583ee34f411df1da3f1206f4&" alt="表符 3" class="emoji-img">
                 </div>
                 <div class="emoji-card">
                     <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548672065576378529/Screenshot_20260913_190644_Discord.jpg?ex=6aa7e8c1&is=6aa69741&hm=9bb87256ecb4423dfb95bb4e2e851084ebd6d3ff7363c569837963455c241eb1&" alt="表符 4" class="emoji-img">
@@ -1437,9 +1437,6 @@
         <div>© 2026 可能是i人的伺服器. All Rights Reserved.</div>
         <div>
             追蹤我們的 Threads：<a href="https://www.threads.com/@qlz__zlp.314" target="_blank">@qlz__zlp.314</a>
-        </div>
-        <div id="visitCount" style="font-size: 0.75rem; margin-top: 4px; opacity: 0.8;">
-            👁️ 本頁累積造訪：載入中...
         </div>
     </footer>
 
@@ -1658,20 +1655,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             // 初始化動態滾動效果
             initScrollReveal();
-
-            // 存取次數持久化
-            let visits = localStorage.getItem('page_visits');
-            if (!visits) {
-                visits = 1;
-            } else {
-                visits = parseInt(visits) + 1;
-            }
-            localStorage.setItem('page_visits', visits);
-            
-            const visitCountElem = document.getElementById('visitCount');
-            if (visitCountElem) {
-                visitCountElem.textContent = `👁️ 本頁累積造訪：${visits}`;
-            }
         });
     </script>
 </body>
