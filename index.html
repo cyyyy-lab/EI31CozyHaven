@@ -936,7 +936,7 @@
                 </div>
             </div>
             <div class="nav-tools-group">
-                <button class="nav-btn" onclick="switchPage('main')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
+                <button class="nav-btn" onclick="switchPage('main', 'whats-inside')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
                 <select class="color-select" onchange="changeBgColor(this.value)">
                     <option value="#ffffff" selected>🎨 白</option>
                     <option value="#64748b">🎨 灰</option>
@@ -1358,8 +1358,8 @@
             <p class="subtitle" style="font-size: 0.85rem; margin-bottom: 10px;">這裡展示更多關於伺服器的資訊與說明。</p>
             <div style="text-align: left; line-height: 1.8; color: var(--text-main);">
                 <p style="margin-bottom: 15px;">感謝你點擊進入頁面！本伺服器致力於為所有喜愛安靜、舒適交流的「i人」打造一個完全無壓力的避風港。</p>
+                <button class="btn-join-main" onclick="switchPage('main', 'whats-inside')" style="margin-top: 20px;">返回主頁</button>
             </div>
-            <button class="btn-join-main" onclick="switchPage('main')">返回主頁</button>
         </div>
 
         <!-- 頻道板塊卡片 -->
@@ -1556,7 +1556,7 @@
             }
         }
 
-        function switchPage(page) {
+        function switchPage(page, targetId = null) {
             const mainView = document.getElementById('mainPageView');
             const subView = document.getElementById('subPageView');
             const mainNav = document.getElementById('mainNavbar');
@@ -1573,7 +1573,16 @@
                 mainView.classList.add('active');
                 subNav.style.display = 'none';
                 mainNav.style.display = 'flex';
-                window.scrollTo(0, 0);
+                if (targetId) {
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        window.scrollTo(0, 0);
+                    }
+                } else {
+                    window.scrollTo(0, 0);
+                }
             }
             // 頁面切換後重新觸發滾動動畫檢查
             setTimeout(initScrollReveal, 100);
