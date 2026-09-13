@@ -515,6 +515,49 @@
             border-radius: 10px;
         }
 
+        /* 機器人專區卡片樣式 */
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .bot-feature-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 14px;
+        }
+
+        .bot-feature-card h3 {
+            font-size: 0.98rem;
+            color: var(--accent-color);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bot-feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.45;
+        }
+
+        .bot-cmd-tag {
+            display: inline-block;
+            background: rgba(91, 115, 199, 0.12);
+            color: var(--accent-color);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 6px;
+            font-family: monospace;
+        }
+
         /* 留言板樣式 */
         .guestbook-form {
             display: flex;
@@ -829,7 +872,7 @@
             body {
                 padding-top: 145px;
             }
-            .features, .dash-grid, .team-grid {
+            .features, .dash-grid, .team-grid, .bot-grid {
                 grid-template-columns: 1fr;
             }
             .guestbook-floating-btn {
@@ -861,6 +904,7 @@
                 <a href="#to-faq" class="nav-btn">常見問題</a>
                 <a href="#to-story" class="nav-btn">起源故事</a>
                 <a href="#to-milestones" class="nav-btn">里程碑</a>
+                <a href="#to-bot" class="nav-btn">專屬機器人</a>
                 <a href="#to-team" class="nav-btn">管理團隊</a>
             </div>
             <div class="nav-tools-group">
@@ -1139,7 +1183,46 @@
         </div>
     </div>
 
-    <!-- 里程碑與管理團隊之間的錨點 -->
+    <!-- 里程碑與專屬機器人之間的錨點 -->
+    <div id="to-bot" class="section-anchor"></div>
+
+    <!-- 專屬機器人介紹卡片 (Custom Bot Showcase) -->
+    <div class="container" id="bot">
+        <div class="dashboard-header">
+            <h2>🐾 專屬機器人｜老大小寵物</h2>
+        </div>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化 AI 大管家，帶來滿滿陪伴與樂趣</p>
+
+        <div class="bot-grid">
+            <div class="bot-feature-card">
+                <h3>📅 打卡與個人名片</h3>
+                <p>追蹤個人發言與語音經驗值，連續打卡 30 天可解鎖活躍身分組。</p>
+                <span class="bot-cmd-tag">!打卡 / !profile</span>
+            </div>
+            <div class="bot-feature-card">
+                <h3>⚔️ 趣味 PK 決鬥</h3>
+                <p>與群友進行搞笑回合制卡牌對決，記錄累積勝率與勝敗戰績。</p>
+                <span class="bot-cmd-tag">!PK @成員</span>
+            </div>
+            <div class="bot-feature-card">
+                <h3>🎴 歐皇體質抽卡</h3>
+                <p>挑戰 10 種稀有度卡牌，幸運抽中最高階 SEC 可解鎖尊爵身分組！</p>
+                <span class="bot-cmd-tag">!抽卡</span>
+            </div>
+            <div class="bot-feature-card">
+                <h3>🎮 娛樂互動樂園</h3>
+                <p>包含 21點對決、猜拳、餵食/摸頭小寵物，以及管理員爆笑金句庫。</p>
+                <span class="bot-cmd-tag">!21 / !出來玩 / !管理員說</span>
+            </div>
+            <div class="bot-feature-card" style="grid-column: span 2;">
+                <h3>⏰ 溫馨定時廣播與倒數提醒</h3>
+                <p>每日凌晨 02:00 晚安提醒、早上 09:00 早安招呼，以及每週一 18:00 活躍排行榜自動結算！還能幫你設定個人專屬倒數提醒。</p>
+                <span class="bot-cmd-tag">!提醒 10m 記得喝水</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 專屬機器人與管理團隊之間的錨點 -->
     <div id="to-team" class="section-anchor"></div>
 
     <!-- 管理團隊卡片 -->
