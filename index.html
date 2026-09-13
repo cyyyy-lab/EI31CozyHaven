@@ -45,7 +45,7 @@
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
-            padding-top: 90px;
+            padding-top: 130px;
             padding-bottom: 50px;
             display: flex;
             flex-direction: column;
@@ -57,53 +57,76 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 70px;
             background: var(--nav-bg);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
+            flex-direction: column;
+            padding: 10px 20px;
+            z-index: 1000;
+            gap: 8px;
+        }
+
+        .nav-row-1 {
+            display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-            z-index: 1000;
+            width: 100%;
         }
 
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .nav-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
             object-fit: cover;
         }
 
-        .nav-title-group {
+        .nav-name-group {
             display: flex;
-            flex-direction: column;
+            align-items: baseline;
+            gap: 8px;
         }
 
         .nav-title {
             font-weight: bold;
             font-size: 0.95rem;
             color: var(--text-main);
-            line-height: 1.2;
         }
 
         .nav-subtitle {
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            font-weight: 600;
         }
 
-        .nav-right {
+        .nav-row-2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            gap: 4px;
+        }
+
+        .nav-links-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: nowrap;
+        }
+
+        .nav-tools-group {
             display: flex;
             align-items: center;
             gap: 6px;
-            flex-wrap: wrap;
+            flex-shrink: 0;
         }
 
         .nav-btn {
@@ -111,7 +134,7 @@
             color: var(--text-main);
             font-size: 0.85rem;
             font-weight: 500;
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 6px;
             transition: background 0.2s;
             cursor: pointer;
@@ -127,8 +150,8 @@
         .btn-join-nav {
             background-color: var(--accent-color);
             color: #ffffff !important;
-            padding: 8px 14px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-weight: bold;
         }
 
@@ -140,8 +163,8 @@
             background-color: var(--dash-item-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
         }
@@ -155,12 +178,12 @@
         }
 
         .color-select {
-            padding: 6px 8px;
+            padding: 5px 6px;
             border-radius: 6px;
             border: 1px solid var(--border-color);
             background: var(--card-bg);
             color: var(--text-main);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             outline: none;
         }
@@ -591,6 +614,12 @@
             line-height: 1.3;
         }
 
+        .team-desc-img {
+            height: 1.2em;
+            vertical-align: middle;
+            object-fit: contain;
+        }
+
         /* 彈跳視窗 (Modal) 樣式 */
         .modal-overlay {
             position: fixed;
@@ -762,8 +791,8 @@
         }
 
         @media (max-width: 600px) {
-            .nav-title-group {
-                display: none;
+            body {
+                padding-top: 145px;
             }
             .features, .dash-grid, .team-grid {
                 grid-template-columns: 1fr;
@@ -784,30 +813,38 @@
 <body>
 
     <nav class="navbar">
-        <div class="nav-left">
-            <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
-            <div class="nav-title-group">
-                <span class="nav-title">可能是i人的伺服器</span>
-                <span class="nav-subtitle">EI Cozy Haven</span>
+        <!-- 第一行：頭像、中文名、英文名 -->
+        <div class="nav-row-1">
+            <div class="nav-left">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
+                <div class="nav-name-group">
+                    <span class="nav-title">可能是i人的伺服器</span>
+                    <span class="nav-subtitle">EI Cozy Haven</span>
+                </div>
             </div>
         </div>
-        <div class="nav-right">
-            <a href="#home" class="nav-btn">首頁</a>
-            <a href="#dashboard" class="nav-btn">儀表板</a>
-            <a href="#rules" class="nav-btn">規則</a>
-            <a href="#faq" class="nav-btn">常見問題</a>
-            <a href="#guestbook" class="nav-btn">訪客簽到</a>
-            <a href="#story" class="nav-btn">起源故事</a>
-            <a href="#team" class="nav-btn">管理團隊</a>
-            <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
-                <option value="#ffffff" selected>🎨 白</option>
-                <option value="#64748b">🎨 灰</option>
-                <option value="#0f111a">🎨 黑</option>
-                <option value="#bcf5dc">🎨 淺綠</option>
-                <option value="#f2d6b3">🎨 琥珀</option>
-            </select>
-            <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
-            <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">📋 複製邀請連結</button>
+        <!-- 第二行：按鈕與工具 -->
+        <div class="nav-row-2">
+            <div class="nav-links-group">
+                <a href="#home" class="nav-btn">首頁</a>
+                <a href="#dashboard" class="nav-btn">儀表板</a>
+                <a href="#rules" class="nav-btn">規則</a>
+                <a href="#faq" class="nav-btn">常見問題</a>
+                <a href="#guestbook" class="nav-btn">訪客留言</a>
+                <a href="#story" class="nav-btn">起源故事</a>
+                <a href="#team" class="nav-btn">管理團隊</a>
+            </div>
+            <div class="nav-tools-group">
+                <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
+                    <option value="#ffffff" selected>🎨 白</option>
+                    <option value="#64748b">🎨 灰</option>
+                    <option value="#0f111a">🎨 黑</option>
+                    <option value="#bcf5dc">🎨 淺綠</option>
+                    <option value="#f2d6b3">🎨 琥珀</option>
+                </select>
+                <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
+                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">📋 複製連結</button>
+            </div>
         </div>
     </nav>
 
@@ -854,7 +891,7 @@
     <div class="container" id="dashboard">
         <div class="dashboard-header">
             <span class="status-dot"></span>
-            <h2>伺服器數據儀表板</h2>
+            <h2>數據儀表板</h2>
         </div>
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
 
@@ -979,12 +1016,12 @@
 
     <div class="container" id="guestbook">
         <div class="dashboard-header">
-            <h2>💬 訪客簽到與打氣留言板</h2>
+            <h2>💬 訪客留言板</h2>
         </div>
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">留下你的簽到或打氣，跟大家打個招呼吧！</p>
         <form class="guestbook-form" id="guestbookForm" onsubmit="addMessage(event)">
             <input type="text" id="senderName" class="guestbook-input" placeholder="你的暱稱 / 稱呼" required maxlength="20">
-            <textarea id="senderMessage" class="guestbook-textarea" placeholder="寫下你的簽到或打氣留言..." required maxlength="100"></textarea>
+            <textarea id="senderMessage" class="guestbook-textarea" placeholder="寫下留言" required maxlength="100"></textarea>
             <button type="submit" class="guestbook-btn">送出留言</button>
         </form>
         <div class="message-list" id="messageList">
@@ -1003,7 +1040,7 @@
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">屬於這個小天地的誕生與溫暖歷程</p>
         <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
             <p style="margin-bottom: 12px;">
-                故事始於 5 月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i 人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的熱烈共鳴與支持。
+                故事始於5月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的前來。
             </p>
             
             <a href="https://www.threads.com/share/BAVGu1Ib5B/" target="_blank" class="threads-link-card">
@@ -1043,7 +1080,7 @@
                 <div class="team-info">
                     <span class="team-role">管理員</span>
                     <span class="team-name">ᴗ̈ᴗ̈ᴗ̈魚板。</span>
-                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                    <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051276333086/BackgroundEraser_20260913_131715399.png?ex=6aa78428&is=6aa632a8&hm=35b7435ae9d74a807660fba04c042fe22f51f0c046375c4f65db56d2233566bc&" alt="簽名檔" class="team-desc-img"></span>
                 </div>
             </div>
             <!-- oboe蜥蜴 -->
@@ -1052,7 +1089,7 @@
                 <div class="team-info">
                     <span class="team-role">管理員</span>
                     <span class="team-name">oboe蜥蜴</span>
-                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                    <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051590914158/BackgroundEraser_20260913_131911795.png?ex=6aa78428&is=6aa632a8&hm=b2778db47fa02dda94c60f7376bc839f409f99136be2238baa1ca894ccfb8461&" alt="簽名檔" class="team-desc-img"></span>
                 </div>
             </div>
             <!-- 禾 -->
@@ -1088,7 +1125,7 @@
                 <div class="team-info">
                     <span class="team-role">管理員</span>
                     <span class="team-name">球</span>
-                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                    <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564050940661810/BackgroundEraser_20260913_131639376.png?ex=6aa78428&is=6aa632a8&hm=5a50c0858751b32ed4c79f555c1fc440c1eb34c2baf8589f7dd633f97881767c&" alt="簽名檔" class="team-desc-img"></span>
                 </div>
             </div>
         </div>
