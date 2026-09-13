@@ -553,20 +553,25 @@
             font-family: monospace;
         }
 
+        /* 調整表符網格為 4 欄，縮小顯示大小 */
         .emoji-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
             margin-top: 15px;
+            justify-items: center;
         }
 
         .emoji-card-img {
+            max-width: 100px;
+            max-height: 100px;
             width: 100%;
-            border-radius: 10px;
+            height: auto;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
             object-fit: cover;
             display: block;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
 
         .threads-link-card {
@@ -860,8 +865,11 @@
             body {
                 padding-top: 145px;
             }
-            .features, .dash-grid, .team-grid, .bot-grid, .emoji-grid {
+            .features, .dash-grid, .team-grid, .bot-grid {
                 grid-template-columns: 1fr;
+            }
+            .emoji-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             .guestbook-floating-btn {
                 bottom: 30px;
@@ -1105,7 +1113,7 @@
             </div>
         </div>
 
-        <!-- 伺服器裡有什麼？卡片 (已與起源調轉順序) -->
+        <!-- 伺服器裡有什麼？卡片 -->
         <div id="whats-inside" class="section-anchor"></div>
 
         <div class="container">
@@ -1124,7 +1132,7 @@
             </div>
         </div>
 
-        <!-- 起源故事 (已與裡面有調轉順序) -->
+        <!-- 起源故事 -->
         <div id="to-story" class="section-anchor"></div>
 
         <div class="container" id="story">
@@ -1339,6 +1347,7 @@
 
     <!-- 新頁面容器 -->
     <div id="subPageView" class="page-view">
+        <!-- 第一卡片（保留返回主頁按鈕） -->
         <div class="container" style="margin-top: 40px;">
             <div class="dashboard-header">
                 <h2>詳細說明與介紹</h2>
@@ -1346,11 +1355,11 @@
             <p class="subtitle" style="font-size: 0.85rem; margin-bottom: 10px;">這裡展示更多關於伺服器的資訊與說明。</p>
             <div style="text-align: left; line-height: 1.8; color: var(--text-main);">
                 <p style="margin-bottom: 15px;">感謝你點擊進入頁面！本伺服器致力於為所有喜愛安靜、舒適交流的「i人」打造一個完全無壓力的避風港。</p>
-                <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 20px;">返回按鈕</button>
+                <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 20px;">返回主頁</button>
             </div>
         </div>
 
-        <!-- 頻道板塊卡片 -->
+        <!-- 頻道板塊卡片（已移除返回按鈕） -->
         <div class="container">
             <div class="dashboard-header">
                 <h2>頻道板塊</h2>
@@ -1383,11 +1392,9 @@
                     <p>常設多個語音討論區、練歌房、小包廂以及24小時 Lofi 陪伴掛機房，一個人上線也絕不孤單。</p>
                 </div>
             </div>
-
-            <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 25px;">返回主頁</button>
         </div>
 
-        <!-- 新增：熱門表符卡片 -->
+        <!-- 熱門表符卡片（已移除返回按鈕 & 圖片已縮小） -->
         <div class="container">
             <div class="dashboard-header">
                 <h2>熱門表符</h2>
@@ -1404,8 +1411,6 @@
                 <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652525811540049/Screenshot_20260913_190700_Discord.jpg?ex=6aa7d68e&is=6aa6850e&hm=c1a05dea7a61b29c67cbfe216c790ea5561c33b3ec19a8f543c54c178b2a158a&" alt="熱門表符 7" class="emoji-card-img">
                 <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652526163730532/Screenshot_20260913_190624_Discord.png?ex=6aa7d68e&is=6aa6850e&hm=264956f0a288f89f56193562c36a82419ac6b2e057df65f61e2e4f7d69b17125&" alt="熱門表符 8" class="emoji-card-img">
             </div>
-
-            <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 25px;">返回主頁</button>
         </div>
     </div>
 
