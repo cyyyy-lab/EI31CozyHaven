@@ -761,124 +761,6 @@
             line-height: 1.5;
         }
 
-        /* 3. 訪客留言板 CSS 與輸入控制 */
-        .guestbook-input, .guestbook-textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: var(--dash-item-bg);
-            color: var(--text-main);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            outline: none;
-        }
-
-        .guestbook-textarea {
-            resize: vertical;
-            min-height: 70px;
-        }
-
-        .guestbook-btn {
-            width: 100%;
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .guestbook-btn:hover {
-            background-color: var(--accent-hover);
-        }
-
-        .message-list {
-            max-height: 220px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-right: 4px;
-        }
-
-        .message-card {
-            background: var(--dash-item-bg);
-            border: 1px solid var(--border-color);
-            padding: 10px 12px;
-            border-radius: 8px;
-            text-align: left;
-            position: relative;
-        }
-
-        .message-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .message-user {
-            font-weight: bold;
-            font-size: 0.85rem;
-            color: var(--accent-color);
-        }
-
-        .message-time {
-            font-size: 0.7rem;
-            color: var(--text-sub);
-        }
-
-        .message-text {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            word-break: break-word;
-            line-height: 1.4;
-        }
-
-        .message-del-btn {
-            background: none;
-            border: none;
-            color: var(--text-sub);
-            font-size: 0.75rem;
-            cursor: pointer;
-            margin-left: 6px;
-            opacity: 0.6;
-        }
-
-        .message-del-btn:hover {
-            color: #ef4444;
-            opacity: 1;
-        }
-
-        .guestbook-floating-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background-color: var(--card-bg);
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            cursor: pointer;
-            z-index: 999;
-            transition: transform 0.2s, background-color 0.2s, color 0.2s;
-        }
-
-        .guestbook-floating-btn:hover {
-            transform: scale(1.1);
-            background-color: var(--accent-color);
-            color: white;
-        }
-
         .footer {
             margin-top: 20px;
             text-align: center;
@@ -997,10 +879,6 @@
             }
             .emoji-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            .guestbook-floating-btn {
-                bottom: 30px;
-                left: 20px;
             }
         }
     </style>
@@ -1465,15 +1343,6 @@
             </div>
         </div>
 
-        <!-- 點贊支持卡片 -->
-        <div class="container scroll-reveal">
-            <div class="dashboard-header">
-                <h2>如果你想支持我們的話</h2>
-            </div>
-            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">你的每一次支持，都是我們繼續維護與經營社群的最大動力！</p>
-            <a href="#" onclick="handleLike(event)" class="btn-join-main">給我們點個贊吧！👍 (<span id="likeCount">0</span>)</a>
-        </div>
-
         <!-- 主頁面最底部回到頂部按鈕 -->
         <div class="container scroll-reveal" style="padding: 20px 30px;">
             <a href="#home" class="btn-join-main" style="text-align: center;">回到頂部</a>
@@ -1543,7 +1412,7 @@
                     <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548672064641040484/Screenshot_20260913_190635_Discord.jpg?ex=6aa7e8c1&is=6aa69741&hm=bf0fc2740624720752ccfb3dc7887690ba5f506eb6ba9eb38b9e66a58fe52134&" alt="表符 2" class="emoji-img">
                 </div>
                 <div class="emoji-card">
-                    <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548672065052352564/Screenshot_20260913_190640_Discord.jpg?ex=6aa7e8c1&is=6aa69741&hm=0d4b827146fcb2846fee0689f6665a6d9f45344a23b6a3e77639ba48c383990c&" alt="表符 3" class="emoji-img">
+                    <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548672065052352564/Screenshot_20260913_190640_Discord.jpg?ex=6aa7e8c1&is=6aa69741&hm=0d4b827146fee0689f6665a6d9f45344a23b6a3e77639ba48c383990c&" alt="表符 3" class="emoji-img">
                 </div>
                 <div class="emoji-card">
                     <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548672065576378529/Screenshot_20260913_190644_Discord.jpg?ex=6aa7e8c1&is=6aa69741&hm=9bb87256ecb4423dfb95bb4e2e851084ebd6d3ff7363c569837963455c241eb1&" alt="表符 4" class="emoji-img">
@@ -1573,26 +1442,6 @@
             👁️ 本頁累積造訪：載入中...
         </div>
     </footer>
-
-    <div class="guestbook-floating-btn" onclick="openGuestbookModal()" title="訪客留言板">💬</div>
-
-    <div class="modal-overlay" id="guestbookModal">
-        <div class="modal-box" style="max-width: 450px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="margin: 0;">💬 訪客留言板</h3>
-                <button onclick="closeGuestbookModal()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main);">✕</button>
-            </div>
-            <p style="text-align: left; font-size: 0.9rem; color: var(--text-sub); margin-bottom: 15px;">留下你的簽到或打氣，跟大家打個招呼吧！</p>
-            <form class="guestbook-form" id="guestbookForm" onsubmit="addMessage(event)">
-                <input type="text" id="senderName" class="guestbook-input" placeholder="你的暱稱 / 稱呼" required maxlength="20">
-                <textarea id="senderMessage" class="guestbook-textarea" placeholder="寫下留言" required maxlength="100"></textarea>
-                <button type="submit" class="guestbook-btn">送出留言</button>
-            </form>
-            <div class="message-list" id="messageList" style="margin-top: 15px;">
-                <!-- 留言將動態由 JS 持久化載入 -->
-            </div>
-        </div>
-    </div>
 
     <a href="#home" class="back-to-top" id="backToTopBtn" title="返回頂部">▲</a>
 
@@ -1692,87 +1541,6 @@
         }
 
         /* ----------------------------------------------------
-         * 3. 留言板資料持久化 (LocalStorage Guestbook)
-         * ---------------------------------------------------- */
-        const STORAGE_KEY = 'cozy_haven_guestbook';
-
-        function loadMessages() {
-            const listElem = document.getElementById('messageList');
-            const stored = localStorage.getItem(STORAGE_KEY);
-            let messages = [];
-
-            if (stored) {
-                try {
-                    messages = JSON.parse(stored);
-                } catch (e) {
-                    messages = [];
-                }
-            } else {
-                // 預設示範留言
-                messages = [
-                    { name: '小葵', text: '伺服器氣氛超棒，大家一起來玩鴨！✨', time: '2026-09-13' }
-                ];
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-            }
-
-            listElem.innerHTML = '';
-            messages.forEach((msg, index) => {
-                const card = document.createElement('div');
-                card.className = 'message-card';
-                card.innerHTML = `
-                    <div class="message-header">
-                        <span class="message-user">${escapeHtml(msg.name)}</span>
-                        <div>
-                            <span class="message-time">${msg.time || ''}</span>
-                            <button class="message-del-btn" onclick="deleteMessage(${index})" title="刪除留言">✕</button>
-                        </div>
-                    </div>
-                    <div class="message-text">${escapeHtml(msg.text)}</div>
-                `;
-                listElem.appendChild(card);
-            });
-        }
-
-        function addMessage(event) {
-            event.preventDefault();
-            const nameInput = document.getElementById('senderName');
-            const messageInput = document.getElementById('senderMessage');
-
-            const name = nameInput.value.trim();
-            const text = messageInput.value.trim();
-
-            if (name && text) {
-                const stored = localStorage.getItem(STORAGE_KEY);
-                let messages = stored ? JSON.parse(stored) : [];
-
-                const now = new Date();
-                const timeStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-                messages.unshift({ name, text, time: timeStr });
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-
-                messageInput.value = '';
-                loadMessages();
-            }
-        }
-
-        function deleteMessage(index) {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                let messages = JSON.parse(stored);
-                messages.splice(index, 1);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-                loadMessages();
-            }
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
-        }
-
-        /* ----------------------------------------------------
          * 原有介面邏輯與功能函數
          * ---------------------------------------------------- */
         function changeBgColor(color) {
@@ -1839,19 +1607,6 @@
             });
         }
 
-        const guestbookModal = document.getElementById('guestbookModal');
-        function openGuestbookModal() {
-            guestbookModal.classList.add('show');
-        }
-        function closeGuestbookModal() {
-            guestbookModal.classList.remove('show');
-        }
-        guestbookModal.addEventListener('click', (e) => {
-            if (e.target === guestbookModal) {
-                closeGuestbookModal();
-            }
-        });
-
         const backToTopBtn = document.getElementById('backToTopBtn');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
@@ -1897,20 +1652,6 @@
             }, 1500);
         }
 
-        function handleLike(event) {
-            event.preventDefault();
-            let likes = parseInt(localStorage.getItem('server_likes') || '0') + 1;
-            localStorage.setItem('server_likes', likes);
-            document.getElementById('likeCount').textContent = likes;
-
-            const toast = document.getElementById('customToast');
-            toast.textContent = "感謝你的點贊！❤️ (點贊次數: " + likes + ")";
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 1500);
-        }
-
         /* ----------------------------------------------------
          * 初始化載入
          * ---------------------------------------------------- */
@@ -1918,10 +1659,7 @@
             // 初始化動態滾動效果
             initScrollReveal();
 
-            // 載入持久化留言
-            loadMessages();
-
-            // 存取次數與點讚持久化
+            // 存取次數持久化
             let visits = localStorage.getItem('page_visits');
             if (!visits) {
                 visits = 1;
@@ -1933,12 +1671,6 @@
             const visitCountElem = document.getElementById('visitCount');
             if (visitCountElem) {
                 visitCountElem.textContent = `👁️ 本頁累積造訪：${visits}`;
-            }
-
-            let likes = localStorage.getItem('server_likes') || '0';
-            const likeCountElem = document.getElementById('likeCount');
-            if (likeCountElem) {
-                likeCountElem.textContent = likes;
             }
         });
     </script>
