@@ -56,6 +56,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+        }
+
+        /* 1. 雪花 Canvas 特效背景 */
+        #snowCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .section-anchor {
@@ -199,7 +211,6 @@
             outline: none;
         }
 
-        /* ----- 卡片樣式與 Hover 微互動動畫 ----- */
         .container {
             max-width: 680px;
             width: 90%;
@@ -208,47 +219,25 @@
             -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             text-align: center;
             border: 1px solid var(--border-color);
             margin-bottom: 30px;
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
 
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18), 0 0 15px rgba(91, 115, 199, 0.25);
-            border-color: rgba(91, 115, 199, 0.4);
-        }
-
-        .feature-item, .dash-card, .bot-feature-card, .team-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.2s;
-        }
-
-        .feature-item:hover, .dash-card:hover, .bot-feature-card:hover, .team-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-            border-color: var(--accent-color);
-        }
-
-        /* ----- 卡片進場動畫 (Animate on Scroll) ----- */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .scroll-animate {
+        /* 2. 滾動淡入與向上滑動樣式 */
+        .scroll-reveal {
             opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
 
-        .scroll-animate.animated {
-            animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        .scroll-reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .main-avatar {
@@ -327,7 +316,7 @@
             border-radius: 12px;
             font-size: 1.1rem;
             font-weight: bold;
-            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            transition: background 0.2s ease, transform 0.1s ease;
             cursor: pointer;
             border: none;
         }
@@ -335,7 +324,6 @@
         .btn-join-main:hover {
             background-color: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(91, 115, 199, 0.4);
         }
 
         .dashboard-header {
@@ -436,11 +424,7 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             overflow: hidden;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .faq-item:hover {
-            transform: translateY(-2px);
+            transition: background 0.2s;
         }
 
         .faq-question {
@@ -750,6 +734,98 @@
             line-height: 1.5;
         }
 
+        /* 3. 訪客留言板 CSS 與輸入控制 */
+        .guestbook-input, .guestbook-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--dash-item-bg);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        .guestbook-textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .guestbook-btn {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .guestbook-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .message-list {
+            max-height: 220px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 4px;
+        }
+
+        .message-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            text-align: left;
+            position: relative;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .message-user {
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--text-sub);
+        }
+
+        .message-text {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .message-del-btn {
+            background: none;
+            border: none;
+            color: var(--text-sub);
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-left: 6px;
+            opacity: 0.6;
+        }
+
+        .message-del-btn:hover {
+            color: #ef4444;
+            opacity: 1;
+        }
+
         .guestbook-floating-btn {
             position: fixed;
             bottom: 30px;
@@ -785,6 +861,8 @@
             flex-direction: column;
             gap: 6px;
             align-items: center;
+            position: relative;
+            z-index: 2;
         }
 
         .footer a {
@@ -899,6 +977,9 @@
 </head>
 <body>
 
+    <!-- 雪花動畫 Canvas -->
+    <canvas id="snowCanvas"></canvas>
+
     <!-- 主頁面導覽列 -->
     <nav class="navbar" id="mainNavbar">
         <div class="nav-row-1">
@@ -962,7 +1043,7 @@
 
     <!-- 主頁面容器 -->
     <div id="mainPageView" class="page-view active">
-        <div class="container scroll-animate" id="home">
+        <div class="container scroll-reveal" id="home">
             <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
             <br>
@@ -979,19 +1060,19 @@
             </p>
 
             <div class="features">
-                <div class="feature-item">
+                <div class="feature-item scroll-reveal">
                     <h3>💬 隨心交流</h3>
                     <p>想聊天就聊，不想說話也可以安靜潛水打卡。</p>
                 </div>
-                <div class="feature-item">
+                <div class="feature-item scroll-reveal">
                     <h3>🎮 組隊開場</h3>
                     <p>輕鬆開團找隊友，沒有壓力一起玩遊戲。</p>
                 </div>
-                <div class="feature-item">
+                <div class="feature-item scroll-reveal">
                     <h3>📻 24小時音樂</h3>
                     <p>常設 Lofi 音樂語音房，一個人掛機也不孤單。</p>
                 </div>
-                <div class="feature-item">
+                <div class="feature-item scroll-reveal">
                     <h3>🤖 各式機器人</h3>
                     <p>提供動態語音頻道與多種便利機器人互動，伺服器更設有專屬御用機器人！</p>
                 </div>
@@ -1004,22 +1085,22 @@
 
         <div id="to-dashboard" class="section-anchor"></div>
 
-        <div class="container scroll-animate" id="dashboard">
+        <div class="container scroll-reveal" id="dashboard">
             <div class="dashboard-header">
                 <h2>數據儀表板</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
 
             <div class="dash-grid">
-                <div class="dash-card">
+                <div class="dash-card scroll-reveal">
                     <div class="dash-title">📅 開服日期 📅</div>
                     <div class="dash-value">5月31日</div>
                 </div>
-                <div class="dash-card">
+                <div class="dash-card scroll-reveal">
                     <div class="dash-title">👥 總成員數 👥</div>
                     <div class="dash-value">3000+</div>
                 </div>
-                <div class="dash-card">
+                <div class="dash-card scroll-reveal">
                     <div class="dash-title">💬 總頻道數 💬</div>
                     <div class="dash-value">100+</div>
                 </div>
@@ -1028,7 +1109,7 @@
 
         <div id="to-rules" class="section-anchor"></div>
 
-        <div class="container scroll-animate" id="rules">
+        <div class="container scroll-reveal" id="rules">
             <div class="dashboard-header">
                 <h2>伺服器規範</h2>
             </div>
@@ -1089,14 +1170,14 @@
 
         <div id="to-faq" class="section-anchor"></div>
 
-        <div class="container scroll-animate" id="faq">
+        <div class="container scroll-reveal" id="faq">
             <div class="dashboard-header">
                 <h2>常見問題</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">點擊問題標題即可展開或收合解答</p>
             
             <div class="faq-list">
-                <div class="faq-item">
+                <div class="faq-item scroll-reveal">
                     <div class="faq-question" onclick="toggleFaq(this)">
                         <span>Q1. 為什麼我不能說話？</span>
                         <span class="faq-arrow">▼</span>
@@ -1106,7 +1187,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item scroll-reveal">
                     <div class="faq-question" onclick="toggleFaq(this)">
                         <span>Q2. 為什麼我看不到其他頻道？</span>
                         <span class="faq-arrow">▼</span>
@@ -1119,7 +1200,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item scroll-reveal">
                     <div class="faq-question" onclick="toggleFaq(this)">
                         <span>Q3. 遇到成員違規、騷擾或紛爭怎麼辦?</span>
                         <span class="faq-arrow">▼</span>
@@ -1132,10 +1213,10 @@
             </div>
         </div>
 
-        <!-- 起源故事 (調整後順序) -->
+        <!-- 起源故事 -->
         <div id="to-story" class="section-anchor"></div>
 
-        <div class="container scroll-animate" id="story">
+        <div class="container scroll-reveal" id="story">
             <div class="dashboard-header">
                 <h2>起源故事</h2>
             </div>
@@ -1149,7 +1230,7 @@
                     為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
                 </p>
 
-                <a href="https://www.threads.com/share/BAVGu1Ib5B/" target="_blank" class="threads-link-card">
+                <a href="https://www.threads.com/share/BAVGu1Ib5B/" target="_blank" class="threads-link-card scroll-reveal">
                     <div class="threads-icon">📱</div>
                     <div class="threads-info">
                         <div class="threads-title">查看最初的那篇 Threads 貼文</div>
@@ -1162,7 +1243,7 @@
         <!-- 伺服器裡有什麼？卡片 -->
         <div id="whats-inside" class="section-anchor"></div>
 
-        <div class="container scroll-animate">
+        <div class="container scroll-reveal">
             <div class="dashboard-header">
                 <h2>伺服器裡有什麼？</h2>
             </div>
@@ -1180,56 +1261,56 @@
 
         <div id="to-milestones" class="section-anchor"></div>
 
-        <div class="container scroll-animate" id="milestones">
+        <div class="container scroll-reveal" id="milestones">
             <div class="dashboard-header">
                 <h2>發展里程碑</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">記錄這個小天地一路走來的點點滴滴</p>
             
             <div class="timeline">
-                <div class="timeline-item">
+                <div class="timeline-item scroll-reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">5月30日</div>
                     <div class="timeline-content">
                         那篇引起廣大共鳴的 Threads 貼文發布。
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item scroll-reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">5月31日</div>
                     <div class="timeline-content">
                         伺服器正式成立！初具規模，當天即突破 1000 人！ 🎉
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item scroll-reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">7月26日</div>
                     <div class="timeline-content">
                         御用機器人正式加入，為社群帶來更多豐富互動！ 🤖
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item scroll-reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">8月1日</div>
                     <div class="timeline-content">
                         Threads 貼文再次迎來一波流量關注。
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item scroll-reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">8月16日</div>
                     <div class="timeline-content">
                         伺服器成員人數突破 2000 人！ 🎉
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item scroll-reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">9月10日</div>
                     <div class="timeline-content">
                         伺服器成員人數突破 3000 人！ 🎉
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item scroll-reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-date">9月13日</div>
                     <div class="timeline-content">
@@ -1241,34 +1322,34 @@
 
         <div id="to-bot" class="section-anchor"></div>
 
-        <div class="container scroll-animate" id="bot">
+        <div class="container scroll-reveal" id="bot">
             <div class="dashboard-header">
                 <h2>御用機器人</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化小管家，帶來滿滿陪伴與樂趣</p>
 
             <div class="bot-grid">
-                <div class="bot-feature-card">
+                <div class="bot-feature-card scroll-reveal">
                     <h3>📅 打卡與個人名片</h3>
                     <p>追蹤個人發言與語音經驗值，連續打卡 30 天可解鎖活躍身分組。</p>
                     <span class="bot-cmd-tag">!打卡 / !profile</span>
                 </div>
-                <div class="bot-feature-card">
+                <div class="bot-feature-card scroll-reveal">
                     <h3>⚔️ 趣味 PK 決鬥</h3>
                     <p>與群友進行搞笑回合制卡牌對決，記錄累積勝率與勝敗戰績。</p>
                     <span class="bot-cmd-tag">!PK @成員</span>
                 </div>
-                <div class="bot-feature-card">
+                <div class="bot-feature-card scroll-reveal">
                     <h3>🎴 歐皇體質抽卡</h3>
                     <p>挑戰 10 種稀有度卡牌，幸運抽中最高階 SEC 可解鎖尊爵身分組！</p>
                     <span class="bot-cmd-tag">!抽卡</span>
                 </div>
-                <div class="bot-feature-card">
+                <div class="bot-feature-card scroll-reveal">
                     <h3>🎮 娛樂互動樂園</h3>
                     <p>包含 21點對決、猜拳、餵食/摸頭小寵物，以及管理員爆笑金句庫。</p>
                     <span class="bot-cmd-tag">!21 / !出來玩 / !管理員說</span>
                 </div>
-                <div class="bot-feature-card" style="grid-column: span 2;">
+                <div class="bot-feature-card scroll-reveal" style="grid-column: span 2;">
                     <h3>⏰ 溫馨定時廣播與倒數提醒</h3>
                     <p>每日凌晨 02:00 晚安提醒、早上 09:00 早安招呼，以及每週一 18:00 活躍排行榜自動結算！還能幫你設定個人專屬倒數提醒。</p>
                     <span class="bot-cmd-tag">!提醒 10m 記得喝水</span>
@@ -1278,14 +1359,14 @@
 
         <div id="to-team" class="section-anchor"></div>
 
-        <div class="container scroll-animate" id="team">
+        <div class="container scroll-reveal" id="team">
             <div class="dashboard-header">
                 <h2>🛡️ 管理團隊</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">守護這個溫馨小天地的幕后功臣們</p>
             
             <div class="team-grid">
-                <div class="team-card">
+                <div class="team-card scroll-reveal">
                     <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548405837997940886/avatar.png?ex=6aa6f0cf&is=6aa59f4f&hm=f2bac829c31a49c8481b48c4efd648994ef337f0cb39a2d47f4a07788caf8e25&" alt="吉" class="team-avatar">
                     <div class="team-info">
                         <span class="team-role">群主</span>
@@ -1293,7 +1374,7 @@
                         <span class="team-desc">AI很好用。</span>
                     </div>
                 </div>
-                <div class="team-card">
+                <div class="team-card scroll-reveal">
                     <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406409979236402/avatar.png?ex=6aa6f158&is=6aa59fd8&hm=860d46b6b2d92e7f60b12569fbafb80b24afd6093cb32033e8a1ef8ccdc00eab&" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
                     <div class="team-info">
                         <span class="team-role">管理員</span>
@@ -1301,7 +1382,7 @@
                         <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051276333086/BackgroundEraser_20260913_131715399.png?ex=6aa78428&is=6aa632a8&hm=35b7435ae9d74a807660fba04c042fe22f51f0c046375c4f65db56d2233566bc&" alt="簽名檔" class="team-desc-img"></span>
                     </div>
                 </div>
-                <div class="team-card">
+                <div class="team-card scroll-reveal">
                     <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406786891980950/avatar.png?ex=6aa6f1b2&is=6aa5a032&hm=af5f6c514521ce637252fa7071ff2bded5983103b1a29569552df1bda3d7f1ca&" alt="oboe蜥蜴" class="team-avatar">
                     <div class="team-info">
                         <span class="team-role">管理員</span>
@@ -1309,7 +1390,7 @@
                         <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051590914158/BackgroundEraser_20260913_131911795.png?ex=6aa78428&is=6aa632a8&hm=b2778db47fa02dda94c60f7376bc839f409f99136be2238baa1ca894ccfb8461&" alt="簽名檔" class="team-desc-img"></span>
                     </div>
                 </div>
-                <div class="team-card">
+                <div class="team-card scroll-reveal">
                     <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407027548553296/avatar.png?ex=6aa6f1eb&is=6aa5a06b&hm=fb0560e4867b49f3c86d0d90565add16dd9b7900ab058d1a958aa2ef3831f013&" alt="禾" class="team-avatar">
                     <div class="team-info">
                         <span class="team-role">管理員</span>
@@ -1317,7 +1398,7 @@
                         <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548573654995046441/Screenshot_20260913_134035_Discord.png?ex=6aa78d1a&is=6aa63b9a&hm=0a8b6f4ac476c995a4e7dc2a325d3bae58f83518afa8f08300159a3f143546bd&" alt="簽名檔" class="team-desc-img"></span>
                     </div>
                 </div>
-                <div class="team-card">
+                <div class="team-card scroll-reveal">
                     <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407208209944657/avatar.png?ex=6aa6f216&is=6aa5a096&hm=2eb7f07714c44e069dab13043cdc3866e2f8469285f5eb623c1256c484bcf067&" alt="muly沐漓" class="team-avatar">
                     <div class="team-info">
                         <span class="team-role">管理員</span>
@@ -1325,7 +1406,7 @@
                         <span class="team-desc">這個人還沒有留下痕跡</span>
                     </div>
                 </div>
-                <div class="team-card">
+                <div class="team-card scroll-reveal">
                     <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407570849472583/avatar.png?ex=6aa6f26c&is=6aa5a0ec&hm=9e7c2ff10d73b879971bc173e248b53b344b827d74f25af7b747dd30af265fb2&" alt="辰" class="team-avatar">
                     <div class="team-info">
                         <span class="team-role">管理員</span>
@@ -1333,7 +1414,7 @@
                         <span class="team-desc">這個人還沒有留下痕跡</span>
                     </div>
                 </div>
-                <div class="team-card">
+                <div class="team-card scroll-reveal">
                     <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407700495405196/avatar.png?ex=6aa6f28b&is=6aa5a10b&hm=d1b6ec6094f30bd2bb85dd1f91535db18945a36dbeaba3cabd7846751531e79a&" alt="球" class="team-avatar">
                     <div class="team-info">
                         <span class="team-role">管理員</span>
@@ -1346,7 +1427,7 @@
 
         <div id="to-support" class="section-anchor"></div>
 
-        <div class="container scroll-animate">
+        <div class="container scroll-reveal">
             <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
             <div style="display: flex; gap: 15px; margin-top: 25px;">
                 <a href="#" onclick="openModal(event)" class="btn-join-main" style="flex: 1; text-align: center;">加入伺服器</a>
@@ -1355,23 +1436,18 @@
         </div>
 
         <!-- 點贊支持卡片 -->
-        <div class="container scroll-animate">
+        <div class="container scroll-reveal">
             <div class="dashboard-header">
                 <h2>如果你想支持我們的話</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">你的每一次支持，都是我們繼續維護與經營社群的最大動力！</p>
             <a href="#" onclick="handleLike(event)" class="btn-join-main">給我們點個贊吧！👍 (<span id="likeCount">0</span>)</a>
         </div>
-
-        <!-- 1. 主頁面最底部的回到頂部卡片按鈕 -->
-        <div class="container scroll-animate" style="margin-top: 10px; margin-bottom: 40px;">
-            <button class="btn-join-main" onclick="scrollToTop()" style="background-color: var(--accent-color);">⬆️ 回到頂部</button>
-        </div>
     </div>
 
     <!-- 新頁面容器 -->
     <div id="subPageView" class="page-view">
-        <div class="container scroll-animate" style="margin-top: 40px;">
+        <div class="container scroll-reveal" style="margin-top: 40px;">
             <div class="dashboard-header">
                 <h2>詳細說明與介紹</h2>
             </div>
@@ -1382,35 +1458,35 @@
             </div>
         </div>
 
-        <!-- 新增：頻道板塊卡片 -->
-        <div class="container scroll-animate">
+        <!-- 頻道板塊卡片 -->
+        <div class="container scroll-reveal">
             <div class="dashboard-header">
                 <h2>頻道板塊</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">探索伺服器內部豐富的主題分區</p>
             
             <div class="bot-grid">
-                <div class="bot-feature-card">
+                <div class="bot-feature-card scroll-reveal">
                     <h3>💬 交流與日常（聊天室、分享區）</h3>
                     <p>設有綜合聊天、男女生區、i人與e人專屬區，以及美食、寵物、攝影、生活小確幸等分享天地，讓大家自在交流生活點滴。</p>
                 </div>
 
-                <div class="bot-feature-card">
+                <div class="bot-feature-card scroll-reveal">
                     <h3>🎮 遊戲與娛樂廳</h3>
                     <p>集結米遊、光遇、麥塊、雀魂、乙女遊戲、STEAM多人遊戲等多樣化討論區，並有經濟、RP系統與機器人互動遊戲，方便同好快速組隊開黑。</p>
                 </div>
 
-                <div class="bot-feature-card">
+                <div class="bot-feature-card scroll-reveal">
                     <h3>📚 學習與藝文天地</h3>
                     <p>提供學習區、交流室、VTUBER、音樂與歐美劇討論，以及巴納姆效應研究室等特色空間，兼顧休閒與自我提升。</p>
                 </div>
 
-                <div class="bot-feature-card">
+                <div class="bot-feature-card scroll-reveal">
                     <h3>🌧️ 溫馨避難所</h3>
                     <p>包含EMO、福利區、爆本人照及心情抒發頻道，當感到疲憊或需要宣洩情緒時，這裡隨時接納你的所有心情。</p>
                 </div>
 
-                <div class="bot-feature-card" style="grid-column: span 2;">
+                <div class="bot-feature-card scroll-reveal" style="grid-column: span 2;">
                     <h3>🎵 動態與音樂語音</h3>
                     <p>常設多個語音討論區、練歌房、小包廂以及24小時 Lofi 陪伴掛機房，一個人上線也絕不孤單。</p>
                 </div>
@@ -1445,10 +1521,7 @@
                 <button type="submit" class="guestbook-btn">送出留言</button>
             </form>
             <div class="message-list" id="messageList" style="margin-top: 15px;">
-                <div class="message-card">
-                    <div class="message-user">小葵</div>
-                    <div class="message-text">伺服器氣氛超棒，大家一起來玩鴨！✨</div>
-                </div>
+                <!-- 留言將動態由 JS 持久化載入 -->
             </div>
         </div>
     </div>
@@ -1469,6 +1542,171 @@
     <div class="toast-msg" id="customToast"></div>
 
     <script>
+        /* ----------------------------------------------------
+         * 1. 背景動態雪花特效 (Canvas Snow Effect)
+         * ---------------------------------------------------- */
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        let snowflakes = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Snowflake {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                this.radius = Math.random() * 2.5 + 1;
+                this.speed = Math.random() * 0.8 + 0.3;
+                this.wind = Math.random() * 0.4 - 0.2;
+                this.opacity = Math.random() * 0.5 + 0.3;
+            }
+            update() {
+                this.y += this.speed;
+                this.x += this.wind;
+                if (this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initSnow() {
+            snowflakes = [];
+            const count = Math.floor(window.innerWidth / 15);
+            for (let i = 0; i < count; i++) {
+                snowflakes.push(new Snowflake());
+            }
+        }
+
+        function renderSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            snowflakes.forEach(flake => {
+                flake.update();
+                flake.draw();
+            });
+            requestAnimationFrame(renderSnow);
+        }
+
+        initSnow();
+        renderSnow();
+
+        /* ----------------------------------------------------
+         * 2. 滾動淡入動畫 (Scroll Reveal Animation)
+         * ---------------------------------------------------- */
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        function initScrollReveal() {
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+        }
+
+        /* ----------------------------------------------------
+         * 3. 留言板資料持久化 (LocalStorage Guestbook)
+         * ---------------------------------------------------- */
+        const STORAGE_KEY = 'cozy_haven_guestbook';
+
+        function loadMessages() {
+            const listElem = document.getElementById('messageList');
+            const stored = localStorage.getItem(STORAGE_KEY);
+            let messages = [];
+
+            if (stored) {
+                try {
+                    messages = JSON.parse(stored);
+                } catch (e) {
+                    messages = [];
+                }
+            } else {
+                // 預設示範留言
+                messages = [
+                    { name: '小葵', text: '伺服器氣氛超棒，大家一起來玩鴨！✨', time: '2026-09-13' }
+                ];
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+            }
+
+            listElem.innerHTML = '';
+            messages.forEach((msg, index) => {
+                const card = document.createElement('div');
+                card.className = 'message-card';
+                card.innerHTML = `
+                    <div class="message-header">
+                        <span class="message-user">${escapeHtml(msg.name)}</span>
+                        <div>
+                            <span class="message-time">${msg.time || ''}</span>
+                            <button class="message-del-btn" onclick="deleteMessage(${index})" title="刪除留言">✕</button>
+                        </div>
+                    </div>
+                    <div class="message-text">${escapeHtml(msg.text)}</div>
+                `;
+                listElem.appendChild(card);
+            });
+        }
+
+        function addMessage(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('senderName');
+            const messageInput = document.getElementById('senderMessage');
+
+            const name = nameInput.value.trim();
+            const text = messageInput.value.trim();
+
+            if (name && text) {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                let messages = stored ? JSON.parse(stored) : [];
+
+                const now = new Date();
+                const timeStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+                messages.unshift({ name, text, time: timeStr });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+
+                messageInput.value = '';
+                loadMessages();
+            }
+        }
+
+        function deleteMessage(index) {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                let messages = JSON.parse(stored);
+                messages.splice(index, 1);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+                loadMessages();
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        /* ----------------------------------------------------
+         * 原有介面邏輯與功能函數
+         * ---------------------------------------------------- */
         function changeBgColor(color) {
             document.documentElement.style.setProperty('--gradient-option', color);
             
@@ -1504,9 +1742,8 @@
                 mainNav.style.display = 'flex';
                 window.scrollTo(0, 0);
             }
-            
-            // 切換頁面後重新觸發進場動畫檢測
-            triggerScrollAnimate();
+            // 頁面切換後重新觸發滾動動畫檢查
+            setTimeout(initScrollReveal, 100);
         }
 
         function switchTab(targetId, event) {
@@ -1534,13 +1771,6 @@
             });
         }
 
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
         const guestbookModal = document.getElementById('guestbookModal');
         function openGuestbookModal() {
             guestbookModal.classList.add('show');
@@ -1562,33 +1792,6 @@
                 backToTopBtn.classList.remove('show');
             }
         });
-
-        function addMessage(event) {
-            event.preventDefault();
-            const nameInput = document.getElementById('senderName');
-            const messageInput = document.getElementById('senderMessage');
-            const messageList = document.getElementById('messageList');
-
-            const name = nameInput.value.trim();
-            const text = messageInput.value.trim();
-
-            if(name && text) {
-                const card = document.createElement('div');
-                card.className = 'message-card';
-                card.innerHTML = `
-                    <div class="message-user">${escapeHtml(name)}</div>
-                    <div class="message-text">${escapeHtml(text)}</div>
-                `;
-                messageList.prepend(card);
-                messageInput.value = '';
-            }
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
-        }
 
         const joinModal = document.getElementById('joinModal');
         function openModal(event) {
@@ -1640,35 +1843,17 @@
             }, 1500);
         }
 
-        // 卡片滾動淡入動畫 (IntersectionObserver)
-        function setupScrollAnimation() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animated');
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-
-            document.querySelectorAll('.scroll-animate').forEach(elem => {
-                observer.observe(elem);
-            });
-        }
-
-        function triggerScrollAnimate() {
-            document.querySelectorAll('.scroll-animate').forEach(elem => {
-                const rect = elem.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom >= 0) {
-                    elem.classList.add('animated');
-                }
-            });
-        }
-
+        /* ----------------------------------------------------
+         * 初始化載入
+         * ---------------------------------------------------- */
         window.addEventListener('DOMContentLoaded', () => {
-            setupScrollAnimation();
+            // 初始化動態滾動效果
+            initScrollReveal();
 
+            // 載入持久化留言
+            loadMessages();
+
+            // 存取次數與點讚持久化
             let visits = localStorage.getItem('page_visits');
             if (!visits) {
                 visits = 1;
