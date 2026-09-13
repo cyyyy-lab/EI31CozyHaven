@@ -1313,6 +1313,9 @@
         <div>
             追蹤我們的 Threads：<a href="https://www.threads.com/@qlz__zlp.314" target="_blank">@qlz__zlp.314</a>
         </div>
+        <div id="visitCount" style="font-size: 0.75rem; color: var(--text-sub); margin-top: 4px; opacity: 0.8;">
+            👁️ 本頁累積造訪：載入中...
+        </div>
     </footer>
 
     <!-- 左下角訪客留言互動小按鈕 -->
@@ -1456,6 +1459,22 @@
         joinModal.addEventListener('click', (e) => {
             if (e.target === joinModal) {
                 closeModal();
+            }
+        });
+
+        // 自動紀錄並顯示網頁累積造訪次數
+        window.addEventListener('DOMContentLoaded', () => {
+            let visits = localStorage.getItem('page_visits');
+            if (!visits) {
+                visits = 1;
+            } else {
+                visits = parseInt(visits) + 1;
+            }
+            localStorage.setItem('page_visits', visits);
+            
+            const visitCountElem = document.getElementById('visitCount');
+            if (visitCountElem) {
+                visitCountElem.textContent = `👁️ 本頁累積造訪：${visits}`;
             }
         });
     </script>
