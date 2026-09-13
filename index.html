@@ -9,23 +9,29 @@
             --gradient-option: #ffffff;
             --gradient-blue: #b4f1f5;
             
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.75);
             --accent-color: #5b73c7;
             --accent-hover: #485cb5;
             --text-main: #2c3e50;
             --text-sub: #546e7a;
-            --nav-bg: rgba(255, 255, 255, 0.85);
+            --nav-bg: rgba(255, 255, 255, 0.75);
             --border-color: rgba(0, 0, 0, 0.1);
             --dash-item-bg: rgba(0, 0, 0, 0.03);
+            --footer-text-color: #546e7a;
         }
 
         body.dark-mode {
-            --card-bg: rgba(26, 29, 46, 0.9);
+            --card-bg: rgba(26, 29, 46, 0.75);
             --text-main: #f1f5f9;
             --text-sub: #94a3b8;
-            --nav-bg: rgba(26, 29, 46, 0.85);
+            --nav-bg: rgba(26, 29, 46, 0.75);
             --border-color: rgba(255, 255, 255, 0.1);
             --dash-item-bg: rgba(255, 255, 255, 0.04);
+            --footer-text-color: #000000;
+        }
+
+        body.gray-mode {
+            --footer-text-color: #000000;
         }
 
         * {
@@ -52,7 +58,6 @@
             align-items: center;
         }
 
-        /* 錨點定位修正：讓內容不會被固定導覽列遮擋 */
         .section-anchor {
             scroll-margin-top: 140px;
         }
@@ -64,6 +69,7 @@
             width: 100%;
             background: var(--nav-bg);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
@@ -197,11 +203,12 @@
             max-width: 680px;
             width: 90%;
             background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             text-align: center;
-            backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             margin-bottom: 30px;
         }
@@ -301,15 +308,6 @@
             margin-bottom: 20px;
         }
 
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #23a55a;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 8px #23a55a;
-        }
-
         .dash-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -387,7 +385,6 @@
             border-color: var(--accent-color);
         }
 
-        /* FAQ 折疊展開 (Accordion) 樣式 */
         .faq-list {
             text-align: left;
             display: flex;
@@ -453,7 +450,6 @@
             margin-top: 6px;
         }
 
-        /* 發展里程碑 (Milestone Timeline) 樣式 */
         .timeline {
             position: relative;
             padding: 10px 0 10px 20px;
@@ -515,7 +511,6 @@
             border-radius: 10px;
         }
 
-        /* 機器人專區卡片樣式 */
         .bot-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -558,7 +553,6 @@
             font-family: monospace;
         }
 
-        /* 留言板樣式 */
         .guestbook-form {
             display: flex;
             flex-direction: column;
@@ -627,7 +621,6 @@
             word-break: break-all;
         }
 
-        /* Threads 貼文卡片樣式 */
         .threads-link-card {
             display: flex;
             align-items: center;
@@ -669,7 +662,6 @@
             word-break: break-all;
         }
 
-        /* 管理團隊小卡片專屬樣式 */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -705,7 +697,7 @@
 
         .team-role {
             font-size: 0.8rem;
-            color: #3b82f6; /* 藍色字 */
+            color: #3b82f6;
             font-weight: bold;
         }
 
@@ -730,7 +722,6 @@
             object-fit: contain;
         }
 
-        /* 彈跳視窗 (Modal) 樣式 */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -739,6 +730,7 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -783,7 +775,6 @@
             line-height: 1.5;
         }
 
-        /* 左下角訪客留言互動小按鈕樣式 */
         .guestbook-floating-btn {
             position: fixed;
             bottom: 30px;
@@ -810,12 +801,11 @@
             color: white;
         }
 
-        /* 頁尾樣式 */
         .footer {
             margin-top: 20px;
             text-align: center;
             font-size: 0.85rem;
-            color: var(--text-sub);
+            color: var(--footer-text-color);
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -831,7 +821,6 @@
             text-decoration: underline;
         }
 
-        /* 返回頂部按鈕樣式 */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -865,7 +854,7 @@
         .footer-note {
             margin-top: 20px;
             font-size: 0.8rem;
-            color: var(--text-sub);
+            color: var(--footer-text-color);
         }
 
         @media (max-width: 600px) {
@@ -885,7 +874,6 @@
 <body>
 
     <nav class="navbar">
-        <!-- 第一行：頭像、中文名、英文名 (置中) -->
         <div class="nav-row-1">
             <div class="nav-left">
                 <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
@@ -895,7 +883,6 @@
                 </div>
             </div>
         </div>
-        <!-- 第二行：按鈕與工具 (導覽按鈕對應至兩卡片之間) -->
         <div class="nav-row-2">
             <div class="nav-links-group">
                 <a href="#home" class="nav-btn">首頁</a>
@@ -912,21 +899,19 @@
                     <option value="#ffffff" selected>🎨 白</option>
                     <option value="#64748b">🎨 灰</option>
                     <option value="#0f111a">🎨 黑</option>
-                    <option value="#bcf5dc">🎨 淺綠</option>
                     <option value="#f2d6b3">🎨 琥珀</option>
                 </select>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
-                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">📋 複製連結</button>
+                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">📋 複製邀請連結</button>
             </div>
         </div>
     </nav>
 
-    <!-- 首頁卡片 -->
     <div class="container" id="home">
         <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="伺服器頭像" class="main-avatar">
 
         <br>
-        <div class="badge">🏷️ 伺服器標籤：和 i 可親</div>
+        <div class="badge">🏷️ 伺服器標籤：和 i 可親 🏷️</div>
         
         <h1>
             歡迎來到<br>
@@ -934,7 +919,7 @@
             <span class="h1-en">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
         </h1>
         <p class="subtitle">
-            這是一個集結了許多「i 人」的 Discord 社群。<br>
+            這是一個集結了許多「i人」的 Discord 社群。<br>
             不論你是I人還是E人，都能在這裡盡情和別人聊天、玩遊戲、掛語音，找到最舒服的社交步調。
         </p>
 
@@ -948,7 +933,7 @@
                 <p>輕鬆開團找隊友，沒有壓力一起玩遊戲。</p>
             </div>
             <div class="feature-item">
-                <h3>📻 24H 音樂</h3>
+                <h3>📻 24小時音樂</h3>
                 <p>常設 Lofi 音樂語音房，一個人掛機也不孤單。</p>
             </div>
             <div class="feature-item">
@@ -959,16 +944,13 @@
 
         <a href="#" onclick="openModal(event)" class="btn-join-main">點擊加入 Discord 伺服器 🚀</a>
 
-        <div class="footer-note">希望你能在這裡找到屬於自己的小天地 ✨</div>
+        <div class="footer-note">✨ 希望你能在這裡找到屬於自己的小天地 ✨</div>
     </div>
 
-    <!-- 首頁與儀表板之間的錨點 -->
     <div id="to-dashboard" class="section-anchor"></div>
 
-    <!-- 數據儀表板卡片 -->
     <div class="container" id="dashboard">
         <div class="dashboard-header">
-            <span class="status-dot"></span>
             <h2>數據儀表板</h2>
         </div>
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
@@ -989,13 +971,11 @@
         </div>
     </div>
 
-    <!-- 儀表板與規則之間的錨點 -->
     <div id="to-rules" class="section-anchor"></div>
 
-    <!-- 伺服器規範卡片 -->
     <div class="container" id="rules">
         <div class="dashboard-header">
-            <h2>📜 伺服器規範</h2>
+            <h2>伺服器規範</h2>
         </div>
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">
             請遵守我們的伺服器規則，共同維護舒適的交流環境 。我們希望每個人都能在這裡度過一段美好的時光
@@ -1052,13 +1032,11 @@
         </div>
     </div>
 
-    <!-- 規則與常見問題之間的錨點 -->
     <div id="to-faq" class="section-anchor"></div>
 
-    <!-- 常見問題卡片 (Accordion 折疊展開互動) -->
     <div class="container" id="faq">
         <div class="dashboard-header">
-            <h2>❓ 常見問題</h2>
+            <h2>常見問題</h2>
         </div>
         <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">點擊問題標題即可展開或收合解答</p>
         
@@ -1099,15 +1077,13 @@
         </div>
     </div>
 
-    <!-- 常見問題與起源故事之間的錨點 -->
     <div id="to-story" class="section-anchor"></div>
 
-    <!-- 起源故事卡片 -->
     <div class="container" id="story">
         <div class="dashboard-header">
-            <h2>📖 起源故事</h2>
+            <h2>起源故事</h2>
         </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">屬於這個小天地的誕生與溫暖歷程</p>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">屬於這個小天地的誕生</p>
         <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
             <p style="margin-bottom: 12px;">
                 故事始於5月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的前來。
@@ -1127,13 +1103,11 @@
         </div>
     </div>
 
-    <!-- 起源故事與里程碑之間的錨點 -->
     <div id="to-milestones" class="section-anchor"></div>
 
-    <!-- 發展里程碑卡片 -->
     <div class="container" id="milestones">
         <div class="dashboard-header">
-            <h2>🚀 發展里程碑</h2>
+            <h2>發展里程碑</h2>
         </div>
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">記錄這個小天地一路走來的點點滴滴</p>
         
@@ -1149,7 +1123,7 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-date">5月31日</div>
                 <div class="timeline-content">
-                    伺服器正式成立！初具規模，當天即突破 1000 人。
+                    伺服器正式成立！初具規模，當天即突破 1000 人！ 🎉
                 </div>
             </div>
             <div class="timeline-item">
@@ -1183,15 +1157,13 @@
         </div>
     </div>
 
-    <!-- 里程碑與專屬機器人之間的錨點 -->
     <div id="to-bot" class="section-anchor"></div>
 
-    <!-- 專屬機器人介紹卡片 (Custom Bot Showcase) -->
     <div class="container" id="bot">
         <div class="dashboard-header">
-            <h2>🐾 專屬機器人｜老大小寵物</h2>
+            <h2>御用機器人</h2>
         </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化 AI 大管家，帶來滿滿陪伴與樂趣</p>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化小管家，帶來滿滿陪伴與樂趣</p>
 
         <div class="bot-grid">
             <div class="bot-feature-card">
@@ -1222,10 +1194,8 @@
         </div>
     </div>
 
-    <!-- 專屬機器人與管理團隊之間的錨點 -->
     <div id="to-team" class="section-anchor"></div>
 
-    <!-- 管理團隊卡片 -->
     <div class="container" id="team">
         <div class="dashboard-header">
             <h2>🛡️ 管理團隊</h2>
@@ -1233,7 +1203,6 @@
         <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">守護這個溫馨小天地的幕后功臣們</p>
         
         <div class="team-grid">
-            <!-- 吉 -->
             <div class="team-card">
                 <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548405837997940886/avatar.png?ex=6aa6f0cf&is=6aa59f4f&hm=f2bac829c31a49c8481b48c4efd648994ef337f0cb39a2d47f4a07788caf8e25&" alt="吉" class="team-avatar">
                 <div class="team-info">
@@ -1242,7 +1211,6 @@
                     <span class="team-desc">AI很好用。</span>
                 </div>
             </div>
-            <!-- 魚板 -->
             <div class="team-card">
                 <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406409979236402/avatar.png?ex=6aa6f158&is=6aa59fd8&hm=860d46b6b2d92e7f60b12569fbafb80b24afd6093cb32033e8a1ef8ccdc00eab&" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
                 <div class="team-info">
@@ -1251,7 +1219,6 @@
                     <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051276333086/BackgroundEraser_20260913_131715399.png?ex=6aa78428&is=6aa632a8&hm=35b7435ae9d74a807660fba04c042fe22f51f0c046375c4f65db56d2233566bc&" alt="簽名檔" class="team-desc-img"></span>
                 </div>
             </div>
-            <!-- oboe蜥蜴 -->
             <div class="team-card">
                 <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548406786891980950/avatar.png?ex=6aa6f1b2&is=6aa5a032&hm=af5f6c514521ce637252fa7071ff2bded5983103b1a29569552df1bda3d7f1ca&" alt="oboe蜥蜴" class="team-avatar">
                 <div class="team-info">
@@ -1260,7 +1227,6 @@
                     <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548564051590914158/BackgroundEraser_20260913_131911795.png?ex=6aa78428&is=6aa632a8&hm=b2778db47fa02dda94c60f7376bc839f409f99136be2238baa1ca894ccfb8461&" alt="簽名檔" class="team-desc-img"></span>
                 </div>
             </div>
-            <!-- 禾 -->
             <div class="team-card">
                 <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407027548553296/avatar.png?ex=6aa6f1eb&is=6aa5a06b&hm=fb0560e4867b49f3c86d0d90565add16dd9b7900ab058d1a958aa2ef3831f013&" alt="禾" class="team-avatar">
                 <div class="team-info">
@@ -1269,7 +1235,6 @@
                     <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548573654995046441/Screenshot_20260913_134035_Discord.png?ex=6aa78d1a&is=6aa63b9a&hm=0a8b6f4ac476c995a4e7dc2a325d3bae58f83518afa8f08300159a3f143546bd&" alt="簽名檔" class="team-desc-img"></span>
                 </div>
             </div>
-            <!-- muly沐漓 -->
             <div class="team-card">
                 <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407208209944657/avatar.png?ex=6aa6f216&is=6aa5a096&hm=2eb7f07714c44e069dab13043cdc3866e2f8469285f5eb623c1256c484bcf067&" alt="muly沐漓" class="team-avatar">
                 <div class="team-info">
@@ -1278,7 +1243,6 @@
                     <span class="team-desc">這個人還沒有留下痕跡</span>
                 </div>
             </div>
-            <!-- 辰 -->
             <div class="team-card">
                 <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407570849472583/avatar.png?ex=6aa6f26c&is=6aa5a0ec&hm=9e7c2ff10d73b879971bc173e248b53b344b827d74f25af7b747dd30af265fb2&" alt="辰" class="team-avatar">
                 <div class="team-info">
@@ -1287,7 +1251,6 @@
                     <span class="team-desc">這個人還沒有留下痕跡</span>
                 </div>
             </div>
-            <!-- 球 -->
             <div class="team-card">
                 <img src="https://cdn.discordapp.com/attachments/1514929686025736192/1548407700495405196/avatar.png?ex=6aa6f28b&is=6aa5a10b&hm=d1b6ec6094f30bd2bb85dd1f91535db18945a36dbeaba3cabd7846751531e79a&" alt="球" class="team-avatar">
                 <div class="team-info">
@@ -1299,7 +1262,6 @@
         </div>
     </div>
 
-    <!-- 最後加入的大卡片 -->
     <div class="container">
         <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
         <div style="display: flex; gap: 15px; margin-top: 25px;">
@@ -1313,15 +1275,13 @@
         <div>
             追蹤我們的 Threads：<a href="https://www.threads.com/@qlz__zlp.314" target="_blank">@qlz__zlp.314</a>
         </div>
-        <div id="visitCount" style="font-size: 0.75rem; color: var(--text-sub); margin-top: 4px; opacity: 0.8;">
+        <div id="visitCount" style="font-size: 0.75rem; margin-top: 4px; opacity: 0.8;">
             👁️ 本頁累積造訪：載入中...
         </div>
     </footer>
 
-    <!-- 左下角訪客留言互動小按鈕 -->
     <div class="guestbook-floating-btn" onclick="openGuestbookModal()" title="訪客留言板">💬</div>
 
-    <!-- 訪客留言彈跳視窗 (Modal) -->
     <div class="modal-overlay" id="guestbookModal">
         <div class="modal-box" style="max-width: 450px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -1343,10 +1303,8 @@
         </div>
     </div>
 
-    <!-- 返回頂部按鈕 -->
     <a href="#home" class="back-to-top" id="backToTopBtn" title="返回頂部">▲</a>
 
-    <!-- 加入伺服器 Modal 彈跳視窗 -->
     <div class="modal-overlay" id="joinModal">
         <div class="modal-box">
             <h3>🎉 歡迎來到可能是i人的伺服器！</h3>
@@ -1361,10 +1319,21 @@
     <script>
         function changeBgColor(color) {
             document.documentElement.style.setProperty('--gradient-option', color);
-            if (color === '#0f111a' || color === '#64748b') {
+            
+            // 移除所有模式 class
+            document.body.classList.remove('dark-mode', 'gray-mode');
+
+            if (color === '#0f111a') {
+                // 黑背景
+                document.documentElement.style.setProperty('--gradient-blue', '#9fc1ff');
                 document.body.classList.add('dark-mode');
+            } else if (color === '#64748b') {
+                // 灰背景
+                document.documentElement.style.setProperty('--gradient-blue', '#b4f1f5');
+                document.body.classList.add('gray-mode');
             } else {
-                document.body.classList.remove('dark-mode');
+                // 其他預設背景
+                document.documentElement.style.setProperty('--gradient-blue', '#b4f1f5');
             }
         }
 
@@ -1379,13 +1348,11 @@
             event.currentTarget.classList.add('active');
         }
 
-        // FAQ 折疊展開互動
         function toggleFaq(element) {
             const item = element.parentElement;
             item.classList.toggle('active');
         }
 
-        // 一鍵複製 Discord 邀請連結
         function copyInviteLink() {
             const link = "https://discord.gg/ie31inviteyou";
             navigator.clipboard.writeText(link).then(() => {
@@ -1395,7 +1362,6 @@
             });
         }
 
-        // 訪客留言板 Modal 控制
         const guestbookModal = document.getElementById('guestbookModal');
         function openGuestbookModal() {
             guestbookModal.classList.add('show');
@@ -1409,7 +1375,6 @@
             }
         });
 
-        // 控制返回頂部按鈕
         const backToTopBtn = document.getElementById('backToTopBtn');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
@@ -1419,7 +1384,6 @@
             }
         });
 
-        // 互動留言板
         function addMessage(event) {
             event.preventDefault();
             const nameInput = document.getElementById('senderName');
@@ -1447,7 +1411,6 @@
             );
         }
 
-        // Modal 彈跳視窗
         const joinModal = document.getElementById('joinModal');
         function openModal(event) {
             event.preventDefault();
@@ -1462,7 +1425,6 @@
             }
         });
 
-        // 自動紀錄並顯示網頁累積造訪次數
         window.addEventListener('DOMContentLoaded', () => {
             let visits = localStorage.getItem('page_visits');
             if (!visits) {
