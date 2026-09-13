@@ -553,6 +553,22 @@
             font-family: monospace;
         }
 
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .emoji-card-img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
         .threads-link-card {
             display: flex;
             align-items: center;
@@ -844,7 +860,7 @@
             body {
                 padding-top: 145px;
             }
-            .features, .dash-grid, .team-grid, .bot-grid {
+            .features, .dash-grid, .team-grid, .bot-grid, .emoji-grid {
                 grid-template-columns: 1fr;
             }
             .guestbook-floating-btn {
@@ -873,8 +889,8 @@
                 <a href="#to-dashboard" class="nav-btn" onclick="switchPage('main')">儀表板</a>
                 <a href="#to-rules" class="nav-btn" onclick="switchPage('main')">規則</a>
                 <a href="#to-faq" class="nav-btn" onclick="switchPage('main')">問答</a>
-                <a href="#to-story" class="nav-btn" onclick="switchPage('main')">起源</a>
                 <a href="#whats-inside" class="nav-btn" onclick="switchPage('main')">裡面有</a>
+                <a href="#to-story" class="nav-btn" onclick="switchPage('main')">起源</a>
                 <a href="#to-milestones" class="nav-btn" onclick="switchPage('main')">里程</a>
                 <a href="#to-bot" class="nav-btn" onclick="switchPage('main')">機器人</a>
                 <a href="#to-team" class="nav-btn" onclick="switchPage('main')">團隊</a>
@@ -1089,7 +1105,26 @@
             </div>
         </div>
 
-        <!-- 起源故事 (調整後順序) -->
+        <!-- 伺服器裡有什麼？卡片 (已與起源調轉順序) -->
+        <div id="whats-inside" class="section-anchor"></div>
+
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>伺服器裡有什麼？</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">探索豐富多元的頻道與社群內容</p>
+            <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
+                <ul class="rules-list" style="margin-bottom: 20px;">
+                    <li><strong>多樣遊戲天地：</strong>各類熱門手遊與電腦遊戲專屬開黑頻道。</li>
+                    <li><strong>日常心情分享：</strong>提供美食、寵物、日常廢文與心情抒發專區。</li>
+                    <li><strong>24小時音樂陪伴：</strong>隨時點歌或掛網聽歌的放鬆角落。</li>
+                    <li><strong>專屬互動小幫手：</strong>獨家機器人提供抽卡、打卡、PK等多樣化趣味功能。</li>
+                </ul>
+                <button class="btn-join-main" onclick="switchPage('sub')">詳細資訊</button>
+            </div>
+        </div>
+
+        <!-- 起源故事 (已與裡面有調轉順序) -->
         <div id="to-story" class="section-anchor"></div>
 
         <div class="container" id="story">
@@ -1113,25 +1148,6 @@
                         <div class="threads-url">https://www.threads.com/share/BAVGu1Ib5B/</div>
                     </div>
                 </a>
-            </div>
-        </div>
-
-        <!-- 伺服器裡有什麼？卡片 -->
-        <div id="whats-inside" class="section-anchor"></div>
-
-        <div class="container">
-            <div class="dashboard-header">
-                <h2>伺服器裡有什麼？</h2>
-            </div>
-            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">探索豐富多元的頻道與社群內容</p>
-            <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
-                <ul class="rules-list" style="margin-bottom: 20px;">
-                    <li><strong>多樣遊戲天地：</strong>各類熱門手遊與電腦遊戲專屬開黑頻道。</li>
-                    <li><strong>日常心情分享：</strong>提供美食、寵物、日常廢文與心情抒發專區。</li>
-                    <li><strong>24小時音樂陪伴：</strong>隨時點歌或掛網聽歌的放鬆角落。</li>
-                    <li><strong>專屬互動小幫手：</strong>獨家機器人提供抽卡、打卡、PK等多樣化趣味功能。</li>
-                </ul>
-                <button class="btn-join-main" onclick="switchPage('sub')">詳細資訊</button>
             </div>
         </div>
 
@@ -1334,7 +1350,7 @@
             </div>
         </div>
 
-        <!-- 新增：頻道板塊卡片 -->
+        <!-- 頻道板塊卡片 -->
         <div class="container">
             <div class="dashboard-header">
                 <h2>頻道板塊</h2>
@@ -1366,6 +1382,27 @@
                     <h3>🎵 動態與音樂語音</h3>
                     <p>常設多個語音討論區、練歌房、小包廂以及24小時 Lofi 陪伴掛機房，一個人上線也絕不孤單。</p>
                 </div>
+            </div>
+
+            <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 25px;">返回主頁</button>
+        </div>
+
+        <!-- 新增：熱門表符卡片 -->
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>熱門表符</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">伺服器內成員最喜愛的熱門表情符號與貼圖</p>
+            
+            <div class="emoji-grid">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652522451771402/Screenshot_20260913_190629_Discord.jpg?ex=6aa7d68d&is=6aa6850d&hm=52d8afdef23e4a4f16fd689f175c75b414d5a60bf8f6cba97a16a11fb1766fb8&" alt="熱門表符 1" class="emoji-card-img">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652523198353408/Screenshot_20260913_190635_Discord.jpg?ex=6aa7d68e&is=6aa6850e&hm=f5dc88bbae5045e9f87572464716020138b576f33384e4fa3dfe62c05c874603&" alt="熱門表符 2" class="emoji-card-img">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652523718582373/Screenshot_20260913_190640_Discord.jpg?ex=6aa7d68e&is=6aa6850e&hm=de7f6e3068a09d790d699df340c177b0d735e21baa3962ac2436b71dbcbd1312&" alt="熱門表符 3" class="emoji-card-img">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652524154658816/Screenshot_20260913_190644_Discord.jpg?ex=6aa7d68e&is=6aa6850e&hm=a55433c7f1fce67a8adb27431bb44add06b0dc1c80ec4715e38c33fcfd792134&" alt="熱門表符 4" class="emoji-card-img">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652524641325077/Screenshot_20260913_190649_Discord.jpg?ex=6aa7d68e&is=6aa6850e&hm=73abfc9e35625b548ff7cd0c92bd1ac3bcb42479196b4be17fab96591cf74db1&" alt="熱門表符 5" class="emoji-card-img">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652525077659708/Screenshot_20260913_190653_Discord.jpg?ex=6aa7d68e&is=6aa6850e&hm=26341f5c315766c634662a8f4f34e087a168d93547a0ee3578e0ea25177a2f9f&" alt="熱門表符 6" class="emoji-card-img">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652525811540049/Screenshot_20260913_190700_Discord.jpg?ex=6aa7d68e&is=6aa6850e&hm=c1a05dea7a61b29c67cbfe216c790ea5561c33b3ec19a8f543c54c178b2a158a&" alt="熱門表符 7" class="emoji-card-img">
+                <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548652526163730532/Screenshot_20260913_190624_Discord.png?ex=6aa7d68e&is=6aa6850e&hm=264956f0a288f89f56193562c36a82419ac6b2e057df65f61e2e4f7d69b17125&" alt="熱門表符 8" class="emoji-card-img">
             </div>
 
             <button class="btn-join-main" onclick="switchPage('main')" style="margin-top: 25px;">返回主頁</button>
