@@ -69,7 +69,7 @@
 
         .nav-row-1 {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* 置中頭像與名字部份 */
             align-items: center;
             width: 100%;
         }
@@ -673,6 +673,33 @@
             line-height: 1.5;
         }
 
+        /* 左下角訪客留言互動小按鈕樣式 */
+        .guestbook-floating-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            z-index: 999;
+            transition: transform 0.2s, background-color 0.2s, color 0.2s;
+        }
+
+        .guestbook-floating-btn:hover {
+            transform: scale(1.1);
+            background-color: var(--accent-color);
+            color: white;
+        }
+
         /* 頁尾樣式 */
         .footer {
             margin-top: 20px;
@@ -725,65 +752,6 @@
             background-color: var(--accent-hover);
         }
 
-        /* 社交能量檢測儀 */
-        .energy-detector-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background-color: var(--card-bg);
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            cursor: pointer;
-            z-index: 999;
-            transition: transform 0.2s, background-color 0.2s, color 0.2s;
-        }
-
-        .energy-detector-btn:hover {
-            transform: scale(1.1);
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .energy-toast {
-            position: fixed;
-            bottom: -150px;
-            left: 30px;
-            background: var(--card-bg);
-            border-left: 5px solid var(--accent-color);
-            padding: 15px 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            max-width: 300px;
-            transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            pointer-events: none;
-        }
-
-        .energy-toast.show {
-            bottom: 100px;
-        }
-
-        .energy-toast-title {
-            font-weight: bold;
-            color: var(--accent-color);
-            font-size: 1rem;
-            margin-bottom: 6px;
-        }
-
-        .energy-toast-text {
-            font-size: 0.9rem;
-            color: var(--text-main);
-            line-height: 1.5;
-        }
-
         .footer-note {
             margin-top: 20px;
             font-size: 0.8rem;
@@ -797,13 +765,7 @@
             .features, .dash-grid, .team-grid {
                 grid-template-columns: 1fr;
             }
-            .energy-toast.show {
-                bottom: 100px;
-                left: 20px;
-                right: 20px;
-                max-width: none;
-            }
-            .energy-detector-btn {
+            .guestbook-floating-btn {
                 bottom: 30px;
                 left: 20px;
             }
@@ -813,7 +775,7 @@
 <body>
 
     <nav class="navbar">
-        <!-- 第一行：頭像、中文名、英文名 -->
+        <!-- 第一行：頭像、中文名、英文名 (置中) -->
         <div class="nav-row-1">
             <div class="nav-left">
                 <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
@@ -823,14 +785,13 @@
                 </div>
             </div>
         </div>
-        <!-- 第二行：按鈕與工具 -->
+        <!-- 第二行：按鈕與工具 (移除訪客留言按鈕) -->
         <div class="nav-row-2">
             <div class="nav-links-group">
                 <a href="#home" class="nav-btn">首頁</a>
                 <a href="#dashboard" class="nav-btn">儀表板</a>
                 <a href="#rules" class="nav-btn">規則</a>
                 <a href="#faq" class="nav-btn">常見問題</a>
-                <a href="#guestbook" class="nav-btn">訪客留言</a>
                 <a href="#story" class="nav-btn">起源故事</a>
                 <a href="#team" class="nav-btn">管理團隊</a>
             </div>
@@ -1014,24 +975,6 @@
         </div>
     </div>
 
-    <div class="container" id="guestbook">
-        <div class="dashboard-header">
-            <h2>💬 訪客留言板</h2>
-        </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">留下你的簽到或打氣，跟大家打個招呼吧！</p>
-        <form class="guestbook-form" id="guestbookForm" onsubmit="addMessage(event)">
-            <input type="text" id="senderName" class="guestbook-input" placeholder="你的暱稱 / 稱呼" required maxlength="20">
-            <textarea id="senderMessage" class="guestbook-textarea" placeholder="寫下留言" required maxlength="100"></textarea>
-            <button type="submit" class="guestbook-btn">送出留言</button>
-        </form>
-        <div class="message-list" id="messageList">
-            <div class="message-card">
-                <div class="message-user">小葵</div>
-                <div class="message-text">伺服器氣氛超棒，大家一起來玩鴨！✨</div>
-            </div>
-        </div>
-    </div>
-
     <!-- 起源故事卡片 -->
     <div class="container" id="story">
         <div class="dashboard-header">
@@ -1098,7 +1041,7 @@
                 <div class="team-info">
                     <span class="team-role">管理員</span>
                     <span class="team-name">禾</span>
-                    <span class="team-desc">這個人還沒有留下痕跡</span>
+                    <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548573654995046441/Screenshot_20260913_134035_Discord.png?ex=6aa78d1a&is=6aa63b9a&hm=0a8b6f4ac476c995a4e7dc2a325d3bae58f83518afa8f08300159a3f143546bd&" alt="簽名檔" class="team-desc-img"></span>
                 </div>
             </div>
             <!-- muly沐漓 -->
@@ -1147,13 +1090,29 @@
         </div>
     </footer>
 
-    <!-- 社交能量檢測儀按鈕 -->
-    <div class="energy-detector-btn" onclick="testEnergy()" title="測試今日社交能量">🔋</div>
+    <!-- 左下角訪客留言互動小按鈕 -->
+    <div class="guestbook-floating-btn" onclick="openGuestbookModal()" title="訪客留言板">💬</div>
 
-    <!-- 社交能量檢測儀提示視窗 -->
-    <div class="energy-toast" id="energyToast">
-        <div class="energy-toast-title">⚡ 今日社交能量檢測</div>
-        <div class="energy-toast-text" id="energyResultText"></div>
+    <!-- 訪客留言彈跳視窗 (Modal) -->
+    <div class="modal-overlay" id="guestbookModal">
+        <div class="modal-box" style="max-width: 450px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0;">💬 訪客留言板</h3>
+                <button onclick="closeGuestbookModal()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main);">✕</button>
+            </div>
+            <p style="text-align: left; font-size: 0.9rem; color: var(--text-sub); margin-bottom: 15px;">留下你的簽到或打氣，跟大家打個招呼吧！</p>
+            <form class="guestbook-form" id="guestbookForm" onsubmit="addMessage(event)">
+                <input type="text" id="senderName" class="guestbook-input" placeholder="你的暱稱 / 稱呼" required maxlength="20">
+                <textarea id="senderMessage" class="guestbook-textarea" placeholder="寫下留言" required maxlength="100"></textarea>
+                <button type="submit" class="guestbook-btn">送出留言</button>
+            </form>
+            <div class="message-list" id="messageList" style="margin-top: 15px;">
+                <div class="message-card">
+                    <div class="message-user">小葵</div>
+                    <div class="message-text">伺服器氣氛超棒，大家一起來玩鴨！✨</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 返回頂部按鈕 -->
@@ -1208,31 +1167,19 @@
             });
         }
 
-        // 社交能量檢測儀邏輯
-        const energyLevels = [
-            "🔋 今日能量 10%：大腦已關機，適合在 Lofi 語音房潛水聽歌。 🎧",
-            "🔋 今日能量 30%：只想當個小透明，偶爾在文字頻道回個貼圖。 🦦",
-            "🔋 今日能量 50%：處於薛丁格的社交狀態，可以掛網也可以稍微聊兩句。 ☕",
-            "🔋 今日能量 70%：精神不錯！適合跟群友組隊玩個兩把遊戲。 🎮",
-            "🔋 今日能量 90%：社交牛逼症發作！立刻出發尋找遊戲隊友或開麥大聊！ 🚀",
-            "🔋 今日能量 100%：E人魂覺醒！今天的你簡直是伺服器裡的氣氛發電機！ ✨"
-        ];
-        
-        let toastTimeout;
-        function testEnergy() {
-            const toast = document.getElementById('energyToast');
-            const resultText = document.getElementById('energyResultText');
-            
-            const randomResult = energyLevels[Math.floor(Math.random() * energyLevels.length)];
-            resultText.innerHTML = randomResult;
-            
-            toast.classList.add('show');
-            
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4500);
+        // 訪客留言板 Modal 控制
+        const guestbookModal = document.getElementById('guestbookModal');
+        function openGuestbookModal() {
+            guestbookModal.classList.add('show');
         }
+        function closeGuestbookModal() {
+            guestbookModal.classList.remove('show');
+        }
+        guestbookModal.addEventListener('click', (e) => {
+            if (e.target === guestbookModal) {
+                closeGuestbookModal();
+            }
+        });
 
         // 控制返回頂部按鈕
         const backToTopBtn = document.getElementById('backToTopBtn');
