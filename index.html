@@ -314,7 +314,6 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            margin-bottom: 25px;
         }
 
         .dash-card {
@@ -335,22 +334,6 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--accent-color);
-        }
-
-        .discord-widget-wrapper {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .discord-widget-iframe {
-            width: 100%;
-            max-width: 350px;
-            height: 500px;
-            border-radius: 12px;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .rules-container {
@@ -468,6 +451,68 @@
             font-size: 0.8rem;
             color: var(--text-sub);
             margin-top: 6px;
+        }
+
+        /* 發展里程碑 (Milestone Timeline) 樣式 */
+        .timeline {
+            position: relative;
+            padding: 10px 0 10px 20px;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            bottom: 15px;
+            left: 27px;
+            width: 2px;
+            background: var(--accent-color);
+            opacity: 0.4;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+            padding-left: 30px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        .timeline-date {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            background: rgba(91, 115, 199, 0.12);
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+        }
+
+        .timeline-content {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 10px;
         }
 
         /* 留言板樣式 */
@@ -815,6 +860,7 @@
                 <a href="#to-rules" class="nav-btn">規則</a>
                 <a href="#to-faq" class="nav-btn">常見問題</a>
                 <a href="#to-story" class="nav-btn">起源故事</a>
+                <a href="#to-milestones" class="nav-btn">里程碑</a>
                 <a href="#to-team" class="nav-btn">管理團隊</a>
             </div>
             <div class="nav-tools-group">
@@ -875,13 +921,13 @@
     <!-- 首頁與儀表板之間的錨點 -->
     <div id="to-dashboard" class="section-anchor"></div>
 
-    <!-- 數據儀表板與即時語音狀態卡片 -->
+    <!-- 數據儀表板卡片 -->
     <div class="container" id="dashboard">
         <div class="dashboard-header">
             <span class="status-dot"></span>
-            <h2>數據儀表板與即時狀態</h2>
+            <h2>數據儀表板</h2>
         </div>
-        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與 Discord 即時在線狀況</p>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
 
         <div class="dash-grid">
             <div class="dash-card">
@@ -896,11 +942,6 @@
                 <div class="dash-title">💬 總頻道數</div>
                 <div class="dash-value">100+</div>
             </div>
-        </div>
-
-        <!-- 嵌入的 Discord Live Widget -->
-        <div class="discord-widget-wrapper">
-            <iframe class="discord-widget-iframe" src="https://discord.com/widget?id=1510333452958830614&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
     </div>
 
@@ -1042,7 +1083,56 @@
         </div>
     </div>
 
-    <!-- 起源故事與管理團隊之間的錨點 -->
+    <!-- 起源故事與里程碑之間的錨點 -->
+    <div id="to-milestones" class="section-anchor"></div>
+
+    <!-- 發展里程碑卡片 -->
+    <div class="container" id="milestones">
+        <div class="dashboard-header">
+            <h2>🚀 發展里程碑</h2>
+        </div>
+        <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">記錄這個小天地一路走來的點點滴滴</p>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">5月30日</div>
+                <div class="timeline-content">
+                    那篇引起廣大共鳴的 Threads 貼文發布。
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">5月31日</div>
+                <div class="timeline-content">
+                    伺服器正式成立！初具規模，當天即突破 1000 人。
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">8月1日</div>
+                <div class="timeline-content">
+                    Threads 貼文再次迎來一波流量關注。
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">8月16日</div>
+                <div class="timeline-content">
+                    伺服器成員人數突破 2000 人！ 🎉
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">9月10日</div>
+                <div class="timeline-content">
+                    人數突破 3000 人，並建立專屬社群宣傳網站！ ✨
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 里程碑與管理團隊之間的錨點 -->
     <div id="to-team" class="section-anchor"></div>
 
     <!-- 管理團隊卡片 -->
