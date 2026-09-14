@@ -225,6 +225,14 @@
             margin-bottom: 30px;
             position: relative;
             z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* 需求 2：Hover 微互動動畫（為卡片加上滑鼠懸停時的放大、陰影加深或邊框發光效果） */
+        .container:hover, .dash-card:hover, .feature-item:hover, .faq-item:hover, .bot-feature-card:hover, .team-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 16px 35px rgba(91, 115, 199, 0.25);
+            border-color: var(--accent-color);
         }
 
         /* 2. 滾動淡入與向上滑動樣式 */
@@ -293,6 +301,7 @@
             border: 1px solid var(--border-color);
             padding: 18px;
             border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .feature-item h3 {
@@ -347,6 +356,7 @@
             padding: 20px 15px;
             border-radius: 14px;
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .dash-title {
@@ -424,7 +434,7 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             overflow: hidden;
-            transition: background 0.2s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.2s;
         }
 
         .faq-question {
@@ -551,6 +561,7 @@
             border: 1px solid var(--border-color);
             padding: 16px;
             border-radius: 14px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .bot-feature-card h3 {
@@ -636,6 +647,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .team-avatar {
@@ -698,6 +710,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .emoji-img {
@@ -925,9 +938,9 @@
         </div>
     </nav>
 
-    <!-- 新頁面導覽列 -->
+    <!-- 新頁面導覽列 (需求 3：副頁面導覽列分兩行，頭像名字，然後其他，要置中) -->
     <nav class="navbar" id="subNavbar" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="nav-row-1">
             <div class="nav-left">
                 <img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548352720069726319/8d688978-bd50-4427-bcca-27a8f1ffc2a4.png?ex=6aa6bf57&is=6aa56dd7&hm=f6217d23384a6c8cabee23705f7539a2af9125543b2c506a0a910d8e782a5960&" alt="頭像" class="nav-avatar">
                 <div class="nav-name-group">
@@ -935,6 +948,8 @@
                     <span class="nav-subtitle">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
                 </div>
             </div>
+        </div>
+        <div class="nav-row-2" style="justify-content: center;">
             <div class="nav-tools-group">
                 <button class="nav-btn" onclick="switchPage('main', 'whats-inside')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
                 <select class="color-select" onchange="changeBgColor(this.value)">
@@ -1311,7 +1326,8 @@
                     <div class="team-info">
                         <span class="team-role">管理員</span>
                         <span class="team-name">muly沐漓</span>
-                        <span class="team-desc">這個人還沒有留下痕跡</span>
+                        <!-- 需求 4：管理員muly沐漓的「這個人還沒有留下痕跡」改成圖片簽名檔 -->
+                        <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548968112400113734/Screenshot_20260914_160428_Discord.jpg?ex=6aa8fc78&is=6aa7aaf8&hm=9e82b135a58f738a7c7b1597ac548d1a94b5332045ec58b25feafc5e721cb8b9&" alt="簽名檔" class="team-desc-img"></span>
                     </div>
                 </div>
                 <div class="team-card scroll-reveal">
@@ -1319,7 +1335,8 @@
                     <div class="team-info">
                         <span class="team-role">管理員</span>
                         <span class="team-name">辰</span>
-                        <span class="team-desc">這個人還沒有留下痕跡</span>
+                        <!-- 需求 1：管理員辰的「這個人還沒有留下痕跡」改成「吃瓜吵架找我」 -->
+                        <span class="team-desc">吃瓜吵架找我</span>
                     </div>
                 </div>
                 <div class="team-card scroll-reveal">
