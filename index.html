@@ -826,6 +826,33 @@
             background-color: var(--accent-hover);
         }
 
+        /* 左下角雨聲播放器按鈕樣式 */
+        .rain-player-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s, transform 0.2s;
+            z-index: 999;
+        }
+
+        .rain-player-btn:hover {
+            background-color: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
         .footer-note {
             margin-top: 20px;
             font-size: 0.8rem;
@@ -900,6 +927,14 @@
 
     <!-- 雪花動畫 Canvas -->
     <canvas id="snowCanvas"></canvas>
+
+    <!-- 雨聲背景音樂 (使用線上穩定且免版權的雨聲白噪音源) -->
+    <audio id="rainAudio" loop preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1255/1255-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 左下角雨聲播放器按鈕 -->
+    <button class="rain-player-btn" id="rainPlayerBtn" onclick="toggleRainAudio()" title="播放/暫停雨聲">🌧️</button>
 
     <!-- 主頁面導覽列 -->
     <nav class="navbar" id="mainNavbar">
@@ -1326,7 +1361,6 @@
                     <div class="team-info">
                         <span class="team-role">管理員</span>
                         <span class="team-name">muly沐漓</span>
-                        <!-- 需求 4：管理員muly沐漓的「這個人還沒有留下痕跡」改成圖片簽名檔 -->
                         <span class="team-desc"><img src="https://cdn.discordapp.com/attachments/1511701967989112943/1548968112400113734/Screenshot_20260914_160428_Discord.jpg?ex=6aa8fc78&is=6aa7aaf8&hm=9e82b135a58f738a7c7b1597ac548d1a94b5332045ec58b25feafc5e721cb8b9&" alt="簽名檔" class="team-desc-img"></span>
                     </div>
                 </div>
@@ -1335,7 +1369,6 @@
                     <div class="team-info">
                         <span class="team-role">管理員</span>
                         <span class="team-name">辰</span>
-                        <!-- 需求 1：管理員辰的「這個人還沒有留下痕跡」改成「吃瓜吵架找我」 -->
                         <span class="team-desc">吃瓜吵架找我</span>
                     </div>
                 </div>
@@ -1535,6 +1568,26 @@
         renderSnow();
 
         /* ----------------------------------------------------
+         * 雨聲播放器控制邏輯
+         * ---------------------------------------------------- */
+        function toggleRainAudio() {
+            const audio = document.getElementById('rainAudio');
+            const btn = document.getElementById('rainPlayerBtn');
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.textContent = "⏸️";
+                    btn.title = "暫停雨聲";
+                }).catch(err => {
+                    console.log("播放失敗：", err);
+                });
+            } else {
+                audio.pause();
+                btn.textContent = "🌧️";
+                btn.title = "播放雨聲";
+            }
+        }
+
+        /* ----------------------------------------------------
          * 2. 滾動淡入動畫 (Scroll Reveal Animation)
          * ---------------------------------------------------- */
         const revealObserver = new IntersectionObserver((entries) => {
@@ -1588,7 +1641,7 @@
             } else {
                 subView.classList.remove('active');
                 mainView.classList.add('active');
-                subNav.style.display = 'none';
+聲                subNav.style.display = 'none';
                 mainNav.style.display = 'flex';
                 if (targetId) {
                     const targetElement = document.getElementById(targetId);
