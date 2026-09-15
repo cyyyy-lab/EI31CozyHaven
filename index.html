@@ -23,7 +23,7 @@
             --gradient-blue: #b4f1f5;
             --gradient-green: #b8f3e2;
             
-            --card-bg: rgba(255, 255, 255, 0.4); /* 調整毛玻璃不透明度為 40% */
+            --card-bg: rgba(255, 255, 255, 0.3); /* 調整毛玻璃不透明度為 30% */
             --accent-color: #5b73c7;
             --accent-hover: #485cb5;
             --text-main: #2c3e50;
@@ -37,14 +37,13 @@
         /* 2. 系統預設主題自動偵測 (當系統為深色模式時自動套用) */
         @media (prefers-color-scheme: dark) {
             :root:not(.light-mode) {
-                --card-bg: rgba(26, 29, 46, 0.4); /* 調整毛玻璃不透明度為 40% */
+                --card-bg: rgba(26, 29, 46, 0.3); /* 調整毛玻璃不透明度為 30% */
                 --text-main: #f1f5f9;
                 --text-sub: #94a3b8;
                 --nav-bg: rgba(26, 29, 46, 0.75);
                 --border-color: rgba(255, 255, 255, 0.1);
                 --dash-item-bg: rgba(255, 255, 255, 0.04);
                 --footer-text-color: #f1f5f9;
-                /* 2. 深色模式：灰綠(#283832) + 灰藍(#2d3748) + 黑色(#0f111a)，斜向漸變 */
                 --gradient-green: #283832;
                 --gradient-blue: #2d3748;
                 --gradient-option: #0f111a;
@@ -52,28 +51,26 @@
         }
 
         body.dark-mode {
-            --card-bg: rgba(26, 29, 46, 0.4); /* 調整毛玻璃不透明度為 40% */
+            --card-bg: rgba(26, 29, 46, 0.3); /* 調整毛玻璃不透明度為 30% */
             --text-main: #f1f5f9;
             --text-sub: #94a3b8;
             --nav-bg: rgba(26, 29, 46, 0.75);
             --border-color: rgba(255, 255, 255, 0.1);
             --dash-item-bg: rgba(255, 255, 255, 0.04);
             --footer-text-color: #f1f5f9;
-            /* 2. 深色模式：灰綠(#283832) + 灰藍(#2d3748) + 黑色(#0f111a) */
             --gradient-green: #283832;
             --gradient-blue: #2d3748;
             --gradient-option: #0f111a;
         }
 
         body.light-mode {
-            --card-bg: rgba(255, 255, 255, 0.4); /* 調整毛玻璃不透明度為 40% */
+            --card-bg: rgba(255, 255, 255, 0.3); /* 調整毛玻璃不透明度為 30% */
             --text-main: #2c3e50;
             --text-sub: #546e7a;
             --nav-bg: rgba(255, 255, 255, 0.75);
             --border-color: rgba(0, 0, 0, 0.1);
             --dash-item-bg: rgba(0, 0, 0, 0.03);
             --footer-text-color: #546e7a;
-            /* 1. 淺色模式：淺綠(#b8f3e2) + 淺藍(#b4f1f5) + 白色(#ffffff) */
             --gradient-green: #b8f3e2;
             --gradient-blue: #b4f1f5;
             --gradient-option: #ffffff;
@@ -92,7 +89,6 @@
         }
 
         body {
-            /* 1. & 2. 套用斜向漸變 (包含綠、藍、白/黑) */
             background: linear-gradient(135deg, var(--gradient-green) 0%, var(--gradient-blue) 50%, var(--gradient-option) 100%);
             background-attachment: fixed;
             color: var(--text-main);
@@ -105,7 +101,6 @@
             position: relative;
         }
 
-        /* 季節性背景特效 Canvas */
         #effectCanvas {
             position: fixed;
             top: 0;
@@ -1103,6 +1098,126 @@
             background-color: var(--accent-hover);
         }
 
+        /* 拒絕社交理由產生器按鈕 */
+        .refusal-ball {
+            position: fixed;
+            bottom: 88px;
+            left: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: #ffffff;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s ease, background-color 0.2s;
+        }
+
+        .refusal-ball:hover {
+            transform: scale(1.1);
+            background: var(--accent-hover);
+        }
+
+        /* 拒絕社交理由彈窗卡片 */
+        .refusal-card {
+            position: fixed;
+            bottom: 146px;
+            left: 30px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 14px 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+            width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px) scale(0.95);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        .refusal-card.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .refusal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .refusal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .refusal-text {
+            font-size: 0.88rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            background: var(--dash-item-bg);
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+        }
+
+        .refusal-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .refusal-btn-gen, .refusal-btn-copy {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.78rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .refusal-btn-gen {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .refusal-btn-gen:hover {
+            background: var(--accent-hover);
+        }
+
+        .refusal-btn-copy {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .refusal-btn-copy:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
         .player-ball {
             position: fixed;
             bottom: 30px;
@@ -1130,7 +1245,7 @@
 
         .lofi-player-card {
             position: fixed;
-            bottom: 88px;
+            bottom: 146px;
             left: 30px;
             background: var(--card-bg);
             backdrop-filter: blur(12px);
@@ -1298,10 +1413,19 @@
                 left: 15px;
                 bottom: 15px;
             }
-            .lofi-player-card {
+            .refusal-ball {
                 left: 15px;
                 bottom: 73px;
+            }
+            .lofi-player-card {
+                left: 15px;
+                bottom: 131px;
                 width: 200px;
+            }
+            .refusal-card {
+                left: 15px;
+                bottom: 131px;
+                width: 230px;
             }
         }
     </style>
@@ -1313,9 +1437,26 @@
 
     <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg" loop preload="auto"></audio>
 
+    <!-- 拒絕社交理由產生器按鈕 (位於播放器按鈕正上方) -->
+    <button class="refusal-ball" id="refusalBall" onclick="toggleRefusalCard()" title="拒絕社交理由產生器">🙅‍♂️</button>
+
+    <!-- 拒絕社交理由卡片 -->
+    <div class="refusal-card" id="refusalCard">
+        <div class="refusal-header">
+            <span>💬 拒絕社交理由產生器</span>
+            <button class="refusal-close" onclick="toggleRefusalCard()">✕</button>
+        </div>
+        <div class="refusal-text" id="refusalQuote">點擊按鈕隨機生成推託金句！</div>
+        <div class="refusal-actions">
+            <button class="refusal-btn-gen" onclick="generateRefusalReason()">🎲 隨機換句</button>
+            <button class="refusal-btn-copy" onclick="copyRefusalReason()">📋 複製理由</button>
+        </div>
+    </div>
+
+    <!-- 音樂播放器按鈕 -->
     <button class="player-ball" id="playerBall" onclick="togglePlayerCard()" title="開啟音樂播放器">🎧</button>
 
-    <!-- 播放器卡片 (移除街道音選項) -->
+    <!-- 播放器卡片 -->
     <div class="lofi-player-card" id="lofiPlayerCard">
         <div class="player-top">
             <div class="player-track-info">
@@ -1357,7 +1498,6 @@
                 <a href="#to-team" class="nav-btn" onclick="switchPage('main')">團隊</a>
             </div>
             <div class="nav-tools-group">
-                <!-- 季節性背景特效選擇選單 -->
                 <select class="color-select" id="effectSelect" onchange="changeEffect(this.value)" title="背景特效選單">
                     <option value="snow" selected>❄️ 雪花</option>
                     <option value="sakura">🌸 落櫻</option>
@@ -1365,7 +1505,6 @@
                     <option value="leaves">🍂 落葉</option>
                     <option value="none">🚫 關閉</option>
                 </select>
-                <!-- 深色/淺色模式一鍵切換圖示按鈕 -->
                 <button class="btn-copy-nav" id="themeToggleBtn" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">複製邀請連結</button>
@@ -2173,6 +2312,53 @@
             });
         }
 
+        /* 拒絕社交理由產生器邏輯 */
+        const refusalQuotes = [
+            "抱歉，我家的貓今天心事重重，我需要留在家陪牠談心。",
+            "我今天社交電量顯示 1%，正處於低電量自動關機狀態。",
+            "不好意思，我的靈魂今天請假了，只有肉體在家躺平。",
+            "剛看了天氣預報，今天極度不適合我出門社交。",
+            "抱歉，我正在與床榻進行一項極為嚴肅的深度對話。",
+            "今天我的社交防護罩出現破洞，需要緊急進行修復。",
+            "我今天已經達到每日對外說話字數上限了，明天請早。",
+            "不好意思，我的宅家防禦系統已啟動，無法解鎖大門。"
+        ];
+
+        function toggleRefusalCard() {
+            const card = document.getElementById('refusalCard');
+            card.classList.toggle('active');
+            if (card.classList.contains('active') && document.getElementById('refusalQuote').textContent.includes('點擊按鈕')) {
+                generateRefusalReason();
+            }
+        }
+
+        function generateRefusalReason() {
+            const quoteElem = document.getElementById('refusalQuote');
+            const randomIndex = Math.floor(Math.random() * refusalQuotes.length);
+            quoteElem.textContent = refusalQuotes[randomIndex];
+        }
+
+        function copyRefusalReason() {
+            const text = document.getElementById('refusalQuote').textContent;
+            if (text && !text.includes('點擊按鈕')) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('📋 已複製拒絕理由！');
+                }).catch(() => {
+                    showToast('📋 複製成功！');
+                });
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('customToast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
         function togglePlayerCard() {
             const card = document.getElementById('lofiPlayerCard');
             card.classList.toggle('active');
@@ -2263,196 +2449,16 @@
             document.getElementById(tabId + 'Btn').classList.add('active');
         }
 
-        function generateProfileCard() {
-            const nameInput = document.getElementById('profileNameInput').value.trim() || 'i人小夥伴';
-            document.getElementById('previewUsername').textContent = nameInput;
-        }
-
-        const fortuneList = [
-            { good: "帶薪發呆、默默潛水", bad: "被迫社交、強制視訊開會" },
-            { good: "盲猜全對、遊戲十連抽中SSR", bad: "出門忘記帶耳機、訊息未讀紅點爆多" },
-            { good: "獨自享用美食、掛網聽背景音", bad: "走在路上巧遇熟人、手機突然沒電" },
-            { good: "躺平耍廢、吸貓擼狗", bad: "群組被@標記、必須開麥講話" },
-            { good: "刷到好看的迷因、享受安靜午後", bad: "網路突然卡頓、外賣送錯餐點" },
-            { good: "早睡早起、心如止水", bad: "深夜被朋友強行拉去打遊戲" }
-        ];
-
-        function drawFortune() {
-            const index = Math.floor(Math.random() * fortuneList.length);
-            const res = fortuneList[index];
-            document.getElementById('fortuneResult').innerHTML = `
-                <div style="font-size: 1.05rem; color: var(--accent-color); font-weight: bold; margin-bottom: 6px;">✨ 宜：${res.good}</div>
-                <div style="font-size: 0.95rem; color: var(--text-sub);">💥 忌：${res.bad}</div>
-            `;
-        }
-
-        const cardPool = [
-            { name: "N · 默默潛水的普通i人", rate: 40 },
-            { name: "R · 偶爾點頭附和的群友", rate: 25 },
-            { name: "RR · 正在24小時 背景音 房掛機", rate: 15 },
-            { name: "RRR · 句點大師", rate: 10 },
-            { name: "SR · 敲木魚積攢功德中", rate: 5 },
-            { name: "SSR · 歐洲人附體！十連雙金", rate: 3 },
-            { name: "UR · 傳說中的開黑發起人", rate: 1.5 },
-            { name: "SEC · 【隱藏極稀有】伺服器守護神", rate: 0.5 }
-        ];
-
-        function drawCard() {
-            let rand = Math.random() * 100;
-            let cumulative = 0;
-            let selected = cardPool[0].name;
-            for (let item of cardPool) {
-                cumulative += item.rate;
-                if (rand <= cumulative) {
-                    selected = item.name;
-                    break;
-                }
-            }
-            document.getElementById('gachaResult').innerHTML = `🎉 恭喜抽中：<span style="color: var(--accent-color);">${selected}</span>`;
-        }
-
-        function switchTab(tabId, event) {
-            document.querySelectorAll('.rules-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('#rules .tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        function toggleFaq(el) {
-            const item = el.parentElement;
-            item.classList.toggle('active');
-        }
-
-        function searchFaq() {
-            const query = document.getElementById('faqSearchInput').value.toLowerCase();
-            const items = document.querySelectorAll('#faqList .faq-item');
-            items.forEach(item => {
-                const text = item.innerText.toLowerCase();
-                item.style.display = text.includes(query) ? 'block' : 'none';
-            });
-        }
-
-        function searchChannels() {
-            const query = document.getElementById('channelSearchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('#channelGrid .channel-card');
-            cards.forEach(card => {
-                const text = card.innerText.toLowerCase();
-                card.style.display = text.includes(query) ? 'block' : 'none';
-            });
-        }
-
-        function toggleCmdAccordion() {
-            const acc = document.getElementById('botCmdAccordion');
-            acc.classList.toggle('active');
-        }
-
-        function switchPage(type, targetAnchor = '') {
-            const mainView = document.getElementById('mainPageView');
-            const subView = document.getElementById('subPageView');
-            const mainNav = document.getElementById('mainNavbar');
-            const subNav = document.getElementById('subNavbar');
-
-            if (type === 'sub') {
-                mainView.classList.remove('active');
-                subView.classList.add('active');
-                mainNav.style.display = 'none';
-                subNav.style.display = 'flex';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                subView.classList.remove('active');
-                mainView.classList.add('active');
-                subNav.style.display = 'none';
-                mainNav.style.display = 'flex';
-                
-                if (targetAnchor) {
-                    setTimeout(() => {
-                        const el = document.getElementById(targetAnchor);
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }, 50);
-                } else {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            }
-        }
-
-        function openModal(e) {
-            e.preventDefault();
-            document.getElementById('joinModal').classList.add('show');
-        }
-
-        function closeModal() {
-            document.getElementById('joinModal').classList.remove('show');
-        }
-
-        function copyInviteLink() {
-            navigator.clipboard.writeText("https://discord.gg/ie31inviteyou").then(() => {
-                showToast("📋 邀請連結已成功複製！");
-            }).catch(() => {
-                showToast("❌ 複製失敗，請手動複製連結。");
-            });
-        }
-
-        function handleDecline() {
-            showToast("🥺 沒關係，隨時歡迎你再來逛逛！");
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('customToast');
-            toast.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
-        }
-
-        const backToTopBtn = document.getElementById('backToTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
+        /* 滾動動畫觸發 */
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
-                    
-                    const counter = entry.target.querySelector('[data-counter]');
-                    if (counter && !counter.classList.contains('counted')) {
-                        counter.classList.add('counted');
-                        const targetVal = parseInt(counter.getAttribute('data-counter'));
-                        const suffix = counter.getAttribute('data-suffix') || '';
-                        let current = 0;
-                        const duration = 1500;
-                        const stepTime = 20;
-                        const steps = duration / stepTime;
-                        const increment = targetVal / steps;
-
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= targetVal) {
-                                counter.textContent = targetVal + suffix;
-                                clearInterval(timer);
-                            } else {
-                                counter.textContent = Math.floor(current) + suffix;
-                            }
-                        }, stepTime);
-                    }
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
