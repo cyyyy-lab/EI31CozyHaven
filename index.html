@@ -1902,8 +1902,8 @@
                 const target = parseInt(counter.getAttribute('data-counter'));
                 const suffix = counter.getAttribute('data-suffix') || '';
                 let current = 0;
-                // 增加總步數並延長間隔時間（35ms），讓動畫跳動更平緩且緩慢
-                const steps = 70;
+                // 增加總步數並延長間隔時間（27ms），讓動畫跳動更平緩且緩慢
+                const steps = 65;
                 const increment = Math.max(1, Math.ceil(target / steps));
                 const timer = setInterval(() => {
                     current += increment;
@@ -1913,7 +1913,7 @@
                     } else {
                         counter.textContent = current + suffix;
                     }
-                }, 30);
+                }, 27);
             });
         }
 
