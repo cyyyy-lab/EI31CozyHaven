@@ -32,9 +32,9 @@
             --footer-text-color: #546e7a;
         }
 
-        /* 2. 系統預設主題自動偵測 (當系統為深色模式時自動套用) */
+        /* 2. 系統預設主題自動偵測 (當系統為深色模式時自動套用)[cite: 13] */
         @media (prefers-color-scheme: dark) {
-            :root {
+            :root:not(.light-mode) {
                 --card-bg: rgba(26, 29, 46, 0.5);
                 --text-main: #f1f5f9;
                 --text-sub: #94a3b8;
@@ -55,10 +55,20 @@
             --border-color: rgba(255, 255, 255, 0.1);
             --dash-item-bg: rgba(255, 255, 255, 0.04);
             --footer-text-color: #f1f5f9;
+            --gradient-blue: #2d3748;
+            --gradient-option: #0f111a;
         }
 
-        body.gray-mode {
-            --footer-text-color: #000000;
+        body.light-mode {
+            --card-bg: rgba(255, 255, 255, 0.5);
+            --text-main: #2c3e50;
+            --text-sub: #546e7a;
+            --nav-bg: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --dash-item-bg: rgba(0, 0, 0, 0.03);
+            --footer-text-color: #546e7a;
+            --gradient-blue: #b4f1f5;
+            --gradient-option: #ffffff;
         }
 
         * {
@@ -86,7 +96,7 @@
             position: relative;
         }
 
-        /* 季節性背景特效 Canvas */
+        /* 季節性背景特效 Canvas[cite: 13] */
         #effectCanvas {
             position: fixed;
             top: 0;
@@ -186,7 +196,7 @@
             font-weight: 500;
             padding: 5px 8px;
             border-radius: 6px;
-            transition: background 0.2s;
+            transition: background 0.2s, color 0.2s;
             cursor: pointer;
             border: none;
             background: transparent;
@@ -195,6 +205,15 @@
 
         .nav-btn:hover {
             background: rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn.active {
+            background-color: var(--accent-color);
+            color: #ffffff !important;
         }
 
         .btn-join-nav {
@@ -658,6 +677,7 @@
             justify-content: center;
             gap: 10px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .demo-content {
@@ -1290,7 +1310,7 @@
 </head>
 <body>
 
-    <!-- 3. 多功能季節性動態背景 Canvas -->
+    <!-- 3. 多功能季節性動態背景 Canvas[cite: 13] -->
     <canvas id="effectCanvas"></canvas>
 
     <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" loop preload="auto"></audio>
@@ -1333,10 +1353,10 @@
             <div class="nav-links-group">
                 <a href="#home" class="nav-btn" onclick="switchPage('main')">首頁</a>
                 <a href="#to-dashboard" class="nav-btn" onclick="switchPage('main')">儀表板</a>
-                <a href="#to-quiz" class="nav-btn" onclick="switchPage('main')">i人小測驗</a>
+                <a href="#to-quiz" class="nav-btn" onclick="switchPage('main')">小測驗</a>
                 <a href="#to-rules" class="nav-btn" onclick="switchPage('main')">規則</a>
                 <a href="#to-faq" class="nav-btn" onclick="switchPage('main')">問答</a>
-                <a href="#whats-inside" class="nav-btn" onclick="switchPage('main')">裡面有</a>
+                <a href="#whats-inside" class="nav-btn" onclick="switchPage('main')">內容</a>
                 <a href="#to-story" class="nav-btn" onclick="switchPage('main')">起源</a>
                 <a href="#to-milestones" class="nav-btn" onclick="switchPage('main')">里程</a>
                 <a href="#to-bot" class="nav-btn" onclick="switchPage('main')">機器人</a>
@@ -1344,20 +1364,16 @@
                 <a href="#to-support" class="nav-btn" onclick="switchPage('main')">支持</a>
             </div>
             <div class="nav-tools-group">
-                <!-- 3. 季節性背景特效選擇選單 -->
+                <!-- 3. 季節性背景特效選擇選單[cite: 13] -->
                 <select class="color-select" id="effectSelect" onchange="changeEffect(this.value)" title="背景特效選單">
                     <option value="snow" selected>❄️ 雪花</option>
                     <option value="sakura">🌸 落櫻</option>
-                    <option value="glow">✨ 微光粒子</option>
+                    <option value="glow">✨ 光粒</option>
                     <option value="leaves">🍂 落葉</option>
-                    <option value="none">🚫 關閉特效</option>
+                    <option value="none">🚫 關閉</option>
                 </select>
-                <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
-                    <option value="#ffffff" selected>🎨 白</option>
-                    <option value="#64748b">🎨 灰</option>
-                    <option value="#0f111a">🎨 黑</option>
-                    <option value="#f2d6b3">🎨 琥珀</option>
-                </select>
+                <!-- 6. 深色/淺色模式一鍵切換圖示按鈕 -->
+                <button class="btn-copy-nav" id="themeToggleBtn" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">複製邀請連結</button>
             </div>
@@ -1381,16 +1397,11 @@
                 <select class="color-select" onchange="changeEffect(this.value)" title="背景特效選單">
                     <option value="snow" selected>❄️ 雪花</option>
                     <option value="sakura">🌸 落櫻</option>
-                    <option value="glow">✨ 微光粒子</option>
+                    <option value="glow">✨ 光粒</option>
                     <option value="leaves">🍂 落葉</option>
-                    <option value="none">🚫 關閉特效</option>
+                    <option value="none">🚫 關閉</option>
                 </select>
-                <select class="color-select" onchange="changeBgColor(this.value)">
-                    <option value="#ffffff" selected>🎨 白</option>
-                    <option value="#64748b">🎨 灰</option>
-                    <option value="#0f111a">🎨 黑</option>
-                    <option value="#f2d6b3">🎨 琥珀</option>
-                </select>
+                <button class="btn-copy-nav" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">連結</button>
             </div>
@@ -1734,6 +1745,7 @@
                 <div class="demo-tabs">
                     <button class="nav-btn tab-btn active" id="muyuTabBtn" onclick="switchDemoTab('muyuTab')">🪵 線上敲木魚</button>
                     <button class="nav-btn tab-btn" id="gachaTabBtn" onclick="switchDemoTab('gachaTab')">🎴 試抽卡體驗</button>
+                    <button class="nav-btn tab-btn" id="profileTabBtn" onclick="switchDemoTab('profileTab')">🆔 Profile 模擬器</button>
                 </div>
                 
                 <div id="muyuTab" class="demo-content active">
@@ -1748,6 +1760,23 @@
                     <div class="gacha-box">
                         <button class="btn-join-main" style="width: auto; padding: 10px 24px; font-size: 0.95rem;" onclick="drawCard()">🎴 點擊單抽體驗</button>
                         <div id="gachaResult" class="gacha-result">點擊上方按鈕開始試抽！</div>
+                    </div>
+                </div>
+
+                <!-- 5. 增加「輸入名稱產生專屬名片/小卡」的模擬器 -->
+                <div id="profileTab" class="demo-content">
+                    <div class="gacha-box" style="text-align: left;">
+                        <label style="font-size: 0.9rem; font-weight: bold; display: block; margin-bottom: 6px;">輸入您的 Discord 名稱：</label>
+                        <input type="text" id="profileNameInput" class="search-input" placeholder="例如：i人小夥伴" value="i人小夥伴" style="margin-bottom: 12px;">
+                        <button class="btn-join-main" style="width: 100%; padding: 12px; font-size: 0.95rem; margin-bottom: 15px;" onclick="generateProfileCard()">生成預覽名片 (!profile)</button>
+                        <div id="profilePreviewCard" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-color); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white;">🤖</div>
+                            <div>
+                                <div id="previewUsername" style="font-weight: bold; color: var(--text-main); font-size: 1rem;">i人小夥伴</div>
+                                <div style="font-size: 0.75rem; color: var(--accent-color); margin-top: 2px;">伺服器等級: Lv.15 | 連續打卡: 12天</div>
+                                <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 2px;">狀態: 正在 24小時 Lofi 房掛機 🎧</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1993,7 +2022,7 @@
     <div class="toast-msg" id="customToast"></div>
 
     <script>
-        /* 3. 多功能季節性背景粒子系統 (雪花 / 落櫻 / 微光粒子 / 落葉) */
+        /* 3. 多功能季節性背景粒子系統 (雪花 / 落櫻 / 光粒 / 落葉)[cite: 13] */
         const canvas = document.getElementById('effectCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -2119,6 +2148,20 @@
         initParticles();
         renderEffect();
 
+        // 6. 深淺模式切換邏輯
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+            
+            const isDark = body.classList.contains('dark-mode');
+            const toggleBtns = document.querySelectorAll('#themeToggleBtn, #subNavbar .btn-copy-nav:nth-child(3)');
+            
+            toggleBtns.forEach(btn => {
+                if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+            });
+        }
+
         function togglePlayerCard() {
             const card = document.getElementById('lofiPlayerCard');
             card.classList.toggle('active');
@@ -2231,11 +2274,19 @@
         function switchDemoTab(tabId) {
             document.getElementById('muyuTab').classList.remove('active');
             document.getElementById('gachaTab').classList.remove('active');
+            document.getElementById('profileTab').classList.remove('active');
             document.getElementById('muyuTabBtn').classList.remove('active');
             document.getElementById('gachaTabBtn').classList.remove('active');
+            document.getElementById('profileTabBtn').classList.remove('active');
 
             document.getElementById(tabId).classList.add('active');
             document.getElementById(tabId + 'Btn').classList.add('active');
+        }
+
+        // 5. 生成 Profile 模擬卡片
+        function generateProfileCard() {
+            const nameInput = document.getElementById('profileNameInput').value.trim() || 'i人小夥伴';
+            document.getElementById('previewUsername').textContent = nameInput;
         }
 
         const cardRarities = [
@@ -2385,22 +2436,6 @@
             accordion.classList.toggle('active');
         }
 
-        function changeBgColor(color) {
-            document.documentElement.style.setProperty('--gradient-option', color);
-            
-            document.body.classList.remove('dark-mode', 'gray-mode');
-
-            if (color === '#0f111a') {
-                document.documentElement.style.setProperty('--gradient-blue', '#7d9acd');
-                document.body.classList.add('dark-mode');
-            } else if (color === '#64748b') {
-                document.documentElement.style.setProperty('--gradient-blue', '#b4f1f5');
-                document.body.classList.add('gray-mode');
-            } else {
-                document.documentElement.style.setProperty('--gradient-blue', '#b4f1f5');
-            }
-        }
-
         function switchPage(page, targetId = null) {
             const mainView = document.getElementById('mainPageView');
             const subView = document.getElementById('subPageView');
@@ -2466,6 +2501,44 @@
             }
         });
 
+        // 7. 導覽列高亮 ScrollSpy 實作
+        window.addEventListener('scroll', () => {
+            const sections = [
+                { id: 'home', selector: '#home' },
+                { id: 'to-dashboard', selector: '#dashboard' },
+                { id: 'to-quiz', selector: '#quiz' },
+                { id: 'to-rules', selector: '#rules' },
+                { id: 'to-faq', selector: '#faq' },
+                { id: 'whats-inside', selector: '#whats-inside' },
+                { id: 'to-story', selector: '#story' },
+                { id: 'to-milestones', selector: '#milestones' },
+                { id: 'to-bot', selector: '#bot' },
+                { id: 'to-team', selector: '#team' },
+                { id: 'to-support', selector: '#to-support' }
+            ];
+
+            let currentId = 'home';
+            for (let sec of sections) {
+                const el = document.querySelector(sec.selector);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= 180 && rect.bottom >= 180) {
+                        currentId = sec.id;
+                        break;
+                    }
+                }
+            }
+
+            const navButtons = document.querySelectorAll('.nav-links-group .nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+                const href = btn.getAttribute('href');
+                if (href === `#${currentId}` || (currentId === 'dashboard' && href === '#to-dashboard') || (currentId === 'quiz' && href === '#to-quiz') || (currentId === 'rules' && href === '#to-rules') || (currentId === 'faq' && href === '#to-faq') || (currentId === 'story' && href === '#to-story') || (currentId === 'milestones' && href === '#to-milestones') || (currentId === 'bot' && href === '#to-bot') || (currentId === 'team' && href === '#to-team') || (currentId === 'to-support' && href === '#to-support')) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+
         const joinModal = document.getElementById('joinModal');
         function openModal(event) {
             event.preventDefault();
@@ -2504,6 +2577,11 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             initScrollReveal();
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-mode');
+                const toggleBtn = document.getElementById('themeToggleBtn');
+                if (toggleBtn) toggleBtn.textContent = '☀️';
+            }
         });
     </script>
 </body>
