@@ -1322,24 +1322,24 @@
     <!-- 多功能季節性動態背景 Canvas -->
     <canvas id="effectCanvas"></canvas>
 
-    <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" loop preload="auto"></audio>
+    <!-- 預設音源：舒適雨聲 -->
+    <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg" loop preload="auto"></audio>
 
     <button class="player-ball" id="playerBall" onclick="togglePlayerCard()" title="開啟音樂播放器">🎧</button>
 
     <div class="lofi-player-card" id="lofiPlayerCard">
         <div class="player-top">
             <div class="player-track-info">
-                <span class="player-icon" id="playerIcon">☕</span>
-                <!-- 1. 播放器「Lofi Background」改為「背景音」 -->
-                <span class="player-title" id="songTitle">背景音</span>
+                <span class="player-icon" id="playerIcon">🌧️</span>
+                <span class="player-title" id="songTitle">舒適雨聲</span>
             </div>
             <button class="player-btn-play" id="playToggleBtn" onclick="togglePlayAudio()">▶</button>
         </div>
         <div class="player-controls">
             <select class="audio-select" id="trackSelect" onchange="switchAudioTrack(this.value)">
-                <option value="rain">🌧️ 舒適雨聲</option>
+                <option value="rain" selected>🌧️ 舒適雨聲</option>
+                <option value="street">🏙️ 街道音</option>
                 <option value="bonfire">🔥 溫馨篝火</option>
-                <option value="street">☕ 咖啡館環境音</option>
             </select>
             <div class="volume-box">
                 <span>🔊</span>
@@ -1381,7 +1381,7 @@
                     <option value="leaves">🍂 落葉</option>
                     <option value="none">🚫 關閉</option>
                 </select>
-                <!-- 2. 深色/淺色模式一鍵切換圖示按鈕 -->
+                <!-- 深色/淺色模式一鍵切換圖示按鈕 -->
                 <button class="btn-copy-nav" id="themeToggleBtn" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">複製邀請連結</button>
@@ -1410,7 +1410,6 @@
                     <option value="leaves">🍂 落葉</option>
                     <option value="none">🚫 關閉</option>
                 </select>
-                <!-- 2. 修正新頁面模式切換按鈕ID -->
                 <button class="btn-copy-nav" id="themeToggleBtnSub" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">連結</button>
@@ -1462,7 +1461,6 @@
 
         <div id="to-dashboard" class="section-anchor"></div>
 
-        <!-- 3. 數據儀表板：滾動到此區塊時數字從 0 動態累加到 3000+ 與 100+ -->
         <div class="container scroll-reveal" id="dashboard">
             <div class="dashboard-header">
                 <h2>數據儀表板</h2>
@@ -2168,7 +2166,7 @@
         initParticles();
         renderEffect();
 
-        /* 2. 修復深淺模式切換按鈕無法使用與狀態切換問題 */
+        /* 修復深淺模式切換按鈕無法使用與狀態切換問題 */
         function toggleDarkMode() {
             const body = document.body;
             const isCurrentlyDark = body.classList.contains('dark-mode') || 
@@ -2195,21 +2193,22 @@
             card.classList.toggle('active');
         }
 
+        /* 音訊曲目對照表 (含雨聲與街道音) */
         const audioTracks = {
             rain: {
                 src: "https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg",
                 title: "舒適雨聲",
                 icon: "🌧️"
             },
+            street: {
+                src: "https://actions.google.com/sounds/v1/ambiences/outdoor_city_traffic.ogg",
+                title: "街道音",
+                icon: "🏙️"
+            },
             bonfire: {
                 src: "https://actions.google.com/sounds/v1/environment/fire_burning.ogg",
                 title: "溫馨篝火",
                 icon: "🔥"
-            },
-            street: {
-                src: "https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg",
-                title: "咖啡館環境音",
-                icon: "☕"
             }
         };
 
@@ -2426,7 +2425,7 @@
         }
 
         function openModal(e) {
-            e.preventDefault();
+            if (e) e.preventDefault();
             document.getElementById('joinModal').classList.add('show');
         }
 
@@ -2436,14 +2435,10 @@
 
         function copyInviteLink() {
             navigator.clipboard.writeText("https://discord.gg/ie31inviteyou").then(() => {
-                showToast("📋 邀請連結已成功複製！");
+                showToast("✅ 已複製邀請連結！");
             }).catch(() => {
-                showToast("❌ 複製失敗，請手動複製連結。");
+                showToast("❌ 複製失敗，請手動複製");
             });
-        }
-
-        function handleDecline() {
-            showToast("🥺 沒關係，隨時歡迎你再來逛逛！");
         }
 
         function showToast(msg) {
@@ -2452,57 +2447,12 @@
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 2500);
+            }, 2000);
         }
 
-        const backToTopBtn = document.getElementById('backToTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    
-                    const counter = entry.target.querySelector('[data-counter]');
-                    if (counter && !counter.classList.contains('counted')) {
-                        counter.classList.add('counted');
-                        const targetVal = parseInt(counter.getAttribute('data-counter'));
-                        const suffix = counter.getAttribute('data-suffix') || '';
-                        let current = 0;
-                        const duration = 1500;
-                        const stepTime = 20;
-                        const steps = duration / stepTime;
-                        const increment = targetVal / steps;
-
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= targetVal) {
-                                counter.textContent = targetVal + suffix;
-                                clearInterval(timer);
-                            } else {
-                                counter.textContent = Math.floor(current) + suffix;
-                            }
-                        }, stepTime);
-                    }
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
-            observer.observe(el);
-        });
+        function handleDecline() {
+            showToast("🥺 沒關係，隨時歡迎你再回來看看！");
+        }
     </script>
 </body>
 </html>
