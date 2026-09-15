@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>可能是i人的伺服器｜Discord 社群</title>
+    <!-- 4. 讓瀏覽器分頁標籤顯示伺服器 Logo (Favicon) -->
+    <link rel="icon" href="images/1sever.png" type="image/png">
     <style>
         :root {
             --gradient-option: #ffffff;
@@ -59,7 +61,7 @@
             position: relative;
         }
 
-        /* 1. 雪花 Canvas 特效背景 */
+        /* 雪花 Canvas 特效背景 */
         #snowCanvas {
             position: fixed;
             top: 0;
@@ -617,6 +619,133 @@
             font-family: monospace;
         }
 
+        /* 1. 線上試玩互動區樣式 */
+        .interactive-demo-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .demo-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .demo-content {
+            display: none;
+        }
+
+        .demo-content.active {
+            display: block;
+        }
+
+        .muyu-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s;
+        }
+
+        .muyu-box:active {
+            transform: scale(0.96);
+        }
+
+        .muyu-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        .muyu-count {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .muyu-hint {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-top: 6px;
+        }
+
+        .muyu-pop {
+            position: absolute;
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            pointer-events: none;
+            animation: floatUp 0.8s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-35px); }
+        }
+
+        .gacha-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .gacha-result {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-height: 30px;
+        }
+
+        /* 2. 小測驗組件樣式 */
+        .quiz-q {
+            text-align: left;
+        }
+
+        .quiz-title {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .quiz-opt-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--dash-item-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.1s;
+        }
+
+        .quiz-opt-btn:hover {
+            background: rgba(91, 115, 199, 0.12);
+            border-color: var(--accent-color);
+            transform: translateX(4px);
+        }
+
+        .quiz-result-box {
+            text-align: left;
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
         .cmd-accordion {
             margin-top: 25px;
             text-align: left;
@@ -790,12 +919,6 @@
             line-height: 1.3;
         }
 
-        .team-desc-img {
-            height: 1.2em;
-            vertical-align: middle;
-            object-fit: contain;
-        }
-
         .emoji-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -954,7 +1077,7 @@
             background: var(--accent-hover);
         }
 
-        /* 精緻音樂播放控制小卡樣式（預設折疊隱藏） */
+        /* 精緻音樂播放控制小卡樣式 */
         .lofi-player-card {
             position: fixed;
             bottom: 88px;
@@ -1160,15 +1283,19 @@
     <div class="lofi-player-card" id="lofiPlayerCard">
         <div class="player-top">
             <div class="player-track-info">
-                <span class="player-icon" id="playerIcon">🎧</span>
+                <span class="player-icon" id="playerIcon">☕</span>
                 <span class="player-title" id="songTitle">Lofi Background</span>
             </div>
             <button class="player-btn-play" id="playToggleBtn" onclick="togglePlayAudio()">▶</button>
         </div>
         <div class="player-controls">
+            <!-- 3. 豐富環境音效選單 -->
             <select class="audio-select" id="trackSelect" onchange="switchAudioTrack(this.value)">
                 <option value="lofi">☕ Lofi BGM</option>
                 <option value="rain">🌧️ 舒適雨聲</option>
+                <option value="bonfire">🔥 溫馨篝火</option>
+                <option value="street">☕ 咖啡館環境音</option>
+                <option value="keyboard">⌨️ 鍵盤打字聲</option>
             </select>
             <div class="volume-box">
                 <span>🔊</span>
@@ -1192,6 +1319,7 @@
             <div class="nav-links-group">
                 <a href="#home" class="nav-btn" onclick="switchPage('main')">首頁</a>
                 <a href="#to-dashboard" class="nav-btn" onclick="switchPage('main')">儀表板</a>
+                <a href="#to-quiz" class="nav-btn" onclick="switchPage('main')">i人小測驗</a>
                 <a href="#to-rules" class="nav-btn" onclick="switchPage('main')">規則</a>
                 <a href="#to-faq" class="nav-btn" onclick="switchPage('main')">問答</a>
                 <a href="#whats-inside" class="nav-btn" onclick="switchPage('main')">裡面有</a>
@@ -1306,6 +1434,49 @@
             </div>
         </div>
 
+        <!-- 2. 「你是哪種 i 人？」極簡小測驗模組 -->
+        <div id="to-quiz" class="section-anchor"></div>
+
+        <div class="container scroll-reveal" id="quiz">
+            <div class="dashboard-header">
+                <h2>🧩 「你是哪種 i 人？」極簡小測驗</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">只需 3 題，快速測出你的社恐/i人屬性並推薦專屬頻道！</p>
+
+            <div id="quizContainer">
+                <div class="quiz-q" id="q1">
+                    <p class="quiz-title">Q1. 當聚會活動或開黑進行到一半時，你通常的狀態是？</p>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(1, 'A')">A. 能量耗盡，想默默偷溜回家躺平看影片 🛌</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(1, 'B')">B. 待在角落滑手機，偶爾回一兩句 📱</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(1, 'C')">C. 聊得很嗨，但回家後需要靜音三天電量恢復 🔋</button>
+                </div>
+
+                <div class="quiz-q" id="q2" style="display:none;">
+                    <p class="quiz-title">Q2. 進入 Discord 語音房時，你最習慣的習慣是？</p>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(2, 'A')">A. 閉麥閉視訊純掛網，當背景音聽大家說話 🎧</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(2, 'B')">B. 用文字頻道打字回應，偶爾開麥說兩句 💬</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(2, 'C')">C. 遇到熟人會開麥暢聊，主動邀約開遊戲房 🎮</button>
+                </div>
+
+                <div class="quiz-q" id="q3" style="display:none;">
+                    <p class="quiz-title">Q3. 當聊天頻道訊息刷得很快時，你會？</p>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(3, 'A')">A. 默默爬文潛水，不打擾大家發言 🌊</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(3, 'B')">B. 看到感興趣的話題貼個表情符號或簡短回應 😃</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(3, 'C')">C. 興奮地直接加入討論大聊特聊 🔥</button>
+                </div>
+
+                <div id="quizResult" style="display:none;" class="quiz-result-box">
+                    <h3 id="quizTypeTitle" style="color: var(--accent-color); font-size: 1.2rem;">測驗結果</h3>
+                    <p id="quizTypeDesc" style="margin: 10px 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.5;"></p>
+                    <div style="background: var(--dash-item-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 12px;">
+                        <strong style="color: var(--text-main);">💡 為你推薦的伺服器專屬頻道：</strong>
+                        <p id="quizRecommend" style="color: var(--accent-color); font-weight: bold; margin-top: 6px; font-size: 0.95rem;"></p>
+                    </div>
+                    <button class="btn-copy-nav" style="margin-top: 15px; width: 100%;" onclick="resetQuiz()">🔄 重新測驗</button>
+                </div>
+            </div>
+        </div>
+
         <div id="to-rules" class="section-anchor"></div>
 
         <div class="container scroll-reveal" id="rules">
@@ -1375,7 +1546,6 @@
             </div>
             <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">點擊問題標題即可展開或收合解答</p>
             
-            <!-- 常見問題關鍵字搜尋框 -->
             <input type="text" id="faqSearchInput" class="search-input" placeholder="🔍 搜尋常見問題關鍵字..." onkeyup="searchFaq()">
 
             <div class="faq-list" id="faqList">
@@ -1415,7 +1585,6 @@
             </div>
         </div>
 
-        <!-- 伺服器裡有什麼？卡片 -->
         <div id="whats-inside" class="section-anchor"></div>
 
         <div class="container scroll-reveal">
@@ -1434,7 +1603,6 @@
             </div>
         </div>
 
-        <!-- 起源故事 -->
         <div id="to-story" class="section-anchor"></div>
 
         <div class="container scroll-reveal" id="story">
@@ -1529,10 +1697,35 @@
                 <h2>御用機器人</h2>
             </div>
             
-            <!-- 御用機器人頭像 -->
             <img src="images/bot.jpg" alt="御用機器人頭像" class="bot-avatar">
             
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化小管家，帶來滿滿陪伴與樂趣</p>
+
+            <!-- 1. 網頁版線上「敲木魚 / 試抽卡」互動模組 -->
+            <div class="interactive-demo-card scroll-reveal">
+                <h3 style="color: var(--accent-color); margin-bottom: 12px; font-size: 1.1rem;">✨ 御用機器人特色功能線上體驗 ✨</h3>
+                <div class="demo-tabs">
+                    <button class="nav-btn tab-btn active" id="muyuTabBtn" onclick="switchDemoTab('muyuTab')">🪵 線上敲木魚</button>
+                    <button class="nav-btn tab-btn" id="gachaTabBtn" onclick="switchDemoTab('gachaTab')">🎴 試抽卡體驗</button>
+                </div>
+                
+                <!-- 敲木魚 -->
+                <div id="muyuTab" class="demo-content active">
+                    <div class="muyu-box" onclick="hitMuyu(event)">
+                        <div class="muyu-icon">🪵</div>
+                        <div class="muyu-count">累積功德：<span id="meritCount">0</span></div>
+                        <p class="muyu-hint">點擊木魚敲擊積攢功德 (帶音效與浮動特效)</p>
+                    </div>
+                </div>
+
+                <!-- 試抽卡 -->
+                <div id="gachaTab" class="demo-content">
+                    <div class="gacha-box">
+                        <button class="btn-join-main" style="width: auto; padding: 10px 24px; font-size: 0.95rem;" onclick="drawCard()">🎴 點擊單抽體驗</button>
+                        <div id="gachaResult" class="gacha-result">點擊上方按鈕開始試抽！</div>
+                    </div>
+                </div>
+            </div>
 
             <div class="bot-grid">
                 <div class="bot-feature-card scroll-reveal">
@@ -1562,7 +1755,6 @@
                 </div>
             </div>
 
-            <!-- 可展開的完整指令清單 -->
             <div class="cmd-accordion" id="botCmdAccordion">
                 <button class="cmd-accordion-btn" onclick="toggleCmdAccordion()">
                     <span>📜 完整指令清單</span>
@@ -1664,7 +1856,6 @@
             </div>
         </div>
 
-        <!-- 主頁面最底部回到頂部按鈕 -->
         <div class="container scroll-reveal" style="padding: 20px 30px;">
             <a href="#home" class="btn-join-main" style="text-align: center;">回到頂部</a>
         </div>
@@ -1683,14 +1874,12 @@
             </div>
         </div>
 
-        <!-- 頻道板塊卡片 -->
         <div class="container scroll-reveal">
             <div class="dashboard-header">
                 <h2>頻道板塊</h2>
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">探索伺服器內部豐富的主題分區</p>
             
-            <!-- 頻道板塊關鍵字搜尋框 -->
             <input type="text" id="channelSearchInput" class="search-input" placeholder="🔍 搜尋頻道或主題關鍵字..." onkeyup="searchChannels()">
 
             <div class="bot-grid" id="channelGrid">
@@ -1721,7 +1910,6 @@
             </div>
         </div>
 
-        <!-- 熱門表符卡片 -->
         <div class="container scroll-reveal">
             <div class="dashboard-header">
                 <h2>熱門表符</h2>
@@ -1780,7 +1968,7 @@
     <div class="toast-msg" id="customToast"></div>
 
     <script>
-        /* 1. 背景動態雪花特效 */
+        /* 背景動態雪花特效 */
         const canvas = document.getElementById('snowCanvas');
         const ctx = canvas.getContext('2d');
         let snowflakes = [];
@@ -1845,17 +2033,32 @@
             card.classList.toggle('active');
         }
 
-        /* 音樂播放控制小卡邏輯 */
+        /* 3. 音樂/環境音效庫 */
         const audioTracks = {
             lofi: {
                 src: "https://assets.mixkit.co/music/preview/mixkit-chill-bro-494.mp3",
-                title: "Lofi Background",
-                icon: "🎧"
+                title: "Lofi BGM",
+                icon: "☕"
             },
             rain: {
                 src: "https://assets.mixkit.co/active_storage/sfx/1255/1255-preview.mp3",
                 title: "舒適雨聲",
                 icon: "🌧️"
+            },
+            bonfire: {
+                src: "https://assets.mixkit.co/active_storage/sfx/2678/2678-preview.mp3",
+                title: "溫馨篝火",
+                icon: "🔥"
+            },
+            street: {
+                src: "https://assets.mixkit.co/active_storage/sfx/28/28-preview.mp3",
+                title: "咖啡館環境音",
+                icon: "☕"
+            },
+            keyboard: {
+                src: "https://assets.mixkit.co/active_storage/sfx/2558/2558-preview.mp3",
+                title: "鍵盤打字聲",
+                icon: "⌨️"
             }
         };
 
@@ -1894,7 +2097,138 @@
             bgmAudio.volume = val;
         }
 
-        /* 數據儀表板動態累加計數器（已調慢） */
+        /* 1. 木魚與試抽卡互動邏輯 */
+        let meritCount = 0;
+        let audioCtx = null;
+
+        function playMuyuSound() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(550, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.08);
+
+                gain.gain.setValueAtTime(0.8, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function hitMuyu(e) {
+            meritCount++;
+            document.getElementById('meritCount').textContent = meritCount;
+            playMuyuSound();
+
+            const pop = document.createElement('div');
+            pop.className = 'muyu-pop';
+            pop.textContent = '功德 +1';
+            
+            const rect = e.currentTarget.getBoundingClientRect();
+            pop.style.left = (e.clientX - rect.left) + 'px';
+            pop.style.top = (e.clientY - rect.top) + 'px';
+
+            e.currentTarget.appendChild(pop);
+            setTimeout(() => pop.remove(), 800);
+        }
+
+        function switchDemoTab(tabId) {
+            document.getElementById('muyuTab').classList.remove('active');
+            document.getElementById('gachaTab').classList.remove('active');
+            document.getElementById('muyuTabBtn').classList.remove('active');
+            document.getElementById('gachaTabBtn').classList.remove('active');
+
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById(tabId + 'Btn').classList.add('active');
+        }
+
+        const cardRarities = [
+            { name: "N 普通卡", weight: 40, color: "#888" },
+            { name: "R 稀有卡", weight: 30, color: "#3b82f6" },
+            { name: "SR 超稀有卡", weight: 18, color: "#a855f7" },
+            { name: "SSR 極稀有卡", weight: 8, color: "#eab308" },
+            { name: "UR 傳說卡", weight: 3.5, color: "#ef4444" },
+            { name: "SEC 隱藏歐皇卡 ✨", weight: 0.5, color: "#10b981" }
+        ];
+
+        function drawCard() {
+            const rand = Math.random() * 100;
+            let cumulative = 0;
+            let result = cardRarities[0];
+            for (let r of cardRarities) {
+                cumulative += r.weight;
+                if (rand <= cumulative) {
+                    result = r;
+                    break;
+                }
+            }
+            const resEl = document.getElementById('gachaResult');
+            resEl.style.color = result.color;
+            resEl.innerHTML = `恭喜抽中：<strong>[${result.name}]</strong>`;
+        }
+
+        /* 2. 小測驗計算邏輯 */
+        let quizAnswers = [];
+        function answerQuiz(qIndex, answer) {
+            quizAnswers.push(answer);
+            document.getElementById(`q${qIndex}`).style.display = 'none';
+            if (qIndex < 3) {
+                document.getElementById(`q${qIndex + 1}`).style.display = 'block';
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            const counts = { A: 0, B: 0, C: 0 };
+            quizAnswers.forEach(a => counts[a] = (counts[a] || 0) + 1);
+
+            let mainType = 'A';
+            if (counts.B >= counts.A && counts.B >= counts.C) mainType = 'B';
+            if (counts.C > counts.A && counts.C > counts.B) mainType = 'C';
+
+            const resBox = document.getElementById('quizResult');
+            const title = document.getElementById('quizTypeTitle');
+            const desc = document.getElementById('quizTypeDesc');
+            const rec = document.getElementById('quizRecommend');
+
+            if (mainType === 'A') {
+                title.textContent = "🌊 類型：深海極致潛水型 i 人";
+                desc.textContent = "你擁有極高的個人社交能量護城河，最享受安靜陪伴與無壓力的潛水氛圍。不說話對你來說就是最舒適的充電方式！";
+                rec.textContent = "🎧 24小時 Lofi 音樂語音房 / 🌧️ 溫馨避難所 (EMO與日常區)";
+            } else if (mainType === 'B') {
+                title.textContent = "☕ 類型：溫和觀察陪伴型 i 人";
+                desc.textContent = "你喜歡隨興溫馨的交流，雖然不太會主動成為聚會焦點，但非常擅長用文字或表符回應大家，是社群裡超溫暖的默默支持者！";
+                rec.textContent = "💬 綜合聊天室 / 🍰 美食與寵物分享區 / 🎮 遊戲與娛樂廳";
+            } else {
+                title.textContent = "⚡ 類型：充電式隱藏型 i 人 (偽裝 E 人)";
+                desc.textContent = "熟絡之後你比誰都能聊、能玩！雖然社交後依然需要時間獨處電量回滿，但在對頻的群友面前你能完全放開！";
+                rec.textContent = "🎮 熱門遊戲開黑語音 / 🎤 動態與音樂語音包廂 / 🤖 機器人互動區";
+            }
+
+            resBox.style.display = 'block';
+        }
+
+        function resetQuiz() {
+            quizAnswers = [];
+            document.getElementById('quizResult').style.display = 'none';
+            document.getElementById('q1').style.display = 'block';
+            document.getElementById('q2').style.display = 'none';
+            document.getElementById('q3').style.display = 'none';
+        }
+
+        /* 數據儀表板動態累加計數器 */
         let animatedCounters = false;
         function animateCounters() {
             const counters = document.querySelectorAll('.dash-value[data-counter]');
@@ -1902,7 +2236,6 @@
                 const target = parseInt(counter.getAttribute('data-counter'));
                 const suffix = counter.getAttribute('data-suffix') || '';
                 let current = 0;
-                // 增加總步數並延長間隔時間（27ms），讓動畫跳動更平緩且緩慢
                 const steps = 65;
                 const increment = Math.max(1, Math.ceil(target / steps));
                 const timer = setInterval(() => {
@@ -1917,7 +2250,7 @@
             });
         }
 
-        /* 2. 滾動觀察器 (包含文字淡入與計數觸發) */
+        /* 滾動觀察器 */
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1939,7 +2272,7 @@
             });
         }
 
-        /* 3. 搜尋過濾功能 */
+        /* 搜尋過濾功能 */
         function searchFaq() {
             const query = document.getElementById('faqSearchInput').value.toLowerCase().trim();
             const faqItems = document.querySelectorAll('#faqList .faq-item');
@@ -1966,7 +2299,7 @@
             });
         }
 
-        /* 4. 折疊機器人指令清單 */
+        /* 折疊機器人指令清單 */
         function toggleCmdAccordion() {
             const accordion = document.getElementById('botCmdAccordion');
             accordion.classList.toggle('active');
