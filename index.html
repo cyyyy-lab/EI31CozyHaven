@@ -2194,56 +2194,58 @@
             card.classList.toggle('active');
         }
 
-        /* 更改為僅保留 雨聲 與 街道音 */
-        const audioTracks = {
-            rain: {
-                src: "https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg",
-                title: "舒適雨聲",
-                icon: "🌧️"
-            },
-            street: {
-                src: "https://actions.google.com/sounds/v1/ambiences/outdoor_city_traffic.ogg",
-                title: "街道環境音",
-                icon: "🏙️"
-            }
-        };
+/* 更新音訊資源列表，確保街道環境音連結正常運作 */
+const audioTracks = {
+    rain: {
+        src: "https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg",
+        title: "舒適雨聲",
+        icon: "🌧️"
+    },
+    street: {
+        src: "https://actions.google.com/sounds/v1/ambiences/traffic_heavy.ogg",
+        title: "街道環境音",
+        icon: "🏙️"
+    }
+};
 
-        const bgmAudio = document.getElementById('bgmAudio');
-        const playToggleBtn = document.getElementById('playToggleBtn');
-        const songTitle = document.getElementById('songTitle');
-        const playerIcon = document.getElementById('playerIcon');
+const bgmAudio = document.getElementById('bgmAudio');
+const playToggleBtn = document.getElementById('playToggleBtn');
+const songTitle = document.getElementById('songTitle');
+const playerIcon = document.getElementById('playerIcon');
 
-        bgmAudio.addEventListener('play', () => {
-            playToggleBtn.textContent = "⏸";
+bgmAudio.addEventListener('play', () => {
+    playToggleBtn.textContent = "⏸";
+});
+
+bgmAudio.addEventListener('pause', () => {
+    playToggleBtn.textContent = "▶";
+});
+
+function togglePlayAudio() {
+    if (bgmAudio.paused) {
+        bgmAudio.play().catch(err => {
+            console.log("播放失敗：", err);
         });
+    } else {
+        bgmAudio.pause();
+    }
+}
 
-        bgmAudio.addEventListener('pause', () => {
-            playToggleBtn.textContent = "▶";
-        });
-
-        function togglePlayAudio() {
-            if (bgmAudio.paused) {
-                bgmAudio.play().catch(err => {
-                    console.log("播放失敗：", err);
-                });
-            } else {
-                bgmAudio.pause();
-            }
+function switchAudioTrack(type) {
+    const track = audioTracks[type];
+    if (track) {
+        const wasPlaying = !bgmAudio.paused;
+        bgmAudio.src = track.src;
+        bgmAudio.load();
+        songTitle.textContent = track.title;
+        playerIcon.textContent = track.icon;
+        
+        // 切換音軌後自動嘗試播放（若原本處於播放狀態，或使用者已觸發互動）
+        if (wasPlaying) {
+            bgmAudio.play().catch(err => console.log("切換後播放失敗：", err));
         }
-
-        function switchAudioTrack(type) {
-            const track = audioTracks[type];
-            if (track) {
-                const isPlaying = !bgmAudio.paused;
-                bgmAudio.src = track.src;
-                bgmAudio.load();
-                songTitle.textContent = track.title;
-                playerIcon.textContent = track.icon;
-                if (isPlaying) {
-                    bgmAudio.play().catch(err => console.log("切換後播放失敗：", err));
-                }
-            }
-        }
+    }
+}
 
         function adjustVolume(val) {
             bgmAudio.volume = val;
