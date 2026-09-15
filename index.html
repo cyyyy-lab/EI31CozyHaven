@@ -1272,10 +1272,8 @@
     <!-- 雪花動畫 Canvas -->
     <canvas id="snowCanvas"></canvas>
 
-    <!-- 音樂/音效播放器 -->
-    <audio id="bgmAudio" loop preload="auto">
-        <source id="audioSource" src="https://assets.mixkit.co/music/preview/mixkit-chill-bro-494.mp3" type="audio/mpeg">
-    </audio>
+    <!-- 音樂/音效播放器（修復：直接宣告跨域相容的音訊資源） -->
+    <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" loop preload="auto"></audio>
 
     <!-- 左下角點擊展開小球與播放控制卡片 -->
     <button class="player-ball" id="playerBall" onclick="togglePlayerCard()" title="開啟音樂播放器">🎧</button>
@@ -2033,30 +2031,30 @@
             card.classList.toggle('active');
         }
 
-        /* 3. 音樂/環境音效庫 */
+        /* 3. 音樂/環境音效庫（修復：替換為免費且跨域相容的音訊資源） */
         const audioTracks = {
             lofi: {
-                src: "https://assets.mixkit.co/music/preview/mixkit-chill-bro-494.mp3",
+                src: "https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg",
                 title: "Lofi BGM",
                 icon: "☕"
             },
             rain: {
-                src: "https://assets.mixkit.co/active_storage/sfx/1255/1255-preview.mp3",
+                src: "https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg",
                 title: "舒適雨聲",
                 icon: "🌧️"
             },
             bonfire: {
-                src: "https://assets.mixkit.co/active_storage/sfx/2678/2678-preview.mp3",
+                src: "https://actions.google.com/sounds/v1/environment/fire_burning.ogg",
                 title: "溫馨篝火",
                 icon: "🔥"
             },
             street: {
-                src: "https://assets.mixkit.co/active_storage/sfx/28/28-preview.mp3",
+                src: "https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg",
                 title: "咖啡館環境音",
                 icon: "☕"
             },
             keyboard: {
-                src: "https://assets.mixkit.co/active_storage/sfx/2558/2558-preview.mp3",
+                src: "https://actions.google.com/sounds/v1/office/keyboard_typing.ogg",
                 title: "鍵盤打字聲",
                 icon: "⌨️"
             }
@@ -2067,16 +2065,22 @@
         const songTitle = document.getElementById('songTitle');
         const playerIcon = document.getElementById('playerIcon');
 
+        /* 自動監聽事件，同步播放/暫停按鈕 UI */
+        bgmAudio.addEventListener('play', () => {
+            playToggleBtn.textContent = "⏸";
+        });
+
+        bgmAudio.addEventListener('pause', () => {
+            playToggleBtn.textContent = "▶";
+        });
+
         function togglePlayAudio() {
             if (bgmAudio.paused) {
-                bgmAudio.play().then(() => {
-                    playToggleBtn.textContent = "⏸";
-                }).catch(err => {
+                bgmAudio.play().catch(err => {
                     console.log("播放失敗：", err);
                 });
             } else {
                 bgmAudio.pause();
-                playToggleBtn.textContent = "▶";
             }
         }
 
@@ -2085,10 +2089,11 @@
             if (track) {
                 const isPlaying = !bgmAudio.paused;
                 bgmAudio.src = track.src;
+                bgmAudio.load(); // 關鍵修復：重新載入新音訊源
                 songTitle.textContent = track.title;
                 playerIcon.textContent = track.icon;
                 if (isPlaying) {
-                    bgmAudio.play();
+                    bgmAudio.play().catch(err => console.log("切換後播放失敗：", err));
                 }
             }
         }
