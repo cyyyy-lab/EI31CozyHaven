@@ -34,7 +34,7 @@
             --footer-text-color: #546e7a;
         }
 
-        /* 2. 系統預設主題自動偵測 (當系統為深色模式時自動套用)[cite: 13] */
+        /* 2. 系統預設主題自動偵測 (當系統為深色模式時自動套用) */
         @media (prefers-color-scheme: dark) {
             :root:not(.light-mode) {
                 --card-bg: rgba(26, 29, 46, 0.5);
@@ -44,9 +44,9 @@
                 --border-color: rgba(255, 255, 255, 0.1);
                 --dash-item-bg: rgba(255, 255, 255, 0.04);
                 --footer-text-color: #f1f5f9;
-                /* 2. 深色模式：調亮後的灰綠(#3e5c51) + 灰藍(#3d4f6b) + 黑色(#0f111a)，斜向漸變 */
-                --gradient-green: #3e5c51;
-                --gradient-blue: #3d4f6b;
+                /* 2. 深色模式：灰綠(#283832) + 灰藍(#2d3748) + 黑色(#0f111a)，斜向漸變 */
+                --gradient-green: #283832;
+                --gradient-blue: #2d3748;
                 --gradient-option: #0f111a;
             }
         }
@@ -59,9 +59,9 @@
             --border-color: rgba(255, 255, 255, 0.1);
             --dash-item-bg: rgba(255, 255, 255, 0.04);
             --footer-text-color: #f1f5f9;
-            /* 2. 深色模式：調亮後的灰綠(#3e5c51) + 灰藍(#3d4f6b) + 黑色(#0f111a) */
-            --gradient-green: #3e5c51;
-            --gradient-blue: #3d4f6b;
+            /* 2. 深色模式：灰綠(#283832) + 灰藍(#2d3748) + 黑色(#0f111a) */
+            --gradient-green: #283832;
+            --gradient-blue: #2d3748;
             --gradient-option: #0f111a;
         }
 
@@ -105,7 +105,7 @@
             position: relative;
         }
 
-        /* 季節性背景特效 Canvas[cite: 13] */
+        /* 季節性背景特效 Canvas */
         #effectCanvas {
             position: fixed;
             top: 0;
@@ -1319,7 +1319,7 @@
 </head>
 <body>
 
-    <!-- 多功能季節性動態背景 Canvas[cite: 13] -->
+    <!-- 多功能季節性動態背景 Canvas -->
     <canvas id="effectCanvas"></canvas>
 
     <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" loop preload="auto"></audio>
@@ -1373,7 +1373,7 @@
                 <a href="#to-team" class="nav-btn" onclick="switchPage('main')">團隊</a>
             </div>
             <div class="nav-tools-group">
-                <!-- 季節性背景特效選擇選單[cite: 13] -->
+                <!-- 季節性背景特效選擇選單 -->
                 <select class="color-select" id="effectSelect" onchange="changeEffect(this.value)" title="背景特效選單">
                     <option value="snow" selected>❄️ 雪花</option>
                     <option value="sakura">🌸 落櫻</option>
@@ -1871,38 +1871,34 @@
                         <span class="team-desc">AI很好用。</span>
                     </div>
                 </div>
-                <!-- 3. 管理員魚板：頭像改為 3smile.png，「管理員」小字改為 esmile.png -->
                 <div class="team-card scroll-reveal">
                     <img src="images/3smile.png" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role"><img src="images/esmile.png" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
+                        <span class="team-role">管理員</span>
                         <span class="team-name">ᴗ̈ᴗ̈ᴗ̈魚板。</span>
                         <span class="team-desc"><img src="images/esmile.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
                 </div>
-                <!-- 4. 管理員oboe：頭像改為 4oboe.png，「管理員」小字改為 eoboe.png -->
                 <div class="team-card scroll-reveal">
                     <img src="images/4oboe.png" alt="oboe蜥蜴" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role"><img src="images/eoboe.png" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
+                        <span class="team-role">管理員</span>
                         <span class="team-name">oboe蜥蜴</span>
                         <span class="team-desc"><img src="images/eoboe.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
                 </div>
-                <!-- 5. 管理員禾：頭像改為 5he.png，「管理員」小字改為 ehe.png -->
                 <div class="team-card scroll-reveal">
                     <img src="images/5he.png" alt="禾" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role"><img src="images/ehe.png" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
+                        <span class="team-role">管理員</span>
                         <span class="team-name">禾</span>
                         <span class="team-desc"><img src="images/ehe.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
                 </div>
-                <!-- 6. 管理員muly：頭像改為 6muly.png，「管理員」小字改為 emuly.jpg -->
                 <div class="team-card scroll-reveal">
                     <img src="images/6muly.png" alt="muly沐漓" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role"><img src="images/emuly.jpg" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
+                        <span class="team-role">管理員</span>
                         <span class="team-name">muly沐漓</span>
                         <span class="team-desc"><img src="images/emuly.jpg" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
@@ -1915,11 +1911,10 @@
                         <span class="team-desc">吃瓜吵架找我</span>
                     </div>
                 </div>
-                <!-- 7. 管理員球：頭像改為 8qiu.png，「管理員」小字改為 eqiu.png -->
                 <div class="team-card scroll-reveal">
                     <img src="images/8qiu.png" alt="球" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role"><img src="images/eqiu.png" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
+                        <span class="team-role">管理員</span>
                         <span class="team-name">球</span>
                         <span class="team-desc"><img src="images/eqiu.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
@@ -2047,7 +2042,7 @@
     <div class="toast-msg" id="customToast"></div>
 
     <script>
-        /* 多功能季節性背景粒子系統 (雪花 / 落櫻 / 光粒 / 落葉)[cite: 13] */
+        /* 多功能季節性背景粒子系統 (雪花 / 落櫻 / 光粒 / 落葉) */
         const canvas = document.getElementById('effectCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -2480,4 +2475,34 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
                     
-                    const counter = entry.target
+                    const counter = entry.target.querySelector('[data-counter]');
+                    if (counter && !counter.classList.contains('counted')) {
+                        counter.classList.add('counted');
+                        const targetVal = parseInt(counter.getAttribute('data-counter'));
+                        const suffix = counter.getAttribute('data-suffix') || '';
+                        let current = 0;
+                        const duration = 1500;
+                        const stepTime = 20;
+                        const steps = duration / stepTime;
+                        const increment = targetVal / steps;
+
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= targetVal) {
+                                counter.textContent = targetVal + suffix;
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = Math.floor(current) + suffix;
+                            }
+                        }, stepTime);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
