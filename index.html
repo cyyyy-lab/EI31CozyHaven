@@ -18,8 +18,10 @@
     <link rel="icon" href="images/1sever.png" type="image/png">
     <style>
         :root {
+            /* 1. 預設/淺色模式：淺綠(#b8f3e2) + 淺藍(#b4f1f5) + 白色(#ffffff)，斜向漸變 */
             --gradient-option: #ffffff;
             --gradient-blue: #b4f1f5;
+            --gradient-green: #b8f3e2;
             
             --card-bg: rgba(255, 255, 255, 0.5);
             --accent-color: #5b73c7;
@@ -42,6 +44,8 @@
                 --border-color: rgba(255, 255, 255, 0.1);
                 --dash-item-bg: rgba(255, 255, 255, 0.04);
                 --footer-text-color: #f1f5f9;
+                /* 2. 深色模式：灰綠(#283832) + 灰藍(#2d3748) + 黑色(#0f111a)，斜向漸變 */
+                --gradient-green: #283832;
                 --gradient-blue: #2d3748;
                 --gradient-option: #0f111a;
             }
@@ -55,6 +59,8 @@
             --border-color: rgba(255, 255, 255, 0.1);
             --dash-item-bg: rgba(255, 255, 255, 0.04);
             --footer-text-color: #f1f5f9;
+            /* 2. 深色模式：灰綠(#283832) + 灰藍(#2d3748) + 黑色(#0f111a) */
+            --gradient-green: #283832;
             --gradient-blue: #2d3748;
             --gradient-option: #0f111a;
         }
@@ -67,6 +73,8 @@
             --border-color: rgba(0, 0, 0, 0.1);
             --dash-item-bg: rgba(0, 0, 0, 0.03);
             --footer-text-color: #546e7a;
+            /* 1. 淺色模式：淺綠(#b8f3e2) + 淺藍(#b4f1f5) + 白色(#ffffff) */
+            --gradient-green: #b8f3e2;
             --gradient-blue: #b4f1f5;
             --gradient-option: #ffffff;
         }
@@ -84,7 +92,8 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--gradient-blue) 0%, var(--gradient-option) 60%);
+            /* 1. & 2. 套用斜向漸變 (包含綠、藍、白/黑) */
+            background: linear-gradient(135deg, var(--gradient-green) 0%, var(--gradient-blue) 50%, var(--gradient-option) 100%);
             background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
@@ -1310,7 +1319,7 @@
 </head>
 <body>
 
-    <!-- 3. 多功能季節性動態背景 Canvas[cite: 13] -->
+    <!-- 多功能季節性動態背景 Canvas[cite: 13] -->
     <canvas id="effectCanvas"></canvas>
 
     <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" loop preload="auto"></audio>
@@ -1364,7 +1373,7 @@
                 <a href="#to-support" class="nav-btn" onclick="switchPage('main')">支持</a>
             </div>
             <div class="nav-tools-group">
-                <!-- 3. 季節性背景特效選擇選單[cite: 13] -->
+                <!-- 季節性背景特效選擇選單[cite: 13] -->
                 <select class="color-select" id="effectSelect" onchange="changeEffect(this.value)" title="背景特效選單">
                     <option value="snow" selected>❄️ 雪花</option>
                     <option value="sakura">🌸 落櫻</option>
@@ -1372,7 +1381,7 @@
                     <option value="leaves">🍂 落葉</option>
                     <option value="none">🚫 關閉</option>
                 </select>
-                <!-- 6. 深色/淺色模式一鍵切換圖示按鈕 -->
+                <!-- 深色/淺色模式一鍵切換圖示按鈕 -->
                 <button class="btn-copy-nav" id="themeToggleBtn" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">複製邀請連結</button>
@@ -1452,6 +1461,7 @@
 
         <div id="to-dashboard" class="section-anchor"></div>
 
+        <!-- 3. 數據儀表板：滾動到此區塊時數字從 0 動態累加到 3000+ 與 100+ -->
         <div class="container scroll-reveal" id="dashboard">
             <div class="dashboard-header">
                 <h2>數據儀表板</h2>
@@ -1746,6 +1756,8 @@
                     <button class="nav-btn tab-btn active" id="muyuTabBtn" onclick="switchDemoTab('muyuTab')">🪵 線上敲木魚</button>
                     <button class="nav-btn tab-btn" id="gachaTabBtn" onclick="switchDemoTab('gachaTab')">🎴 試抽卡體驗</button>
                     <button class="nav-btn tab-btn" id="profileTabBtn" onclick="switchDemoTab('profileTab')">🆔 Profile 模擬器</button>
+                    <!-- 4. 「今日運勢」抽籤機 Tab 按鈕 -->
+                    <button class="nav-btn tab-btn" id="fortuneTabBtn" onclick="switchDemoTab('fortuneTab')">🔮 今日 i 人運勢</button>
                 </div>
                 
                 <div id="muyuTab" class="demo-content active">
@@ -1763,7 +1775,6 @@
                     </div>
                 </div>
 
-                <!-- 5. 增加「輸入名稱產生專屬名片/小卡」的模擬器 -->
                 <div id="profileTab" class="demo-content">
                     <div class="gacha-box" style="text-align: left;">
                         <label style="font-size: 0.9rem; font-weight: bold; display: block; margin-bottom: 6px;">輸入您的 Discord 名稱：</label>
@@ -1776,6 +1787,17 @@
                                 <div style="font-size: 0.75rem; color: var(--accent-color); margin-top: 2px;">伺服器等級: Lv.15 | 連續打卡: 12天</div>
                                 <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 2px;">狀態: 正在 24小時 Lofi 房掛機 🎧</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. 「今日運勢」抽籤機小工具內容區塊 -->
+                <div id="fortuneTab" class="demo-content">
+                    <div class="gacha-box" style="text-align: center;">
+                        <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 12px;">點擊按鈕抽取你今天的 i 人專屬運勢！</p>
+                        <button class="btn-join-main" style="width: auto; padding: 10px 24px; font-size: 0.95rem;" onclick="drawFortune()">🥠 抽取今日 i 人運勢</button>
+                        <div id="fortuneResult" class="gacha-result" style="background: var(--dash-item-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 15px;">
+                            點擊上方按鈕看看今天運勢如何吧 ✨
                         </div>
                     </div>
                 </div>
@@ -1827,6 +1849,7 @@
                         <li><code>!PK @成員</code> <span>發起對決</span></li>
                         <li><code>!profile</code> <span>可查看成員的加入伺服器天數、連續打卡天數、本週發言數、本週語音時長、PK戰績</span></li>
                         <li><code>!提醒</code> <span>在指定時間後標記自己進行提醒</span></li>
+                        <li><code>!運勢</code> <span>抽今日 i 人運勢 (宜/忌)</span></li>
                     </ul>
                 </div>
             </div>
@@ -2022,7 +2045,7 @@
     <div class="toast-msg" id="customToast"></div>
 
     <script>
-        /* 3. 多功能季節性背景粒子系統 (雪花 / 落櫻 / 光粒 / 落葉)[cite: 13] */
+        /* 多功能季節性背景粒子系統 (雪花 / 落櫻 / 光粒 / 落葉)[cite: 13] */
         const canvas = document.getElementById('effectCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -2053,7 +2076,7 @@
 
                 if (this.type === 'glow') {
                     this.y = Math.random() * canvas.height;
-                    this.speedY = -(Math.random() * 0.5 + 0.2); // 向上飄浮
+                    this.speedY = -(Math.random() * 0.5 + 0.2);
                     this.size = Math.random() * 3 + 1;
                     this.color = Math.random() > 0.5 ? 'rgba(255, 230, 150,' : 'rgba(180, 241, 245,';
                 } else if (this.type === 'sakura') {
@@ -2063,7 +2086,7 @@
                     const colors = ['rgba(230, 126, 34,', 'rgba(211, 84, 0,', 'rgba(243, 156, 18,'];
                     this.color = colors[Math.floor(Math.random() * colors.length)];
                     this.size = Math.random() * 5 + 4;
-                } else { // snow
+                } else {
                     this.color = 'rgba(255, 255, 255,';
                     this.size = Math.random() * 2.5 + 1;
                 }
@@ -2148,7 +2171,7 @@
         initParticles();
         renderEffect();
 
-        // 6. 深淺模式切換邏輯
+        // 深淺模式切換邏輯
         function toggleDarkMode() {
             const body = document.body;
             body.classList.toggle('dark-mode');
@@ -2275,18 +2298,35 @@
             document.getElementById('muyuTab').classList.remove('active');
             document.getElementById('gachaTab').classList.remove('active');
             document.getElementById('profileTab').classList.remove('active');
+            document.getElementById('fortuneTab').classList.remove('active'); // 4. 切換隱藏運勢 Tab
             document.getElementById('muyuTabBtn').classList.remove('active');
             document.getElementById('gachaTabBtn').classList.remove('active');
             document.getElementById('profileTabBtn').classList.remove('active');
+            document.getElementById('fortuneTabBtn').classList.remove('active'); // 4. 切換取消按鈕 active
 
             document.getElementById(tabId).classList.add('active');
             document.getElementById(tabId + 'Btn').classList.add('active');
         }
 
-        // 5. 生成 Profile 模擬卡片
         function generateProfileCard() {
             const nameInput = document.getElementById('profileNameInput').value.trim() || 'i人小夥伴';
             document.getElementById('previewUsername').textContent = nameInput;
+        }
+
+        // 4. 「今日 i 人運勢」抽籤機資料庫
+        const fortuneList = [
+            { good: "帶薪發呆、默默潛水", bad: "被迫社交、強制視訊開會" },
+            { good: "盲猜全對、遊戲十連抽中SSR", bad: "出門忘記帶耳機、訊息未讀紅點爆多" },
+            { good: "獨自享用美食、掛網聽Lofi", bad: "走在路上巧遇熟人、手機突然沒電" },
+            { good: "躺平耍廢、吸貓擼狗", bad: "群組被@標記、必須開麥講話" },
+            { good: "刷到好看的迷因、享受安靜午後", bad: "網路突然卡頓、外賣送錯餐點" },
+            { good: "早睡早起、心如止水", bad: "深夜被朋友強行拉去打遊戲" }
+        ];
+
+        function drawFortune() {
+            const randomItem = fortuneList[Math.floor(Math.random() * fortuneList.length)];
+            const resEl = document.getElementById('fortuneResult');
+            resEl.innerHTML = `🌟 <strong>今日 i 人運勢解籤</strong> 🌟<br><span style="color: #10b981;">✅ 今日宜：${randomItem.good}</span><br><span style="color: #ef4444;">❌ 今日忌：${randomItem.bad}</span>`;
         }
 
         const cardRarities = [
@@ -2363,6 +2403,7 @@
             document.getElementById('q3').style.display = 'none';
         }
 
+        // 3. 數據儀表板動態累加邏輯
         let animatedCounters = false;
         function animateCounters() {
             const counters = document.querySelectorAll('.dash-value[data-counter]');
@@ -2370,7 +2411,7 @@
                 const target = parseInt(counter.getAttribute('data-counter'));
                 const suffix = counter.getAttribute('data-suffix') || '';
                 let current = 0;
-                const steps = 65;
+                const steps = 60;
                 const increment = Math.max(1, Math.ceil(target / steps));
                 const timer = setInterval(() => {
                     current += increment;
@@ -2380,7 +2421,7 @@
                     } else {
                         counter.textContent = current + suffix;
                     }
-                }, 27);
+                }, 25);
             });
         }
 
@@ -2388,6 +2429,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
+                    // 3. 滾動到儀表板時觸發數字累加
                     if (entry.target.id === 'dashboard' && !animatedCounters) {
                         animatedCounters = true;
                         animateCounters();
@@ -2501,7 +2543,6 @@
             }
         });
 
-        // 7. 導覽列高亮 ScrollSpy 實作
         window.addEventListener('scroll', () => {
             const sections = [
                 { id: 'home', selector: '#home' },
@@ -2539,49 +2580,21 @@
             });
         });
 
-        const joinModal = document.getElementById('joinModal');
-        function openModal(event) {
-            event.preventDefault();
-            joinModal.classList.add('show');
+        function openModal(e) {
+            e.preventDefault();
+            document.getElementById('joinModal').classList.add('show');
         }
+
         function closeModal() {
-            joinModal.classList.remove('show');
+            document.getElementById('joinModal').classList.remove('show');
         }
-        joinModal.addEventListener('click', (e) => {
-            if (e.target === joinModal) {
-                closeModal();
-            }
-        });
 
         function handleDecline() {
-            document.body.classList.add('shake-effect');
-            setTimeout(() => {
-                document.body.classList.remove('shake-effect');
-            }, 400);
-
-            const toast = document.getElementById('customToast');
-            toast.textContent = "真的不要嗎🥺";
-            toast.classList.add('show');
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    toast.textContent = "沒關係，期待下次再見！";
-                    toast.classList.add('show');
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                    }, 1500);
-                }, 300);
-            }, 1500);
+            alert("沒關係！隨時歡迎你再回來看看～ ✨");
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('load', () => {
             initScrollReveal();
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.body.classList.add('dark-mode');
-                const toggleBtn = document.getElementById('themeToggleBtn');
-                if (toggleBtn) toggleBtn.textContent = '☀️';
-            }
         });
     </script>
 </body>
