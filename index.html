@@ -1128,14 +1128,14 @@
             background: var(--accent-hover);
         }
 
-        /* 拒絕社交理由產生器按鈕 (位於播放器按鈕上方) */
+        /* 拒絕社交理由產生器按鈕 (圓形懸浮圖示，位於播放器按鈕上方) */
         .decline-ball {
             position: fixed;
             bottom: 88px;
             left: 30px;
+            width: 48px;
             height: 48px;
-            padding: 0 16px;
-            border-radius: 24px;
+            border-radius: 50%;
             background: var(--accent-color);
             color: #ffffff;
             border: 2px solid var(--border-color);
@@ -1143,16 +1143,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            font-size: 0.9rem;
-            font-weight: bold;
+            font-size: 1.3rem;
             cursor: pointer;
             z-index: 1000;
             transition: transform 0.3s ease, background-color 0.2s;
         }
 
         .decline-ball:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
             background: var(--accent-hover);
         }
 
@@ -1378,8 +1376,8 @@
 
     <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg" loop preload="auto"></audio>
 
-    <!-- 拒絕社交理由產生器按鈕 (位於播放器按鈕上方) -->
-    <button class="decline-ball" id="declineBall" onclick="toggleDeclineCard()" title="拒絕社交理由產生器">🛡️ 拒絕社交理由</button>
+    <!-- 拒絕社交理由產生器按鈕 (圓形懸浮圖示，位於播放器按鈕上方) -->
+    <button class="decline-ball" id="declineBall" onclick="toggleDeclineCard()" title="拒絕社交理由產生器">🛡️</button>
 
     <!-- 拒絕社交理由產生器卡片 -->
     <div class="decline-card" id="declineCard">
