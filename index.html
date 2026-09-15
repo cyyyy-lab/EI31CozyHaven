@@ -235,7 +235,7 @@
             border-color: var(--accent-color);
         }
 
-        /* 2. 滾動淡入與向上滑動樣式 */
+        /* 滾動淡入與向上滑動樣式 */
         .scroll-reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -422,6 +422,25 @@
             border-color: var(--accent-color);
         }
 
+        /* 搜尋輸入框通用樣式 */
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--dash-item-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(91, 115, 199, 0.2);
+        }
+
         .faq-list {
             text-align: left;
             display: flex;
@@ -548,6 +567,17 @@
             border-radius: 10px;
         }
 
+        /* 御用機器人區塊特有樣式 */
+        .bot-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+        }
+
         .bot-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -589,6 +619,84 @@
             border-radius: 4px;
             margin-top: 6px;
             font-family: monospace;
+        }
+
+        /* 展開式指令清單 */
+        .cmd-accordion {
+            margin-top: 25px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            background: var(--dash-item-bg);
+        }
+
+        .cmd-accordion-btn {
+            width: 100%;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .cmd-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 20px;
+        }
+
+        .cmd-accordion.active .cmd-accordion-content {
+            max-height: 800px;
+            padding: 10px 20px 20px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .cmd-accordion.active .cmd-arrow {
+            transform: rotate(180deg);
+        }
+
+        .cmd-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .cmd-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cmd-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .cmd-list li:last-child {
+            border-bottom: none;
+        }
+
+        .cmd-list code {
+            background: rgba(91, 115, 199, 0.15);
+            color: var(--accent-color);
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.88rem;
+            white-space: nowrap;
         }
 
         .threads-link-card {
@@ -826,31 +934,106 @@
             background-color: var(--accent-hover);
         }
 
-        /* 左下角雨聲播放器按鈕樣式 */
-        .rain-player-btn {
+        /* 精緻音樂播放控制小卡樣式 */
+        .lofi-player-card {
             position: fixed;
             bottom: 30px;
             left: 30px;
-            background-color: var(--accent-color);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+            width: 240px;
+            transition: all 0.3s ease;
+        }
+
+        .player-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .player-track-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow: hidden;
+        }
+
+        .player-icon {
+            font-size: 1.2rem;
+        }
+
+        .player-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-btn-play {
+            background: var(--accent-color);
             color: white;
-            width: 45px;
-            height: 45px;
+            border: none;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            border: none;
-            transition: background-color 0.2s, transform 0.2s;
-            z-index: 999;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: background 0.2s;
         }
 
-        .rain-player-btn:hover {
-            background-color: var(--accent-hover);
-            transform: scale(1.05);
+        .player-btn-play:hover {
+            background: var(--accent-hover);
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .audio-select {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 0.75rem;
+            padding: 4px 6px;
+            border-radius: 6px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-box {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 90px;
+        }
+
+        .volume-box span {
+            font-size: 0.75rem;
+        }
+
+        .volume-slider {
+            width: 100%;
+            height: 4px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
         }
 
         .footer-note {
@@ -920,6 +1103,11 @@
             .emoji-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .lofi-player-card {
+                left: 15px;
+                bottom: 15px;
+                width: 210px;
+            }
         }
     </style>
 </head>
@@ -928,13 +1116,31 @@
     <!-- 雪花動畫 Canvas -->
     <canvas id="snowCanvas"></canvas>
 
-    <!-- 雨聲背景音樂 -->
-    <audio id="rainAudio" loop preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/1255/1255-preview.mp3" type="audio/mpeg">
+    <!-- 音樂/音效播放器 -->
+    <audio id="bgmAudio" loop preload="auto">
+        <source id="audioSource" src="https://assets.mixkit.co/music/preview/mixkit-chill-bro-494.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 左下角雨聲播放器按鈕 -->
-    <button class="rain-player-btn" id="rainPlayerBtn" onclick="toggleRainAudio()" title="播放/暫停雨聲">🌧️</button>
+    <!-- 左下角精緻播放控制小卡 -->
+    <div class="lofi-player-card">
+        <div class="player-top">
+            <div class="player-track-info">
+                <span class="player-icon" id="playerIcon">🎧</span>
+                <span class="player-title" id="songTitle">Lofi Background</span>
+            </div>
+            <button class="player-btn-play" id="playToggleBtn" onclick="togglePlayAudio()">▶</button>
+        </div>
+        <div class="player-controls">
+            <select class="audio-select" id="trackSelect" onchange="switchAudioTrack(this.value)">
+                <option value="lofi">☕ Lofi BGM</option>
+                <option value="rain">🌧️ 舒適雨聲</option>
+            </select>
+            <div class="volume-box">
+                <span>🔊</span>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" oninput="adjustVolume(this.value)">
+            </div>
+        </div>
+    </div>
 
     <!-- 主頁面導覽列 -->
     <nav class="navbar" id="mainNavbar">
@@ -1056,11 +1262,11 @@
                 </div>
                 <div class="dash-card scroll-reveal">
                     <div class="dash-title">👥 總成員數 👥</div>
-                    <div class="dash-value">3000+</div>
+                    <div class="dash-value" data-counter="3000" data-suffix="+">0</div>
                 </div>
                 <div class="dash-card scroll-reveal">
                     <div class="dash-title">💬 總頻道數 💬</div>
-                    <div class="dash-value">100+</div>
+                    <div class="dash-value" data-counter="100" data-suffix="+">0</div>
                 </div>
             </div>
         </div>
@@ -1134,7 +1340,10 @@
             </div>
             <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">點擊問題標題即可展開或收合解答</p>
             
-            <div class="faq-list">
+            <!-- 常見問題關鍵字搜尋框 -->
+            <input type="text" id="faqSearchInput" class="search-input" placeholder="🔍 搜尋常見問題關鍵字..." onkeyup="searchFaq()">
+
+            <div class="faq-list" id="faqList">
                 <div class="faq-item scroll-reveal">
                     <div class="faq-question" onclick="toggleFaq(this)">
                         <span>Q1. 為什麼我不能說話？</span>
@@ -1284,6 +1493,10 @@
             <div class="dashboard-header">
                 <h2>御用機器人</h2>
             </div>
+            
+            <!-- 御用機器人頭像 -->
+            <img src="images/bot.jpg" alt="御用機器人頭像" class="bot-avatar">
+            
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化小管家，帶來滿滿陪伴與樂趣</p>
 
             <div class="bot-grid">
@@ -1311,6 +1524,29 @@
                     <h3>⏰ 溫馨定時廣播與倒數提醒</h3>
                     <p>每日凌晨 02:00 晚安提醒、早上 09:00 早安招呼，以及每週一 18:00 活躍排行榜自動結算！還能幫你設定個人專屬倒數提醒。</p>
                     <span class="bot-cmd-tag">!提醒 10m 記得喝水</span>
+                </div>
+            </div>
+
+            <!-- 可展開的完整指令清單 -->
+            <div class="cmd-accordion" id="botCmdAccordion">
+                <button class="cmd-accordion-btn" onclick="toggleCmdAccordion()">
+                    <span>📜 完整指令清單</span>
+                    <span class="cmd-arrow">▼</span>
+                </button>
+                <div class="cmd-accordion-content">
+                    <ul class="cmd-list">
+                        <li><code>!hello</code> <span>與機器人打招呼</span></li>
+                        <li><code>!muyu</code> <span>敲木魚</span></li>
+                        <li><code>!猜拳</code> <span>與機器人猜拳</span></li>
+                        <li><code>!出來玩</code> <span>對機器人餵食/摸頭/陪玩</span></li>
+                        <li><code>!21</code> <span>與機器人玩二十一點</span></li>
+                        <li><code>!管理員說</code> <span>管理員們都常說什麼？（21句）</span></li>
+                        <li><code>!抽卡</code> <span>低到高 N/R/RR/RRR/S/SR/SSR/UR/LR/SEC</span></li>
+                        <li><code>!打卡</code> <span>查詢自己當前連續活躍了幾天</span></li>
+                        <li><code>!PK @成員</code> <span>發起對決</span></li>
+                        <li><code>!profile</code> <span>可查看成員的加入伺服器天數、連續打卡天數、本週發言數、本週語音時長、PK戰績</span></li>
+                        <li><code>!提醒</code> <span>在指定時間後標記自己進行提醒</span></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -1419,28 +1655,31 @@
             </div>
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">探索伺服器內部豐富的主題分區</p>
             
-            <div class="bot-grid">
-                <div class="bot-feature-card scroll-reveal">
+            <!-- 頻道板塊關鍵字搜尋框 -->
+            <input type="text" id="channelSearchInput" class="search-input" placeholder="🔍 搜尋頻道或主題關鍵字..." onkeyup="searchChannels()">
+
+            <div class="bot-grid" id="channelGrid">
+                <div class="bot-feature-card channel-card scroll-reveal">
                     <h3>💬 交流與日常（聊天室、分享區）</h3>
                     <p>設有綜合聊天、男女生區、i人與e人專屬區，以及美食、寵物、攝影、生活小確幸等分享天地，讓大家自在交流生活點滴。</p>
                 </div>
 
-                <div class="bot-feature-card scroll-reveal">
+                <div class="bot-feature-card channel-card scroll-reveal">
                     <h3>🎮 遊戲與娛樂廳</h3>
                     <p>集結米遊、光遇、麥塊、雀魂、乙女遊戲、STEAM多人遊戲等多樣化討論區，並有經濟、RP系統與機器人互動遊戲，方便同好快速組隊開黑。</p>
                 </div>
 
-                <div class="bot-feature-card scroll-reveal">
+                <div class="bot-feature-card channel-card scroll-reveal">
                     <h3>📚 學習與藝文天地</h3>
                     <p>提供學習區、交流室、VTUBER、音樂與歐美劇討論，以及巴納姆效應研究室等特色空間，兼顧休閒與自我提升。</p>
                 </div>
 
-                <div class="bot-feature-card scroll-reveal">
+                <div class="bot-feature-card channel-card scroll-reveal">
                     <h3>🌧️ 溫馨避難所</h3>
                     <p>包含EMO、福利區、爆本人照及心情抒發頻道，當感到疲憊或需要宣洩情緒時，這裡隨時接納你的所有心情。</p>
                 </div>
 
-                <div class="bot-feature-card scroll-reveal" style="grid-column: span 2;">
+                <div class="bot-feature-card channel-card scroll-reveal" style="grid-column: span 2;">
                     <h3>🎵 動態與音樂語音</h3>
                     <p>常設多個語音討論區、練歌房、小包廂以及24小時 Lofi 陪伴掛機房，一個人上線也絕不孤單。</p>
                 </div>
@@ -1565,29 +1804,85 @@
         initSnow();
         renderSnow();
 
-        /* 雨聲播放器控制邏輯 */
-        function toggleRainAudio() {
-            const audio = document.getElementById('rainAudio');
-            const btn = document.getElementById('rainPlayerBtn');
-            if (audio.paused) {
-                audio.play().then(() => {
-                    btn.textContent = "⏸️";
-                    btn.title = "暫停雨聲";
+        /* 音樂播放控制小卡邏輯 */
+        const audioTracks = {
+            lofi: {
+                src: "https://assets.mixkit.co/music/preview/mixkit-chill-bro-494.mp3",
+                title: "Lofi Background",
+                icon: "🎧"
+            },
+            rain: {
+                src: "https://assets.mixkit.co/active_storage/sfx/1255/1255-preview.mp3",
+                title: "舒適雨聲",
+                icon: "🌧️"
+            }
+        };
+
+        const bgmAudio = document.getElementById('bgmAudio');
+        const playToggleBtn = document.getElementById('playToggleBtn');
+        const songTitle = document.getElementById('songTitle');
+        const playerIcon = document.getElementById('playerIcon');
+
+        function togglePlayAudio() {
+            if (bgmAudio.paused) {
+                bgmAudio.play().then(() => {
+                    playToggleBtn.textContent = "⏸";
                 }).catch(err => {
                     console.log("播放失敗：", err);
                 });
             } else {
-                audio.pause();
-                btn.textContent = "🌧️";
-                btn.title = "播放雨聲";
+                bgmAudio.pause();
+                playToggleBtn.textContent = "▶";
             }
         }
 
-        /* 2. 滾動淡入動畫 */
+        function switchAudioTrack(type) {
+            const track = audioTracks[type];
+            if (track) {
+                const isPlaying = !bgmAudio.paused;
+                bgmAudio.src = track.src;
+                songTitle.textContent = track.title;
+                playerIcon.textContent = track.icon;
+                if (isPlaying) {
+                    bgmAudio.play();
+                }
+            }
+        }
+
+        function adjustVolume(val) {
+            bgmAudio.volume = val;
+        }
+
+        /* 數據儀表板動態累加計數器 */
+        let animatedCounters = false;
+        function animateCounters() {
+            const counters = document.querySelectorAll('.dash-value[data-counter]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-counter'));
+                const suffix = counter.getAttribute('data-suffix') || '';
+                let current = 0;
+                const increment = Math.ceil(target / 60);
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target + suffix;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = current + suffix;
+                    }
+                }, 25);
+            });
+        }
+
+        /* 2. 滾動觀察器 (包含文字淡入與計數觸發) */
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
+                    if (entry.target.id === 'dashboard' && !animatedCounters) {
+                        animatedCounters = true;
+                        animateCounters();
+                    }
                 }
             });
         }, {
@@ -1599,6 +1894,39 @@
             document.querySelectorAll('.scroll-reveal').forEach(el => {
                 revealObserver.observe(el);
             });
+        }
+
+        /* 3. 搜尋過濾功能 */
+        function searchFaq() {
+            const query = document.getElementById('faqSearchInput').value.toLowerCase().trim();
+            const faqItems = document.querySelectorAll('#faqList .faq-item');
+            faqItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function searchChannels() {
+            const query = document.getElementById('channelSearchInput').value.toLowerCase().trim();
+            const channelCards = document.querySelectorAll('#channelGrid .channel-card');
+            channelCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        /* 4. 折疊機器人指令清單 */
+        function toggleCmdAccordion() {
+            const accordion = document.getElementById('botCmdAccordion');
+            accordion.classList.toggle('active');
         }
 
         /* 介面邏輯與功能函數 */
