@@ -1330,7 +1330,8 @@
         <div class="player-top">
             <div class="player-track-info">
                 <span class="player-icon" id="playerIcon">☕</span>
-                <span class="player-title" id="songTitle">Lofi Background</span>
+                <!-- 1. 播放器「Lofi Background」改為「背景音」 -->
+                <span class="player-title" id="songTitle">背景音</span>
             </div>
             <button class="player-btn-play" id="playToggleBtn" onclick="togglePlayAudio()">▶</button>
         </div>
@@ -1380,7 +1381,7 @@
                     <option value="leaves">🍂 落葉</option>
                     <option value="none">🚫 關閉</option>
                 </select>
-                <!-- 深色/淺色模式一鍵切換圖示按鈕 -->
+                <!-- 2. 深色/淺色模式一鍵切換圖示按鈕 -->
                 <button class="btn-copy-nav" id="themeToggleBtn" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">複製邀請連結</button>
@@ -1409,7 +1410,7 @@
                     <option value="leaves">🍂 落葉</option>
                     <option value="none">🚫 關閉</option>
                 </select>
-                <!-- 修正新頁面模式切換按鈕ID -->
+                <!-- 2. 修正新頁面模式切換按鈕ID -->
                 <button class="btn-copy-nav" id="themeToggleBtnSub" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
                 <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入</a>
                 <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">連結</button>
@@ -1446,7 +1447,7 @@
                 </div>
                 <div class="feature-item scroll-reveal">
                     <h3>📻 24小時音樂</h3>
-                    <p>常設 Lofi 音樂語音房，一個人掛機也不孤單。</p>
+                    <p>常設 背景音 音樂語音房，一個人掛機也不孤單。</p>
                 </div>
                 <div class="feature-item scroll-reveal">
                     <h3>🤖 各式機器人</h3>
@@ -1756,7 +1757,6 @@
                     <button class="nav-btn tab-btn active" id="muyuTabBtn" onclick="switchDemoTab('muyuTab')">🪵 線上敲木魚</button>
                     <button class="nav-btn tab-btn" id="gachaTabBtn" onclick="switchDemoTab('gachaTab')">🎴 試抽卡體驗</button>
                     <button class="nav-btn tab-btn" id="profileTabBtn" onclick="switchDemoTab('profileTab')">🆔 Profile 模擬器</button>
-                    <!-- 4. 「今日運勢」抽籤機 Tab 按鈕 -->
                     <button class="nav-btn tab-btn" id="fortuneTabBtn" onclick="switchDemoTab('fortuneTab')">🔮 今日 i 人運勢</button>
                 </div>
                 
@@ -1785,13 +1785,12 @@
                             <div>
                                 <div id="previewUsername" style="font-weight: bold; color: var(--text-main); font-size: 1rem;">i人小夥伴</div>
                                 <div style="font-size: 0.75rem; color: var(--accent-color); margin-top: 2px;">伺服器等級: Lv.15 | 連續打卡: 12天</div>
-                                <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 2px;">狀態: 正在 24小時 Lofi 房掛機 🎧</div>
+                                <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 2px;">狀態: 正在 24小時 背景音 房掛機 🎧</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. 「今日 i 人運勢」抽籤機小工具內容區塊 -->
                 <div id="fortuneTab" class="demo-content">
                     <div class="gacha-box" style="text-align: center;">
                         <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 12px;">點擊按鈕抽取你今天的 i 人專屬運勢！</p>
@@ -1872,40 +1871,40 @@
                         <span class="team-desc">AI很好用。</span>
                     </div>
                 </div>
-                <!-- 3. 管理員魚板的留言大頭貼改為 images/esmile.png -->
+                <!-- 3. 管理員魚板：頭像改為 3smile.png，「管理員」小字改為 esmile.png -->
                 <div class="team-card scroll-reveal">
-                    <img src="images/esmile.png" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
+                    <img src="images/3smile.png" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role">管理員</span>
+                        <span class="team-role"><img src="images/esmile.png" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
                         <span class="team-name">ᴗ̈ᴗ̈ᴗ̈魚板。</span>
-                        <span class="team-desc">管理員</span>
+                        <span class="team-desc"><img src="images/esmile.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
                 </div>
-                <!-- 4. 管理員oboe的留言大頭貼改為 images/eoboe.png -->
+                <!-- 4. 管理員oboe：頭像改為 4oboe.png，「管理員」小字改為 eoboe.png -->
                 <div class="team-card scroll-reveal">
-                    <img src="images/eoboe.png" alt="oboe蜥蜴" class="team-avatar">
+                    <img src="images/4oboe.png" alt="oboe蜥蜴" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role">管理員</span>
+                        <span class="team-role"><img src="images/eoboe.png" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
                         <span class="team-name">oboe蜥蜴</span>
-                        <span class="team-desc">管理員</span>
+                        <span class="team-desc"><img src="images/eoboe.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
                 </div>
-                <!-- 5. 管理員禾的留言大頭貼改為 images/ehe.png -->
+                <!-- 5. 管理員禾：頭像改為 5he.png，「管理員」小字改為 ehe.png -->
                 <div class="team-card scroll-reveal">
-                    <img src="images/ehe.png" alt="禾" class="team-avatar">
+                    <img src="images/5he.png" alt="禾" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role">管理員</span>
+                        <span class="team-role"><img src="images/ehe.png" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
                         <span class="team-name">禾</span>
-                        <span class="team-desc">管理員</span>
+                        <span class="team-desc"><img src="images/ehe.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
                 </div>
-                <!-- 6. 管理員muly的留言大頭貼改為 images/emuly.jpg -->
+                <!-- 6. 管理員muly：頭像改為 6muly.png，「管理員」小字改為 emuly.jpg -->
                 <div class="team-card scroll-reveal">
-                    <img src="images/emuly.jpg" alt="muly沐漓" class="team-avatar">
+                    <img src="images/6muly.png" alt="muly沐漓" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role">管理員</span>
+                        <span class="team-role"><img src="images/emuly.jpg" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
                         <span class="team-name">muly沐漓</span>
-                        <span class="team-desc">管理員</span>
+                        <span class="team-desc"><img src="images/emuly.jpg" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
                 </div>
                 <div class="team-card scroll-reveal">
@@ -1916,13 +1915,13 @@
                         <span class="team-desc">吃瓜吵架找我</span>
                     </div>
                 </div>
-                <!-- 7. 管理員球的留言大頭貼改為 images/eqiu.png -->
+                <!-- 7. 管理員球：頭像改為 8qiu.png，「管理員」小字改為 eqiu.png -->
                 <div class="team-card scroll-reveal">
-                    <img src="images/eqiu.png" alt="球" class="team-avatar">
+                    <img src="images/8qiu.png" alt="球" class="team-avatar">
                     <div class="team-info">
-                        <span class="team-role">管理員</span>
+                        <span class="team-role"><img src="images/eqiu.png" alt="管理員" style="height: 16px; vertical-align: middle;"></span>
                         <span class="team-name">球</span>
-                        <span class="team-desc">管理員</span>
+                        <span class="team-desc"><img src="images/eqiu.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
                     </div>
                 </div>
             </div>
@@ -1985,7 +1984,7 @@
 
                 <div class="bot-feature-card channel-card scroll-reveal" style="grid-column: span 2;">
                     <h3>🎵 動態與音樂語音</h3>
-                    <p>常設多個語音討論區、練歌房、小包廂以及24小時 Lofi 陪伴掛機房，一個人上線也絕不孤單。</p>
+                    <p>常設多個語音討論區、練歌房、小包廂以及24小時 背景音 陪伴掛機房，一個人上線也絕不孤單。</p>
                 </div>
             </div>
         </div>
@@ -2174,11 +2173,19 @@
         initParticles();
         renderEffect();
 
-        /* 1. 修復深淺模式切換按鈕無法使用問題 (同步更新所有按鈕圖示) */
+        /* 2. 修復深淺模式切換按鈕無法使用與狀態切換問題 */
         function toggleDarkMode() {
             const body = document.body;
-            body.classList.toggle('dark-mode');
-            body.classList.toggle('light-mode');
+            const isCurrentlyDark = body.classList.contains('dark-mode') || 
+                (!body.classList.contains('light-mode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            
+            if (isCurrentlyDark) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+            }
             
             const isDark = body.classList.contains('dark-mode');
             const toggleBtns = document.querySelectorAll('#themeToggleBtn, #themeToggleBtnSub');
@@ -2319,7 +2326,7 @@
         const fortuneList = [
             { good: "帶薪發呆、默默潛水", bad: "被迫社交、強制視訊開會" },
             { good: "盲猜全對、遊戲十連抽中SSR", bad: "出門忘記帶耳機、訊息未讀紅點爆多" },
-            { good: "獨自享用美食、掛網聽Lofi", bad: "走在路上巧遇熟人、手機突然沒電" },
+            { good: "獨自享用美食、掛網聽背景音", bad: "走在路上巧遇熟人、手機突然沒電" },
             { good: "躺平耍廢、吸貓擼狗", bad: "群組被@標記、必須開麥講話" },
             { good: "刷到好看的迷因、享受安靜午後", bad: "網路突然卡頓、外賣送錯餐點" },
             { good: "早睡早起、心如止水", bad: "深夜被朋友強行拉去打遊戲" }
@@ -2337,7 +2344,7 @@
         const cardPool = [
             { name: "N · 默默潛水的普通i人", rate: 40 },
             { name: "R · 偶爾點頭附和的群友", rate: 25 },
-            { name: "RR · 正在24小時Lofi房掛機", rate: 15 },
+            { name: "RR · 正在24小時 背景音 房掛機", rate: 15 },
             { name: "RRR · 句點大師", rate: 10 },
             { name: "SR · 敲木魚積攢功德中", rate: 5 },
             { name: "SSR · 歐洲人附體！十連雙金", rate: 3 },
