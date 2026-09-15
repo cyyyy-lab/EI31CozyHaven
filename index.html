@@ -4,7 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>可能是i人的伺服器｜Discord 社群</title>
-    <!-- 4. 讓瀏覽器分頁標籤顯示伺服器 Logo (Favicon) -->
+
+    <!-- 1. Open Graph (OG) 社群卡片標籤 -->
+    <meta property="og:title" content="可能是i人的伺服器｜EI Cozy Haven Discord 社群">
+    <meta property="og:description" content="這是一個集結許多「i人」的 Discord 社群。不論你是 I人 還是 E人，都能在這裡盡情聊天、玩遊戲、掛語音，找到最舒服的社交步調。">
+    <meta property="og:image" content="images/1sever.png">
+    <meta property="og:url" content="https://discord.gg/ie31inviteyou">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="可能是i人的伺服器">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- 讓瀏覽器分頁標籤顯示伺服器 Logo (Favicon) -->
     <link rel="icon" href="images/1sever.png" type="image/png">
     <style>
         :root {
@@ -22,6 +32,21 @@
             --footer-text-color: #546e7a;
         }
 
+        /* 2. 系統預設主題自動偵測 (當系統為深色模式時自動套用) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --card-bg: rgba(26, 29, 46, 0.5);
+                --text-main: #f1f5f9;
+                --text-sub: #94a3b8;
+                --nav-bg: rgba(26, 29, 46, 0.75);
+                --border-color: rgba(255, 255, 255, 0.1);
+                --dash-item-bg: rgba(255, 255, 255, 0.04);
+                --footer-text-color: #f1f5f9;
+                --gradient-blue: #2d3748;
+                --gradient-option: #0f111a;
+            }
+        }
+
         body.dark-mode {
             --card-bg: rgba(26, 29, 46, 0.5);
             --text-main: #f1f5f9;
@@ -29,7 +54,7 @@
             --nav-bg: rgba(26, 29, 46, 0.75);
             --border-color: rgba(255, 255, 255, 0.1);
             --dash-item-bg: rgba(255, 255, 255, 0.04);
-            --footer-text-color: #000000;
+            --footer-text-color: #f1f5f9;
         }
 
         body.gray-mode {
@@ -61,8 +86,8 @@
             position: relative;
         }
 
-        /* 雪花 Canvas 特效背景 */
-        #snowCanvas {
+        /* 季節性背景特效 Canvas */
+        #effectCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -619,7 +644,6 @@
             font-family: monospace;
         }
 
-        /* 1. 線上試玩互動區樣式 */
         .interactive-demo-card {
             background: var(--dash-item-bg);
             border: 1px solid var(--border-color);
@@ -705,7 +729,6 @@
             min-height: 30px;
         }
 
-        /* 2. 小測驗組件樣式 */
         .quiz-q {
             text-align: left;
         }
@@ -1051,7 +1074,6 @@
             background-color: var(--accent-hover);
         }
 
-        /* 音樂播放觸發小球樣式 */
         .player-ball {
             position: fixed;
             bottom: 30px;
@@ -1077,7 +1099,6 @@
             background: var(--accent-hover);
         }
 
-        /* 精緻音樂播放控制小卡樣式 */
         .lofi-player-card {
             position: fixed;
             bottom: 88px;
@@ -1269,13 +1290,11 @@
 </head>
 <body>
 
-    <!-- 雪花動畫 Canvas -->
-    <canvas id="snowCanvas"></canvas>
+    <!-- 3. 多功能季節性動態背景 Canvas -->
+    <canvas id="effectCanvas"></canvas>
 
-    <!-- 音樂/音效播放器（修復：直接宣告跨域相容的音訊資源） -->
     <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" loop preload="auto"></audio>
 
-    <!-- 左下角點擊展開小球與播放控制卡片 -->
     <button class="player-ball" id="playerBall" onclick="togglePlayerCard()" title="開啟音樂播放器">🎧</button>
 
     <div class="lofi-player-card" id="lofiPlayerCard">
@@ -1287,7 +1306,6 @@
             <button class="player-btn-play" id="playToggleBtn" onclick="togglePlayAudio()">▶</button>
         </div>
         <div class="player-controls">
-            <!-- 3. 豐富環境音效選單 -->
             <select class="audio-select" id="trackSelect" onchange="switchAudioTrack(this.value)">
                 <option value="lofi">☕ Lofi BGM</option>
                 <option value="rain">🌧️ 舒適雨聲</option>
@@ -1328,6 +1346,14 @@
                 <a href="#to-support" class="nav-btn" onclick="switchPage('main')">支持</a>
             </div>
             <div class="nav-tools-group">
+                <!-- 3. 季節性背景特效選擇選單 -->
+                <select class="color-select" id="effectSelect" onchange="changeEffect(this.value)" title="背景特效選單">
+                    <option value="snow" selected>❄️ 雪花</option>
+                    <option value="sakura">🌸 落櫻</option>
+                    <option value="glow">✨ 微光粒子</option>
+                    <option value="leaves">🍂 落葉</option>
+                    <option value="none">🚫 關閉特效</option>
+                </select>
                 <select class="color-select" id="bgSelect" onchange="changeBgColor(this.value)">
                     <option value="#ffffff" selected>🎨 白</option>
                     <option value="#64748b">🎨 灰</option>
@@ -1354,6 +1380,13 @@
         <div class="nav-row-2" style="justify-content: center;">
             <div class="nav-tools-group">
                 <button class="nav-btn" onclick="switchPage('main', 'whats-inside')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
+                <select class="color-select" onchange="changeEffect(this.value)" title="背景特效選單">
+                    <option value="snow" selected>❄️ 雪花</option>
+                    <option value="sakura">🌸 落櫻</option>
+                    <option value="glow">✨ 微光粒子</option>
+                    <option value="leaves">🍂 落葉</option>
+                    <option value="none">🚫 關閉特效</option>
+                </select>
                 <select class="color-select" onchange="changeBgColor(this.value)">
                     <option value="#ffffff" selected>🎨 白</option>
                     <option value="#64748b">🎨 灰</option>
@@ -1432,7 +1465,6 @@
             </div>
         </div>
 
-        <!-- 2. 「你是哪種 i 人？」極簡小測驗模組 -->
         <div id="to-quiz" class="section-anchor"></div>
 
         <div class="container scroll-reveal" id="quiz">
@@ -1699,7 +1731,6 @@
             
             <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化小管家，帶來滿滿陪伴與樂趣</p>
 
-            <!-- 1. 網頁版線上「敲木魚 / 試抽卡」互動模組 -->
             <div class="interactive-demo-card scroll-reveal">
                 <h3 style="color: var(--accent-color); margin-bottom: 12px; font-size: 1.1rem;">✨ 御用機器人特色功能線上體驗 ✨</h3>
                 <div class="demo-tabs">
@@ -1707,7 +1738,6 @@
                     <button class="nav-btn tab-btn" id="gachaTabBtn" onclick="switchDemoTab('gachaTab')">🎴 試抽卡體驗</button>
                 </div>
                 
-                <!-- 敲木魚 -->
                 <div id="muyuTab" class="demo-content active">
                     <div class="muyu-box" onclick="hitMuyu(event)">
                         <div class="muyu-icon">🪵</div>
@@ -1716,7 +1746,6 @@
                     </div>
                 </div>
 
-                <!-- 試抽卡 -->
                 <div id="gachaTab" class="demo-content">
                     <div class="gacha-box">
                         <button class="btn-join-main" style="width: auto; padding: 10px 24px; font-size: 0.95rem;" onclick="drawCard()">🎴 點擊單抽體驗</button>
@@ -1966,10 +1995,11 @@
     <div class="toast-msg" id="customToast"></div>
 
     <script>
-        /* 背景動態雪花特效 */
-        const canvas = document.getElementById('snowCanvas');
+        /* 3. 多功能季節性背景粒子系統 (雪花 / 落櫻 / 微光粒子 / 落葉) */
+        const canvas = document.getElementById('effectCanvas');
         const ctx = canvas.getContext('2d');
-        let snowflakes = [];
+        let particles = [];
+        let currentEffect = 'snow';
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -1978,60 +2008,124 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        class Snowflake {
-            constructor() {
+        class Particle {
+            constructor(type) {
+                this.type = type;
                 this.reset();
             }
+
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * -canvas.height;
-                this.radius = Math.random() * 2.5 + 1;
-                this.speed = Math.random() * 0.8 + 0.3;
-                this.wind = Math.random() * 0.4 - 0.2;
-                this.opacity = Math.random() * 0.5 + 0.3;
-            }
-            update() {
-                this.y += this.speed;
-                this.x += this.wind;
-                if (this.y > canvas.height) {
-                    this.reset();
+                this.size = Math.random() * 3 + 2;
+                this.speedY = Math.random() * 0.8 + 0.4;
+                this.speedX = Math.random() * 0.6 - 0.3;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+                this.opacity = Math.random() * 0.6 + 0.3;
+
+                if (this.type === 'glow') {
+                    this.y = Math.random() * canvas.height;
+                    this.speedY = -(Math.random() * 0.5 + 0.2); // 向上飄浮
+                    this.size = Math.random() * 3 + 1;
+                    this.color = Math.random() > 0.5 ? 'rgba(255, 230, 150,' : 'rgba(180, 241, 245,';
+                } else if (this.type === 'sakura') {
+                    this.color = 'rgba(255, 183, 197,';
+                    this.size = Math.random() * 4 + 3;
+                } else if (this.type === 'leaves') {
+                    const colors = ['rgba(230, 126, 34,', 'rgba(211, 84, 0,', 'rgba(243, 156, 18,'];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.size = Math.random() * 5 + 4;
+                } else { // snow
+                    this.color = 'rgba(255, 255, 255,';
+                    this.size = Math.random() * 2.5 + 1;
                 }
             }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3;
+                this.rotation += this.rotationSpeed;
+
+                if (this.type === 'glow') {
+                    if (this.y < -10) {
+                        this.reset();
+                        this.y = canvas.height + 10;
+                    }
+                } else {
+                    if (this.y > canvas.height + 10) this.reset();
+                }
+            }
+
             draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.fill();
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+
+                if (this.type === 'snow') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `${this.color}${this.opacity})`;
+                    ctx.fill();
+                } else if (this.type === 'sakura') {
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-this.size, -this.size * 1.5, -this.size * 1.5, this.size, 0, this.size * 1.5);
+                    ctx.bezierCurveTo(this.size * 1.5, this.size, this.size, -this.size * 1.5, 0, 0);
+                    ctx.fillStyle = `${this.color}${this.opacity})`;
+                    ctx.fill();
+                } else if (this.type === 'leaves') {
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                    ctx.fillStyle = `${this.color}${this.opacity})`;
+                    ctx.fill();
+                } else if (this.type === 'glow') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `${this.color}${this.opacity})`;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+                    ctx.fill();
+                }
+                ctx.restore();
             }
         }
 
-        function initSnow() {
-            snowflakes = [];
+        function initParticles() {
+            particles = [];
+            if (currentEffect === 'none') return;
             const count = Math.floor(window.innerWidth / 15);
             for (let i = 0; i < count; i++) {
-                snowflakes.push(new Snowflake());
+                particles.push(new Particle(currentEffect));
             }
         }
 
-        function renderSnow() {
+        function renderEffect() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            snowflakes.forEach(flake => {
-                flake.update();
-                flake.draw();
-            });
-            requestAnimationFrame(renderSnow);
+            if (currentEffect !== 'none') {
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+            }
+            requestAnimationFrame(renderEffect);
         }
 
-        initSnow();
-        renderSnow();
+        function changeEffect(val) {
+            currentEffect = val;
+            const selects = document.querySelectorAll('#effectSelect');
+            selects.forEach(s => s.value = val);
+            initParticles();
+        }
 
-        /* 音樂播放控制卡片開關邏輯 */
+        initParticles();
+        renderEffect();
+
         function togglePlayerCard() {
             const card = document.getElementById('lofiPlayerCard');
             card.classList.toggle('active');
         }
 
-        /* 3. 音樂/環境音效庫（修復：替換為免費且跨域相容的音訊資源） */
         const audioTracks = {
             rain: {
                 src: "https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg",
@@ -2055,7 +2149,6 @@
         const songTitle = document.getElementById('songTitle');
         const playerIcon = document.getElementById('playerIcon');
 
-        /* 自動監聽事件，同步播放/暫停按鈕 UI */
         bgmAudio.addEventListener('play', () => {
             playToggleBtn.textContent = "⏸";
         });
@@ -2079,7 +2172,7 @@
             if (track) {
                 const isPlaying = !bgmAudio.paused;
                 bgmAudio.src = track.src;
-                bgmAudio.load(); // 關鍵修復：重新載入新音訊源
+                bgmAudio.load();
                 songTitle.textContent = track.title;
                 playerIcon.textContent = track.icon;
                 if (isPlaying) {
@@ -2092,7 +2185,6 @@
             bgmAudio.volume = val;
         }
 
-        /* 1. 木魚與試抽卡互動邏輯 */
         let meritCount = 0;
         let audioCtx = null;
 
@@ -2173,7 +2265,6 @@
             resEl.innerHTML = `恭喜抽中：<strong>[${result.name}]</strong>`;
         }
 
-        /* 2. 小測驗計算邏輯 */
         let quizAnswers = [];
         function answerQuiz(qIndex, answer) {
             quizAnswers.push(answer);
@@ -2223,7 +2314,6 @@
             document.getElementById('q3').style.display = 'none';
         }
 
-        /* 數據儀表板動態累加計數器 */
         let animatedCounters = false;
         function animateCounters() {
             const counters = document.querySelectorAll('.dash-value[data-counter]');
@@ -2245,7 +2335,6 @@
             });
         }
 
-        /* 滾動觀察器 */
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -2267,7 +2356,6 @@
             });
         }
 
-        /* 搜尋過濾功能 */
         function searchFaq() {
             const query = document.getElementById('faqSearchInput').value.toLowerCase().trim();
             const faqItems = document.querySelectorAll('#faqList .faq-item');
@@ -2294,13 +2382,11 @@
             });
         }
 
-        /* 折疊機器人指令清單 */
         function toggleCmdAccordion() {
             const accordion = document.getElementById('botCmdAccordion');
             accordion.classList.toggle('active');
         }
 
-        /* 介面邏輯與功能函數 */
         function changeBgColor(color) {
             document.documentElement.style.setProperty('--gradient-option', color);
             
