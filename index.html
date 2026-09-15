@@ -1,72 +1,2503 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <title>環境音播放器</title>
-  <style>
-    .player-card {
-      border: 1px solid #ccc;
-      padding: 16px;
-      border-radius: 8px;
-      width: 280px;
-      font-family: sans-serif;
-    }
-    .sound-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .sound-item button {
-      padding: 6px 12px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可能是i人的伺服器｜Discord 社群</title>
+
+    <!-- 1. Open Graph (OG) 社群卡片標籤 -->
+    <meta property="og:title" content="可能是i人的伺服器｜EI Cozy Haven Discord 社群">
+    <meta property="og:description" content="這是一個集結許多「i人」的 Discord 社群。不論你是 I人 還是 E人，都能在這裡盡情聊天、玩遊戲、掛語音，找到最舒服的社交步調。">
+    <meta property="og:image" content="images/1sever.png">
+    <meta property="og:url" content="https://discord.gg/ie31inviteyou">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="可能是i人的伺服器">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- 讓瀏覽器分頁標籤顯示伺服器 Logo (Favicon) -->
+    <link rel="icon" href="images/1sever.png" type="image/png">
+    <style>
+        :root {
+            /* 1. 預設/淺色模式：淺綠(#b8f3e2) + 淺藍(#b4f1f5) + 白色(#ffffff)，斜向漸變 */
+            --gradient-option: #ffffff;
+            --gradient-blue: #b4f1f5;
+            --gradient-green: #b8f3e2;
+            
+            --card-bg: rgba(255, 255, 255, 0.5);
+            --accent-color: #5b73c7;
+            --accent-hover: #485cb5;
+            --text-main: #2c3e50;
+            --text-sub: #546e7a;
+            --nav-bg: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --dash-item-bg: rgba(0, 0, 0, 0.03);
+            --footer-text-color: #546e7a;
+        }
+
+        /* 2. 系統預設主題自動偵測 (當系統為深色模式時自動套用) */
+        @media (prefers-color-scheme: dark) {
+            :root:not(.light-mode) {
+                --card-bg: rgba(26, 29, 46, 0.5);
+                --text-main: #f1f5f9;
+                --text-sub: #94a3b8;
+                --nav-bg: rgba(26, 29, 46, 0.75);
+                --border-color: rgba(255, 255, 255, 0.1);
+                --dash-item-bg: rgba(255, 255, 255, 0.04);
+                --footer-text-color: #f1f5f9;
+                /* 2. 深色模式：灰綠(#283832) + 灰藍(#2d3748) + 黑色(#0f111a)，斜向漸變 */
+                --gradient-green: #283832;
+                --gradient-blue: #2d3748;
+                --gradient-option: #0f111a;
+            }
+        }
+
+        body.dark-mode {
+            --card-bg: rgba(26, 29, 46, 0.5);
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --nav-bg: rgba(26, 29, 46, 0.75);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --dash-item-bg: rgba(255, 255, 255, 0.04);
+            --footer-text-color: #f1f5f9;
+            /* 2. 深色模式：灰綠(#283832) + 灰藍(#2d3748) + 黑色(#0f111a) */
+            --gradient-green: #283832;
+            --gradient-blue: #2d3748;
+            --gradient-option: #0f111a;
+        }
+
+        body.light-mode {
+            --card-bg: rgba(255, 255, 255, 0.5);
+            --text-main: #2c3e50;
+            --text-sub: #546e7a;
+            --nav-bg: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --dash-item-bg: rgba(0, 0, 0, 0.03);
+            --footer-text-color: #546e7a;
+            /* 1. 淺色模式：淺綠(#b8f3e2) + 淺藍(#b4f1f5) + 白色(#ffffff) */
+            --gradient-green: #b8f3e2;
+            --gradient-blue: #b4f1f5;
+            --gradient-option: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            /* 1. & 2. 套用斜向漸變 (包含綠、藍、白/黑) */
+            background: linear-gradient(135deg, var(--gradient-green) 0%, var(--gradient-blue) 50%, var(--gradient-option) 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-top: 130px;
+            padding-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 季節性背景特效 Canvas */
+        #effectCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 140px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 10px 20px;
+            z-index: 1000;
+            gap: 8px;
+        }
+
+        .nav-row-1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .nav-name-group {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .nav-title {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .nav-subtitle {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .nav-row-2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            gap: 4px;
+        }
+
+        .nav-links-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: nowrap;
+        }
+
+        .nav-tools-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 5px 8px;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn.active {
+            background-color: var(--accent-color);
+            color: #ffffff !important;
+        }
+
+        .btn-join-nav {
+            background-color: var(--accent-color);
+            color: #ffffff !important;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .btn-join-nav:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-copy-nav {
+            background-color: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-copy-nav:hover {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .btn-copy-nav:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .color-select {
+            padding: 5px 6px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 0.8rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .container {
+            max-width: 680px;
+            width: 90%;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .container:hover, .dash-card:hover, .feature-item:hover, .faq-item:hover, .bot-feature-card:hover, .team-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 16px 35px rgba(91, 115, 199, 0.25);
+            border-color: var(--accent-color);
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .scroll-reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .main-avatar {
+            width: 165px;
+            height: 165px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(91, 115, 199, 0.15);
+            color: var(--accent-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            line-height: 1.4;
+            margin-bottom: 14px;
+        }
+
+        .h1-en {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 35px;
+            text-align: left;
+        }
+
+        .feature-item {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 18px;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .feature-item h3 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .feature-item p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.4;
+        }
+
+        .btn-join-main {
+            display: inline-block;
+            width: 100%;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background 0.2s ease, transform 0.1s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-join-main:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .dash-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px 15px;
+            border-radius: 14px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .dash-title {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+        }
+
+        .dash-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .rules-container {
+            text-align: left;
+        }
+
+        .rules-section {
+            display: none;
+        }
+
+        .rules-section.active {
+            display: block;
+        }
+
+        .rules-section h3 {
+            font-size: 1.15rem;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .rules-list {
+            list-style-type: decimal;
+            padding-left: 20px;
+            color: var(--text-main);
+        }
+
+        .rules-list li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .rules-desc {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .tab-btn {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: #ffffff;
+            border-color: var(--accent-color);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--dash-item-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(91, 115, 199, 0.2);
+        }
+
+        .faq-list {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.2s;
+        }
+
+        .faq-question {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.05rem;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        body.dark-mode .faq-question:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .faq-arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 20px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 20px 16px 20px;
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-small {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-top: 6px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 10px 0 10px 20px;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            bottom: 15px;
+            left: 27px;
+            width: 2px;
+            background: var(--accent-color);
+            opacity: 0.4;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+            padding-left: 30px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        .timeline-date {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            background: rgba(91, 115, 199, 0.12);
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+        }
+
+        .timeline-content {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+
+        .bot-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+        }
+
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .bot-feature-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 14px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .bot-feature-card h3 {
+            font-size: 0.98rem;
+            color: var(--accent-color);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bot-feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.45;
+        }
+
+        .bot-cmd-tag {
+            display: inline-block;
+            background: rgba(91, 115, 199, 0.12);
+            color: var(--accent-color);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 6px;
+            font-family: monospace;
+        }
+
+        .interactive-demo-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .demo-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-content {
+            display: none;
+        }
+
+        .demo-content.active {
+            display: block;
+        }
+
+        .muyu-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s;
+        }
+
+        .muyu-box:active {
+            transform: scale(0.96);
+        }
+
+        .muyu-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        .muyu-count {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .muyu-hint {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-top: 6px;
+        }
+
+        .muyu-pop {
+            position: absolute;
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            pointer-events: none;
+            animation: floatUp 0.8s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-35px); }
+        }
+
+        .gacha-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .gacha-result {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-height: 30px;
+        }
+
+        .quiz-q {
+            text-align: left;
+        }
+
+        .quiz-title {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .quiz-opt-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--dash-item-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.1s;
+        }
+
+        .quiz-opt-btn:hover {
+            background: rgba(91, 115, 199, 0.12);
+            border-color: var(--accent-color);
+            transform: translateX(4px);
+        }
+
+        .quiz-result-box {
+            text-align: left;
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .cmd-accordion {
+            margin-top: 25px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            background: var(--dash-item-bg);
+        }
+
+        .cmd-accordion-btn {
+            width: 100%;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .cmd-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 20px;
+        }
+
+        .cmd-accordion.active .cmd-accordion-content {
+            max-height: 800px;
+            padding: 10px 20px 20px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .cmd-accordion.active .cmd-arrow {
+            transform: rotate(180deg);
+        }
+
+        .cmd-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .cmd-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cmd-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .cmd-list li:last-child {
+            border-bottom: none;
+        }
+
+        .cmd-list code {
+            background: rgba(91, 115, 199, 0.15);
+            color: var(--accent-color);
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.88rem;
+            white-space: nowrap;
+        }
+
+        .threads-link-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            margin: 20px 0;
+            transition: transform 0.2s, background 0.2s;
+            color: var(--text-main);
+        }
+
+        .threads-link-card:hover {
+            transform: translateY(-2px);
+            background: rgba(91, 115, 199, 0.08);
+        }
+
+        .threads-icon {
+            font-size: 2rem;
+        }
+
+        .threads-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .threads-title {
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1rem;
+        }
+
+        .threads-url {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            word-break: break-all;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            text-align: left;
+        }
+
+        .team-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .team-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow: hidden;
+        }
+
+        .team-role {
+            font-size: 0.8rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .team-name {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .team-desc {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            line-height: 1.3;
+        }
+
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .emoji-card {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .emoji-img {
+            width: 100%;
+            height: auto;
+            max-height: 100px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.show .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-box h3 {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+        }
+
+        .modal-box p {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--footer-text-color);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, background-color 0.2s;
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .player-ball {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: #ffffff;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s ease, background-color 0.2s;
+        }
+
+        .player-ball:hover {
+            transform: scale(1.1);
+            background: var(--accent-hover);
+        }
+
+        .lofi-player-card {
+            position: fixed;
+            bottom: 88px;
+            left: 30px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+            width: 240px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px) scale(0.95);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        .lofi-player-card.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .player-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .player-track-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow: hidden;
+        }
+
+        .player-icon {
+            font-size: 1.2rem;
+        }
+
+        .player-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-btn-play {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+
+        .player-btn-play:hover {
+            background: var(--accent-hover);
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .audio-select {
+            background: var(--dash-item-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 0.75rem;
+            padding: 4px 6px;
+            border-radius: 6px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-box {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 90px;
+        }
+
+        .volume-box span {
+            font-size: 0.75rem;
+        }
+
+        .volume-slider {
+            width: 100%;
+            height: 4px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: var(--footer-text-color);
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-1px, -2px) rotate(-1deg); }
+            40% { transform: translate(-3px, 0px) rotate(1deg); }
+            60% { transform: translate(3px, 2px) rotate(0deg); }
+            80% { transform: translate(1px, -1px) rotate(1deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+
+        .shake-effect {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .toast-msg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 20px 30px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .toast-msg.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .page-view {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-view.active {
+            display: flex;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding-top: 145px;
+            }
+            .features, .dash-grid, .team-grid, .bot-grid {
+                grid-template-columns: 1fr;
+            }
+            .emoji-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .player-ball {
+                left: 15px;
+                bottom: 15px;
+            }
+            .lofi-player-card {
+                left: 15px;
+                bottom: 73px;
+                width: 210px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="player-card">
-  <h3>環境音播放器</h3>
-  <div id="sound-list"></div>
-</div>
+    <!-- 多功能季節性動態背景 Canvas -->
+    <canvas id="effectCanvas"></canvas>
 
-<script>
-  // 音效資料清單：僅保留「雨聲」與「街道音」
-  const sounds = [
-    { id: 'rain', name: '雨聲', icon: '🌧️', src: 'https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg' },
-    { id: 'street', name: '街道音', icon: '🏙️', src: 'https://actions.google.com/sounds/v1/ambiences/outdoor_city_traffic.ogg' }
-  ];
+    <audio id="bgmAudio" src="https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg" loop preload="auto"></audio>
 
-  const soundListContainer = document.getElementById('sound-list');
+    <button class="player-ball" id="playerBall" onclick="togglePlayerCard()" title="開啟音樂播放器">🎧</button>
 
-  // 動態生成播放器控制介面
-  sounds.forEach(sound => {
-    const itemDiv = document.createElement('div');
-    itemDiv.className = 'sound-item';
+    <div class="lofi-player-card" id="lofiPlayerCard">
+        <div class="player-top">
+            <div class="player-track-info">
+                <span class="player-icon" id="playerIcon">🌧️</span>
+                <!-- 播放器「背景音」標題 -->
+                <span class="player-title" id="songTitle">舒適雨聲</span>
+            </div>
+            <button class="player-btn-play" id="playToggleBtn" onclick="togglePlayAudio()">▶</button>
+        </div>
+        <div class="player-controls">
+            <select class="audio-select" id="trackSelect" onchange="switchAudioTrack(this.value)">
+                <option value="rain">🌧️ 舒適雨聲</option>
+                <option value="street">🏙️ 街道環境音</option>
+            </select>
+            <div class="volume-box">
+                <span>🔊</span>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" oninput="adjustVolume(this.value)">
+            </div>
+        </div>
+    </div>
 
-    itemDiv.innerHTML = `
-      <span>${sound.icon} ${sound.name}</span>
-      <audio id="audio-${sound.id}" loop src="${sound.src}"></audio>
-      <button onclick="toggleAudio('${sound.id}')" id="btn-${sound.id}">播放</button>
-    `;
+    <!-- 主頁面導覽列 -->
+    <nav class="navbar" id="mainNavbar">
+        <div class="nav-row-1">
+            <div class="nav-left">
+                <img src="images/1sever.png" alt="頭像" class="nav-avatar">
+                <div class="nav-name-group">
+                    <span class="nav-title">可能是i人的伺服器</span>
+                    <span class="nav-subtitle">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
+                </div>
+            </div>
+        </div>
+        <div class="nav-row-2">
+            <div class="nav-links-group">
+                <a href="#home" class="nav-btn" onclick="switchPage('main')">首頁</a>
+                <a href="#to-dashboard" class="nav-btn" onclick="switchPage('main')">儀表板</a>
+                <a href="#to-quiz" class="nav-btn" onclick="switchPage('main')">小測驗</a>
+                <a href="#to-rules" class="nav-btn" onclick="switchPage('main')">規則</a>
+                <a href="#to-faq" class="nav-btn" onclick="switchPage('main')">問答</a>
+                <a href="#whats-inside" class="nav-btn" onclick="switchPage('main')">內容</a>
+                <a href="#to-story" class="nav-btn" onclick="switchPage('main')">起源</a>
+                <a href="#to-milestones" class="nav-btn" onclick="switchPage('main')">里程</a>
+                <a href="#to-bot" class="nav-btn" onclick="switchPage('main')">機器人</a>
+                <a href="#to-team" class="nav-btn" onclick="switchPage('main')">團隊</a>
+            </div>
+            <div class="nav-tools-group">
+                <!-- 季節性背景特效選擇選單 -->
+                <select class="color-select" id="effectSelect" onchange="changeEffect(this.value)" title="背景特效選單">
+                    <option value="snow" selected>❄️ 雪花</option>
+                    <option value="sakura">🌸 落櫻</option>
+                    <option value="glow">✨ 光粒</option>
+                    <option value="leaves">🍂 落葉</option>
+                    <option value="none">🚫 關閉</option>
+                </select>
+                <!-- 2. 深色/淺色模式一鍵切換圖示按鈕 -->
+                <button class="btn-copy-nav" id="themeToggleBtn" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
+                <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入小天地</a>
+                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">複製邀請連結</button>
+            </div>
+        </div>
+    </nav>
 
-    soundListContainer.appendChild(itemDiv);
-  });
+    <!-- 新頁面導覽列 -->
+    <nav class="navbar" id="subNavbar" style="display: none;">
+        <div class="nav-row-1">
+            <div class="nav-left">
+                <img src="images/1sever.png" alt="頭像" class="nav-avatar">
+                <div class="nav-name-group">
+                    <span class="nav-title">可能是i人的伺服器</span>
+                    <span class="nav-subtitle">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
+                </div>
+            </div>
+        </div>
+        <div class="nav-row-2" style="justify-content: center;">
+            <div class="nav-tools-group">
+                <button class="nav-btn" onclick="switchPage('main', 'whats-inside')" style="background: var(--dash-item-bg); border: 1px solid var(--border-color);">返回</button>
+                <select class="color-select" onchange="changeEffect(this.value)" title="背景特效選單">
+                    <option value="snow" selected>❄️ 雪花</option>
+                    <option value="sakura">🌸 落櫻</option>
+                    <option value="glow">✨ 光粒</option>
+                    <option value="leaves">🍂 落葉</option>
+                    <option value="none">🚫 關閉</option>
+                </select>
+                <!-- 2. 修正新頁面模式切換按鈕ID -->
+                <button class="btn-copy-nav" id="themeToggleBtnSub" onclick="toggleDarkMode()" title="切換深淺模式">🌙</button>
+                <a href="#" onclick="openModal(event)" class="nav-btn btn-join-nav">加入</a>
+                <button onclick="copyInviteLink()" class="nav-btn btn-copy-nav">連結</button>
+            </div>
+        </div>
+    </nav>
 
-  // 控制播放 / 暫停
-  function toggleAudio(id) {
-    const audio = document.getElementById(`audio-${id}`);
-    const btn = document.getElementById(`btn-${id}`);
+    <!-- 主頁面容器 -->
+    <div id="mainPageView" class="page-view active">
+        <div class="container scroll-reveal" id="home">
+            <img src="images/1sever.png" alt="伺服器頭像" class="main-avatar">
 
-    if (audio.paused) {
-      audio.play();
-      btn.textContent = '暫停';
-    } else {
-      audio.pause();
-      btn.textContent = '播放';
-    }
-  }
-</script>
+            <br>
+            <div class="badge">🏷️ 伺服器標籤：和 i 可親 🏷️</div>
+            
+            <h1>
+                歡迎來到<br>
+                可能是i人的伺服器<br>
+                <span class="h1-en">𝐸𝐼 𝐶𝑜𝑧𝑦 𝐻𝑎𝑣𝑒𝑛</span>
+            </h1>
+            <p class="subtitle">
+                這是一個集結了許多「i人」的 Discord 社群。<br>
+                不論你是I人還是E人，都能在這裡盡情和別人聊天、玩遊戲、掛語音，找到最舒服的社交步調。
+            </p>
 
+            <div class="features">
+                <div class="feature-item scroll-reveal">
+                    <h3>💬 隨心交流</h3>
+                    <p>想聊天就聊，不想說話也可以安靜潛水打卡。</p>
+                </div>
+                <div class="feature-item scroll-reveal">
+                    <h3>🎮 組隊開場</h3>
+                    <p>輕鬆開團找隊友，沒有壓力一起玩遊戲。</p>
+                </div>
+                <div class="feature-item scroll-reveal">
+                    <h3>📻 24小時音樂</h3>
+                    <p>常設 背景音 音樂語音房，一個人掛機也不孤單。</p>
+                </div>
+                <div class="feature-item scroll-reveal">
+                    <h3>🤖 各式機器人</h3>
+                    <p>提供動態語音頻道與多種便利機器人互動，伺服器更設有專屬御用機器人！</p>
+                </div>
+            </div>
+
+            <a href="#" onclick="openModal(event)" class="btn-join-main">點擊加入 Discord 伺服器</a>
+
+            <div class="footer-note">✨ 希望你能在這裡找到屬於自己的小天地 ✨</div>
+        </div>
+
+        <div id="to-dashboard" class="section-anchor"></div>
+
+        <!-- 3. 數據儀表板：滾動到此區塊時數字從 0 動態累加到 3000+ 與 100+ -->
+        <div class="container scroll-reveal" id="dashboard">
+            <div class="dashboard-header">
+                <h2>數據儀表板</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群統計與資訊概覽</p>
+
+            <div class="dash-grid">
+                <div class="dash-card scroll-reveal">
+                    <div class="dash-title">📅 開服日期 📅</div>
+                    <div class="dash-value">5月31日</div>
+                </div>
+                <div class="dash-card scroll-reveal">
+                    <div class="dash-title">👥 總成員數 👥</div>
+                    <div class="dash-value" data-counter="3000" data-suffix="+">0</div>
+                </div>
+                <div class="dash-card scroll-reveal">
+                    <div class="dash-title">💬 總頻道數 💬</div>
+                    <div class="dash-value" data-counter="100" data-suffix="+">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-quiz" class="section-anchor"></div>
+
+        <div class="container scroll-reveal" id="quiz">
+            <div class="dashboard-header">
+                <h2>🧩 「你是哪種 i 人？」極簡小測驗</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">只需 3 題，快速測出你的社恐/i人屬性並推薦專屬頻道！</p>
+
+            <div id="quizContainer">
+                <div class="quiz-q" id="q1">
+                    <p class="quiz-title">Q1. 當聚會活動或開黑進行到一半時，你通常的狀態是？</p>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(1, 'A')">A. 能量耗盡，想默默偷溜回家躺平看影片 🛌</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(1, 'B')">B. 待在角落滑手機，偶爾回一兩句 📱</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(1, 'C')">C. 聊得很嗨，但回家後需要靜音三天電量恢復 🔋</button>
+                </div>
+
+                <div class="quiz-q" id="q2" style="display:none;">
+                    <p class="quiz-title">Q2. 進入 Discord 語音房時，你最習慣的習慣是？</p>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(2, 'A')">A. 閉麥閉視訊純掛網，當背景音聽大家說話 🎧</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(2, 'B')">B. 用文字頻道打字回應，偶爾開麥說兩句 💬</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(2, 'C')">C. 遇到熟人會開麥暢聊，主動邀約開遊戲房 🎮</button>
+                </div>
+
+                <div class="quiz-q" id="q3" style="display:none;">
+                    <p class="quiz-title">Q3. 當聊天頻道訊息刷得很快時，你會？</p>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(3, 'A')">A. 默默爬文潛水，不打擾大家發言 🌊</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(3, 'B')">B. 看到感興趣的話題貼個表情符號或簡短回應 😃</button>
+                    <button class="quiz-opt-btn" onclick="answerQuiz(3, 'C')">C. 興奮地直接加入討論大聊特聊 🔥</button>
+                </div>
+
+                <div id="quizResult" style="display:none;" class="quiz-result-box">
+                    <h3 id="quizTypeTitle" style="color: var(--accent-color); font-size: 1.2rem;">測驗結果</h3>
+                    <p id="quizTypeDesc" style="margin: 10px 0; color: var(--text-sub); font-size: 0.95rem; line-height: 1.5;"></p>
+                    <div style="background: var(--dash-item-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 12px;">
+                        <strong style="color: var(--text-main);">💡 為你推薦的伺服器專屬頻道：</strong>
+                        <p id="quizRecommend" style="color: var(--accent-color); font-weight: bold; margin-top: 6px; font-size: 0.95rem;"></p>
+                    </div>
+                    <button class="btn-copy-nav" style="margin-top: 15px; width: 100%;" onclick="resetQuiz()">🔄 重新測驗</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-rules" class="section-anchor"></div>
+
+        <div class="container scroll-reveal" id="rules">
+            <div class="dashboard-header">
+                <h2>伺服器規範</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">
+                請遵守我們的伺服器規則，共同維護舒適的交流環境 。我們希望每個人都能在這裡度過一段美好的時光
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 30px;">
+                <button class="nav-btn tab-btn active" onclick="switchTab('basic-rules', event)">基本規則</button>
+                <button class="nav-btn tab-btn" onclick="switchTab('voice-rules', event)">語音禮儀</button>
+                <button class="nav-btn tab-btn" onclick="switchTab('prohibited', event)">禁止事項</button>
+                <button class="nav-btn tab-btn" onclick="switchTab('punishments', event)">處罰分級</button>
+            </div>
+
+            <div class="rules-container">
+                <div class="rules-section active" id="basic-rules">
+                    <h3>基本規則</h3>
+                    <ol class="rules-list">
+                        <li>保持禮貌、尊重與包容，遵守各頻道主題發言</li>
+                        <li>請不要隨意和未經他人允許披露個人資訊</li>
+                        <li>若有紛爭請到⁠吃瓜與吵架頻道，勿影響他人及其他頻道</li>
+                        <li>有關伺服器問題，如非無法使用⁠客服中心 ，請不要私訊群主或管理員</li>
+                    </ol>
+                </div>
+                <div class="rules-section" id="voice-rules">
+                    <h3>語音禮儀</h3>
+                    <ol class="rules-list">
+                        <li>避免使用音效板/噪音/尖叫/錄音而造成他人困擾</li>
+                        <li>請勿未經允許更改他人語音狀態</li>
+                        <li>勿打斷他人唱歌</li>
+                    </ol>
+                </div>
+                <div class="rules-section" id="prohibited">
+                    <h3>禁止事項</h3>
+                    <ol class="rules-list">
+                        <li>宣傳私人群組及進行交易買賣</li>
+                        <li>於福利頻道以外發送及討論色情</li>
+                        <li>刷頻/冒充他人/經常亂入或打斷對話</li>
+                        <li>發表政治/仇恨/歧視/騷擾/辱罵/人身攻擊等言論</li>
+                    </ol>
+                </div>
+                <div class="rules-section" id="punishments">
+                    <h3>處罰分級</h3>
+                    <p class="rules-desc">
+                        本群規則會持續更新<br>
+                        若認為處罰有誤，可到客服中心進行申訴
+                    </p>
+                    <ol class="rules-list">
+                        <li>有不當行為時，新增規則與移除相關訊息，若影響多位成員則@出該成員</li>
+                        <li>特殊處罰，影響多位成員或無需說明時發出</li>
+                        <li>違反以上規則，或同一成員作出第三次不當行為時，@出該成員並移除相關訊息</li>
+                        <li>同一成員違規第二次時，禁言一週</li>
+                        <li>同一成員違規第三次時，移出群組</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-faq" class="section-anchor"></div>
+
+        <div class="container scroll-reveal" id="faq">
+            <div class="dashboard-header">
+                <h2>常見問題</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 25px; font-size: 0.95rem;">點擊問題標題即可展開或收合解答</p>
+            
+            <input type="text" id="faqSearchInput" class="search-input" placeholder="🔍 搜尋常見問題關鍵字..." onkeyup="searchFaq()">
+
+            <div class="faq-list" id="faqList">
+                <div class="faq-item scroll-reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q1. 為什麼我不能說話？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>請到須知進行驗證</p>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q2. 為什麼我看不到其他頻道？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>請到頻道與身分組領取身分組<br>
+                        需領取E/I身分組方可解鎖基本頻道<br>
+                        若想看遊戲頻道，需領取遊戲身分組</p>
+                        <div class="faq-small">（可額外領取對應的遊戲獨立身分組解鎖專屬頻道）</div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-reveal">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Q3. 遇到成員違規、騷擾或紛爭怎麼辦?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>可到客服中心開啟臨時頻道聯繫處理<br>
+                        若有紛爭，可選擇移步至吃瓜與吵架頻道</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="whats-inside" class="section-anchor"></div>
+
+        <div class="container scroll-reveal">
+            <div class="dashboard-header">
+                <h2>伺服器裡有什麼？</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">探索豐富多元的頻道與社群內容</p>
+            <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
+                <ul class="rules-list" style="margin-bottom: 20px;">
+                    <li><strong>多樣遊戲天地：</strong>各類熱門手遊與電腦遊戲專屬開黑頻道。</li>
+                    <li><strong>日常心情分享：</strong>提供美食、寵物、日常廢文與心情抒發專區。</li>
+                    <li><strong>24小時音樂陪伴：</strong>隨時點歌或掛網聽歌的放鬆角落。</li>
+                    <li><strong>專屬互動小幫手：</strong>獨家機器人提供抽卡、打卡、PK等多樣化趣味功能。</li>
+                </ul>
+                <button class="btn-join-main" onclick="switchPage('sub')">詳細資訊</button>
+            </div>
+        </div>
+
+        <div id="to-story" class="section-anchor"></div>
+
+        <div class="container scroll-reveal" id="story">
+            <div class="dashboard-header">
+                <h2>起源故事</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">屬於這個小天地的誕生</p>
+            <div style="text-align: left; line-height: 1.7; font-size: 0.95rem; color: var(--text-main);">
+                <p style="margin-bottom: 12px;">
+                    故事始於5月份那篇獲得廣大迴響的 Threads 貼文。當時原本只是隨手分享一個想為「i人」打造輕鬆自由社交空間的想法，沒想到瞬間吸引了無數同好的前來。
+                </p>
+                
+                <p style="margin-top: 12px; margin-bottom: 12px;">
+                    為了讓這份溫暖延續，我們建立了這個 Discord 伺服器。從最初的小小發想，到如今集結了許多陪伴彼此交流、掛機、玩遊戲的好朋友，這裡成為了大家避風與放鬆的專屬角落。我們希望賦予這個小天地更多溫度與人情味，期待與你一起寫下更多美好的故事。
+                </p>
+
+                <a href="https://www.threads.com/share/BAVGu1Ib5B/" target="_blank" class="threads-link-card scroll-reveal">
+                    <div class="threads-icon">📱</div>
+                    <div class="threads-info">
+                        <div class="threads-title">查看最初的那篇 Threads 貼文</div>
+                        <div class="threads-url">https://www.threads.com/share/BAVGu1Ib5B/</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div id="to-milestones" class="section-anchor"></div>
+
+        <div class="container scroll-reveal" id="milestones">
+            <div class="dashboard-header">
+                <h2>發展里程碑</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">記錄這個小天地一路走來的點點滴滴</p>
+            
+            <div class="timeline">
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">5月30日</div>
+                    <div class="timeline-content">
+                        那篇引起廣大共鳴的 Threads 貼文發布。
+                    </div>
+                </div>
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">5月31日</div>
+                    <div class="timeline-content">
+                        伺服器正式成立！初具規模，當天即突破 1000 人！ 🎉
+                    </div>
+                </div>
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">7月26日</div>
+                    <div class="timeline-content">
+                        御用機器人正式加入，為社群帶來更多豐富互動！ 🤖
+                    </div>
+                </div>
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">8月1日</div>
+                    <div class="timeline-content">
+                        Threads 貼文再次迎來一波流量關注。
+                    </div>
+                </div>
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">8月16日</div>
+                    <div class="timeline-content">
+                        伺服器成員人數突破 2000 人！ 🎉
+                    </div>
+                </div>
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">9月10日</div>
+                    <div class="timeline-content">
+                        伺服器成員人數突破 3000 人！ 🎉
+                    </div>
+                </div>
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">9月13日</div>
+                    <div class="timeline-content">
+                        建立專屬社群宣傳網站！ ✨
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-bot" class="section-anchor"></div>
+
+        <div class="container scroll-reveal" id="bot">
+            <div class="dashboard-header">
+                <h2>御用機器人</h2>
+            </div>
+            
+            <img src="images/bot.jpg" alt="御用機器人頭像" class="bot-avatar">
+            
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群專屬客製化小管家，帶來滿滿陪伴與樂趣</p>
+
+            <div class="interactive-demo-card scroll-reveal">
+                <h3 style="color: var(--accent-color); margin-bottom: 12px; font-size: 1.1rem;">✨ 御用機器人特色功能線上體驗 ✨</h3>
+                <div class="demo-tabs">
+                    <button class="nav-btn tab-btn active" id="muyuTabBtn" onclick="switchDemoTab('muyuTab')">🪵 線上敲木魚</button>
+                    <button class="nav-btn tab-btn" id="gachaTabBtn" onclick="switchDemoTab('gachaTab')">🎴 試抽卡體驗</button>
+                    <button class="nav-btn tab-btn" id="profileTabBtn" onclick="switchDemoTab('profileTab')">🆔 Profile 模擬器</button>
+                    <button class="nav-btn tab-btn" id="fortuneTabBtn" onclick="switchDemoTab('fortuneTab')">🔮 今日 i 人運勢</button>
+                </div>
+                
+                <div id="muyuTab" class="demo-content active">
+                    <div class="muyu-box" onclick="hitMuyu(event)">
+                        <div class="muyu-icon">🪵</div>
+                        <div class="muyu-count">累積功德：<span id="meritCount">0</span></div>
+                        <p class="muyu-hint">點擊木魚敲擊積攢功德 (帶音效與浮動特效)</p>
+                    </div>
+                </div>
+
+                <div id="gachaTab" class="demo-content">
+                    <div class="gacha-box">
+                        <button class="btn-join-main" style="width: auto; padding: 10px 24px; font-size: 0.95rem;" onclick="drawCard()">🎴 點擊單抽體驗</button>
+                        <div id="gachaResult" class="gacha-result">點擊上方按鈕開始試抽！</div>
+                    </div>
+                </div>
+
+                <div id="profileTab" class="demo-content">
+                    <div class="gacha-box" style="text-align: left;">
+                        <label style="font-size: 0.9rem; font-weight: bold; display: block; margin-bottom: 6px;">輸入您的 Discord 名稱：</label>
+                        <input type="text" id="profileNameInput" class="search-input" placeholder="例如：i人小夥伴" value="i人小夥伴" style="margin-bottom: 12px;">
+                        <button class="btn-join-main" style="width: 100%; padding: 12px; font-size: 0.95rem; margin-bottom: 15px;" onclick="generateProfileCard()">生成預覽名片 (!profile)</button>
+                        <div id="profilePreviewCard" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-color); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white;">🤖</div>
+                            <div>
+                                <div id="previewUsername" style="font-weight: bold; color: var(--text-main); font-size: 1rem;">i人小夥伴</div>
+                                <div style="font-size: 0.75rem; color: var(--accent-color); margin-top: 2px;">伺服器等級: Lv.15 | 連續打卡: 12天</div>
+                                <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 2px;">狀態: 正在 24小時 背景音 房掛機 🎧</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="fortuneTab" class="demo-content">
+                    <div class="gacha-box" style="text-align: center;">
+                        <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 12px;">點擊按鈕抽取你今天的 i 人專屬運勢！</p>
+                        <button class="btn-join-main" style="width: auto; padding: 10px 24px; font-size: 0.95rem;" onclick="drawFortune()">🥠 抽取今日 i 人運勢</button>
+                        <div id="fortuneResult" class="gacha-result" style="background: var(--dash-item-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 15px;">
+                            點擊上方按鈕看看今天運勢如何吧 ✨
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bot-grid">
+                <div class="bot-feature-card scroll-reveal">
+                    <h3>📅 打卡與個人名片</h3>
+                    <p>追蹤個人發言與語音經驗值，連續打卡 30 天可解鎖活躍身分組。</p>
+                    <span class="bot-cmd-tag">!打卡 / !profile</span>
+                </div>
+                <div class="bot-feature-card scroll-reveal">
+                    <h3>⚔️ 趣味 PK 決鬥</h3>
+                    <p>與群友進行搞笑回合制卡牌對決，記錄累積勝率與勝敗戰績。</p>
+                    <span class="bot-cmd-tag">!PK @成員</span>
+                </div>
+                <div class="bot-feature-card scroll-reveal">
+                    <h3>🎴 歐皇體質抽卡</h3>
+                    <p>挑戰 10 種稀有度卡牌，幸運抽中最高階 SEC 可解鎖尊爵身分組！</p>
+                    <span class="bot-cmd-tag">!抽卡</span>
+                </div>
+                <div class="bot-feature-card scroll-reveal">
+                    <h3>🎮 娛樂互動樂園</h3>
+                    <p>包含 21點對決、猜拳、餵食/摸頭小寵物，以及管理員爆笑金句庫。</p>
+                    <span class="bot-cmd-tag">!21 / !出來玩 / !管理員說</span>
+                </div>
+                <div class="bot-feature-card scroll-reveal" style="grid-column: span 2;">
+                    <h3>⏰ 溫馨定時廣播與倒數提醒</h3>
+                    <p>每日凌晨 02:00 晚安提醒、早上 09:00 早安招呼，以及每週一 18:00 活躍排行榜自動結算！還能幫你設定個人專屬倒數提醒。</p>
+                    <span class="bot-cmd-tag">!提醒 10m 記得喝水</span>
+                </div>
+            </div>
+
+            <div class="cmd-accordion" id="botCmdAccordion">
+                <button class="cmd-accordion-btn" onclick="toggleCmdAccordion()">
+                    <span>📜 完整指令清單</span>
+                    <span class="cmd-arrow">▼</span>
+                </button>
+                <div class="cmd-accordion-content">
+                    <ul class="cmd-list">
+                        <li><code>!hello</code> <span>與機器人打招呼</span></li>
+                        <li><code>!muyu</code> <span>敲木魚</span></li>
+                        <li><code>!猜拳</code> <span>與機器人猜拳</span></li>
+                        <li><code>!出來玩</code> <span>對機器人餵食/摸頭/陪玩</span></li>
+                        <li><code>!21</code> <span>與機器人玩二十一點</span></li>
+                        <li><code>!管理員說</code> <span>管理員們都常說什麼？（21句）</span></li>
+                        <li><code>!抽卡</code> <span>低到高 N/R/RR/RRR/S/SR/SSR/UR/LR/SEC</span></li>
+                        <li><code>!打卡</code> <span>查詢自己當前連續活躍了幾天</span></li>
+                        <li><code>!PK @成員</code> <span>發起對決</span></li>
+                        <li><code>!profile</code> <span>可查看成員的加入伺服器天數、連續打卡天數、本週發言數、本週語音時長、PK戰績</span></li>
+                        <li><code>!提醒</code> <span>在指定時間後標記自己進行提醒</span></li>
+                        <li><code>!運勢</code> <span>抽今日 i 人運勢 (宜/忌)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="to-team" class="section-anchor"></div>
+
+        <div class="container scroll-reveal" id="team">
+            <div class="dashboard-header">
+                <h2>🛡️ 管理團隊</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">守護這個溫馨小天地的幕后功臣們</p>
+            
+            <div class="team-grid">
+                <div class="team-card scroll-reveal">
+                    <img src="images/2cyyyy.png" alt="吉" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">群主</span>
+                        <span class="team-name">吉</span>
+                        <span class="team-desc">AI很好用。</span>
+                    </div>
+                </div>
+                <div class="team-card scroll-reveal">
+                    <img src="images/3smile.png" alt="ᴗ̈ᴗ̈ᴗ̈魚板。" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">ᴗ̈ᴗ̈ᴗ̈魚板。</span>
+                        <span class="team-desc"><img src="images/esmile.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
+                    </div>
+                </div>
+                <div class="team-card scroll-reveal">
+                    <img src="images/4oboe.png" alt="oboe蜥蜴" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">oboe蜥蜴</span>
+                        <span class="team-desc"><img src="images/eoboe.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
+                    </div>
+                </div>
+                <div class="team-card scroll-reveal">
+                    <img src="images/5he.png" alt="禾" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">禾</span>
+                        <span class="team-desc"><img src="images/ehe.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
+                    </div>
+                </div>
+                <div class="team-card scroll-reveal">
+                    <img src="images/6muly.png" alt="muly沐漓" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">muly沐漓</span>
+                        <span class="team-desc"><img src="images/emuly.jpg" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
+                    </div>
+                </div>
+                <div class="team-card scroll-reveal">
+                    <img src="images/7chen.png" alt="辰" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">辰</span>
+                        <span class="team-desc">吃瓜吵架找我</span>
+                    </div>
+                </div>
+                <div class="team-card scroll-reveal">
+                    <img src="images/8qiu.png" alt="球" class="team-avatar">
+                    <div class="team-info">
+                        <span class="team-role">管理員</span>
+                        <span class="team-name">球</span>
+                        <span class="team-desc"><img src="images/eqiu.png" alt="管理員" style="height: 14px; vertical-align: middle;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container scroll-reveal">
+            <h2 style="font-size: 1.5rem; margin-bottom: 14px;">感謝你的閱讀，要加入我們，成為小天地的一員嗎？</h2>
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <a href="#" onclick="openModal(event)" class="btn-join-main" style="flex: 1; text-align: center;">加入伺服器</a>
+                <button class="btn-join-main" style="flex: 1; background-color: #94a3b8; cursor: pointer; border: none;" onclick="handleDecline()">不要</button>
+            </div>
+        </div>
+
+        <div class="container scroll-reveal" style="padding: 20px 30px;">
+            <a href="#home" class="btn-join-main" style="text-align: center;">回到頂部</a>
+        </div>
+    </div>
+
+    <!-- 新頁面容器 -->
+    <div id="subPageView" class="page-view">
+        <div class="container scroll-reveal" style="margin-top: 40px;">
+            <div class="dashboard-header">
+                <h2>詳細說明與介紹</h2>
+            </div>
+            <p class="subtitle" style="font-size: 0.85rem; margin-bottom: 10px;">這裡展示更多關於伺服器的資訊與說明。</p>
+            <div style="text-align: left; line-height: 1.8; color: var(--text-main);">
+                <p style="margin-bottom: 15px;">感謝你點擊進入頁面！本伺服器致力於為所有喜愛安靜、舒適交流的「i人」打造一個完全無壓力的避風港。</p>
+                <button class="btn-join-main" onclick="switchPage('main', 'whats-inside')" style="margin-top: 20px;">返回主頁</button>
+            </div>
+        </div>
+
+        <div class="container scroll-reveal">
+            <div class="dashboard-header">
+                <h2>頻道板塊</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">探索伺服器內部豐富的主題分區</p>
+            
+            <input type="text" id="channelSearchInput" class="search-input" placeholder="🔍 搜尋頻道或主題關鍵字..." onkeyup="searchChannels()">
+
+            <div class="bot-grid" id="channelGrid">
+                <div class="bot-feature-card channel-card scroll-reveal">
+                    <h3>💬 交流與日常（聊天室、分享區）</h3>
+                    <p>設有綜合聊天、男女生區、i人與e人專屬區，以及美食、寵物、攝影、生活小確幸等分享天地，讓大家自在交流生活點滴。</p>
+                </div>
+
+                <div class="bot-feature-card channel-card scroll-reveal">
+                    <h3>🎮 遊戲與娛樂廳</h3>
+                    <p>集結米遊、光遇、麥塊、雀魂、乙女遊戲、STEAM多人遊戲等多樣化討論區，並有經濟、RP系統與機器人互動遊戲，方便同好快速組隊開黑。</p>
+                </div>
+
+                <div class="bot-feature-card channel-card scroll-reveal">
+                    <h3>📚 學習與藝文天地</h3>
+                    <p>提供學習區、交流室、VTUBER、音樂與歐美劇討論，以及巴納姆效應研究室等特色空間，兼顧休閒與自我提升。</p>
+                </div>
+
+                <div class="bot-feature-card channel-card scroll-reveal">
+                    <h3>🌧️ 溫馨避難所</h3>
+                    <p>包含EMO、福利區、爆本人照及心情抒發頻道，當感到疲憊或需要宣洩情緒時，這裡隨時接納你的所有心情。</p>
+                </div>
+
+                <div class="bot-feature-card channel-card scroll-reveal" style="grid-column: span 2;">
+                    <h3>🎵 動態與音樂語音</h3>
+                    <p>常設多個語音討論區、練歌房、小包廂以及24小時 背景音 陪伴掛機房，一個人上線也絕不孤單。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container scroll-reveal">
+            <div class="dashboard-header">
+                <h2>熱門表符</h2>
+            </div>
+            <p class="subtitle" style="margin-bottom: 20px; font-size: 0.95rem;">社群熱門熱門表情符號展覽</p>
+            
+            <div class="emoji-grid">
+                <div class="emoji-card">
+                    <img src="images/emoji1.jpg" alt="表符 1" class="emoji-img">
+                </div>
+                <div class="emoji-card">
+                    <img src="images/emoji2.jpg" alt="表符 2" class="emoji-img">
+                </div>
+                <div class="emoji-card">
+                    <img src="images/emoji3.jpg" alt="表符 3" class="emoji-img">
+                </div>
+                <div class="emoji-card">
+                    <img src="images/emoji4.jpg" alt="表符 4" class="emoji-img">
+                </div>
+                <div class="emoji-card">
+                    <img src="images/emoji5.jpg" alt="表符 5" class="emoji-img">
+                </div>
+                <div class="emoji-card">
+                    <img src="images/emoji6.jpg" alt="表符 6" class="emoji-img">
+                </div>
+                <div class="emoji-card">
+                    <img src="images/emoji7.jpg" alt="表符 7" class="emoji-img">
+                </div>
+                <div class="emoji-card">
+                    <img src="images/emoji8.png" alt="表符 8" class="emoji-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div>© 2026 可能是i人的伺服器. All Rights Reserved.</div>
+        <div>
+            追蹤我們的 Threads：<a href="https://www.threads.com/@qlz__zlp.314" target="_blank">@qlz__zlp.314</a>
+        </div>
+    </footer>
+
+    <a href="#home" class="back-to-top" id="backToTopBtn" title="返回頂部">▲</a>
+
+    <div class="modal-overlay" id="joinModal">
+        <div class="modal-box">
+            <h3>🎉 歡迎來到可能是i人的伺服器！</h3>
+            <p>感謝你對本社群的喜愛與支持！即將帶領你前往我們的 Discord 溫馨小天地，準備好展開美好的交流了嗎？</p>
+            <div style="display: flex; gap: 10px;">
+                <a href="https://discord.gg/ie31inviteyou" target="_blank" class="btn-join-main" style="flex: 1; text-align: center; text-decoration: none;" onclick="closeModal()">確認前往 🚀</a>
+                <button class="btn-join-main" style="flex: 1; background-color: #94a3b8;" onclick="closeModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-msg" id="customToast"></div>
+
+    <script>
+        /* 多功能季節性背景粒子系統 (雪花 / 落櫻 / 光粒 / 落葉) */
+        const canvas = document.getElementById('effectCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let currentEffect = 'snow';
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(type) {
+                this.type = type;
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                this.size = Math.random() * 3 + 2;
+                this.speedY = Math.random() * 0.8 + 0.4;
+                this.speedX = Math.random() * 0.6 - 0.3;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+                this.opacity = Math.random() * 0.6 + 0.3;
+
+                if (this.type === 'glow') {
+                    this.y = Math.random() * canvas.height;
+                    this.speedY = -(Math.random() * 0.5 + 0.2);
+                    this.size = Math.random() * 3 + 1;
+                    this.color = Math.random() > 0.5 ? 'rgba(255, 230, 150,' : 'rgba(180, 241, 245,';
+                } else if (this.type === 'sakura') {
+                    this.color = 'rgba(255, 183, 197,';
+                    this.size = Math.random() * 4 + 3;
+                } else if (this.type === 'leaves') {
+                    const colors = ['rgba(230, 126, 34,', 'rgba(211, 84, 0,', 'rgba(243, 156, 18,'];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.size = Math.random() * 5 + 4;
+                } else {
+                    this.color = 'rgba(255, 255, 255,';
+                    this.size = Math.random() * 2.5 + 1;
+                }
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3;
+                this.rotation += this.rotationSpeed;
+
+                if (this.type === 'glow') {
+                    if (this.y < -10) {
+                        this.reset();
+                        this.y = canvas.height + 10;
+                    }
+                } else {
+                    if (this.y > canvas.height + 10) this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+
+                if (this.type === 'snow') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `${this.color}${this.opacity})`;
+                    ctx.fill();
+                } else if (this.type === 'sakura') {
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-this.size, -this.size * 1.5, -this.size * 1.5, this.size, 0, this.size * 1.5);
+                    ctx.bezierCurveTo(this.size * 1.5, this.size, this.size, -this.size * 1.5, 0, 0);
+                    ctx.fillStyle = `${this.color}${this.opacity})`;
+                    ctx.fill();
+                } else if (this.type === 'leaves') {
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                    ctx.fillStyle = `${this.color}${this.opacity})`;
+                    ctx.fill();
+                } else if (this.type === 'glow') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `${this.color}${this.opacity})`;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            if (currentEffect === 'none') return;
+            const count = Math.floor(window.innerWidth / 15);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle(currentEffect));
+            }
+        }
+
+        function renderEffect() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (currentEffect !== 'none') {
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+            }
+            requestAnimationFrame(renderEffect);
+        }
+
+        function changeEffect(val) {
+            currentEffect = val;
+            const selects = document.querySelectorAll('#effectSelect');
+            selects.forEach(s => s.value = val);
+            initParticles();
+        }
+
+        initParticles();
+        renderEffect();
+
+        /* 修復深淺模式切換按鈕無法使用與狀態切換問題 */
+        function toggleDarkMode() {
+            const body = document.body;
+            const isCurrentlyDark = body.classList.contains('dark-mode') || 
+                (!body.classList.contains('light-mode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            
+            if (isCurrentlyDark) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+            }
+            
+            const isDark = body.classList.contains('dark-mode');
+            const toggleBtns = document.querySelectorAll('#themeToggleBtn, #themeToggleBtnSub');
+            
+            toggleBtns.forEach(btn => {
+                if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+            });
+        }
+
+        function togglePlayerCard() {
+            const card = document.getElementById('lofiPlayerCard');
+            card.classList.toggle('active');
+        }
+
+        /* 更改為僅保留 雨聲 與 街道音 */
+        const audioTracks = {
+            rain: {
+                src: "https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg",
+                title: "舒適雨聲",
+                icon: "🌧️"
+            },
+            street: {
+                src: "https://actions.google.com/sounds/v1/ambiences/outdoor_city_traffic.ogg",
+                title: "街道環境音",
+                icon: "🏙️"
+            }
+        };
+
+        const bgmAudio = document.getElementById('bgmAudio');
+        const playToggleBtn = document.getElementById('playToggleBtn');
+        const songTitle = document.getElementById('songTitle');
+        const playerIcon = document.getElementById('playerIcon');
+
+        bgmAudio.addEventListener('play', () => {
+            playToggleBtn.textContent = "⏸";
+        });
+
+        bgmAudio.addEventListener('pause', () => {
+            playToggleBtn.textContent = "▶";
+        });
+
+        function togglePlayAudio() {
+            if (bgmAudio.paused) {
+                bgmAudio.play().catch(err => {
+                    console.log("播放失敗：", err);
+                });
+            } else {
+                bgmAudio.pause();
+            }
+        }
+
+        function switchAudioTrack(type) {
+            const track = audioTracks[type];
+            if (track) {
+                const isPlaying = !bgmAudio.paused;
+                bgmAudio.src = track.src;
+                bgmAudio.load();
+                songTitle.textContent = track.title;
+                playerIcon.textContent = track.icon;
+                if (isPlaying) {
+                    bgmAudio.play().catch(err => console.log("切換後播放失敗：", err));
+                }
+            }
+        }
+
+        function adjustVolume(val) {
+            bgmAudio.volume = val;
+        }
+
+        let meritCount = 0;
+        let audioCtx = null;
+
+        function playMuyuSound() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(550, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.08);
+
+                gain.gain.setValueAtTime(0.8, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function hitMuyu(e) {
+            meritCount++;
+            document.getElementById('meritCount').textContent = meritCount;
+            playMuyuSound();
+
+            const pop = document.createElement('div');
+            pop.className = 'muyu-pop';
+            pop.textContent = '功德 +1';
+            
+            const rect = e.currentTarget.getBoundingClientRect();
+            pop.style.left = (e.clientX - rect.left) + 'px';
+            pop.style.top = (e.clientY - rect.top) + 'px';
+
+            e.currentTarget.appendChild(pop);
+            setTimeout(() => pop.remove(), 800);
+        }
+
+        function switchDemoTab(tabId) {
+            document.getElementById('muyuTab').classList.remove('active');
+            document.getElementById('gachaTab').classList.remove('active');
+            document.getElementById('profileTab').classList.remove('active');
+            document.getElementById('fortuneTab').classList.remove('active');
+            document.getElementById('muyuTabBtn').classList.remove('active');
+            document.getElementById('gachaTabBtn').classList.remove('active');
+            document.getElementById('profileTabBtn').classList.remove('active');
+            document.getElementById('fortuneTabBtn').classList.remove('active');
+
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById(tabId + 'Btn').classList.add('active');
+        }
+
+        function generateProfileCard() {
+            const nameInput = document.getElementById('profileNameInput').value.trim() || 'i人小夥伴';
+            document.getElementById('previewUsername').textContent = nameInput;
+        }
+
+        const fortuneList = [
+            { good: "帶薪發呆、默默潛水", bad: "被迫社交、強制視訊開會" },
+            { good: "盲猜全對、遊戲十連抽中SSR", bad: "出門忘記帶耳機、訊息未讀紅點爆多" },
+            { good: "獨自享用美食、掛網聽背景音", bad: "走在路上巧遇熟人、手機突然沒電" },
+            { good: "躺平耍廢、吸貓擼狗", bad: "群組被@標記、必須開麥講話" },
+            { good: "刷到好看的迷因、享受安靜午後", bad: "網路突然卡頓、外賣送錯餐點" },
+            { good: "早睡早起、心如止水", bad: "深夜被朋友強行拉去打遊戲" }
+        ];
+
+        function drawFortune() {
+            const index = Math.floor(Math.random() * fortuneList.length);
+            const res = fortuneList[index];
+            document.getElementById('fortuneResult').innerHTML = `
+                <div style="font-size: 1.05rem; color: var(--accent-color); font-weight: bold; margin-bottom: 6px;">✨ 宜：${res.good}</div>
+                <div style="font-size: 0.95rem; color: var(--text-sub);">💥 忌：${res.bad}</div>
+            `;
+        }
+
+        const cardPool = [
+            { name: "N · 默默潛水的普通i人", rate: 40 },
+            { name: "R · 偶爾點頭附和的群友", rate: 25 },
+            { name: "RR · 正在24小時 背景音 房掛機", rate: 15 },
+            { name: "RRR · 句點大師", rate: 10 },
+            { name: "SR · 敲木魚積攢功德中", rate: 5 },
+            { name: "SSR · 歐洲人附體！十連雙金", rate: 3 },
+            { name: "UR · 傳說中的開黑發起人", rate: 1.5 },
+            { name: "SEC · 【隱藏極稀有】伺服器守護神", rate: 0.5 }
+        ];
+
+        function drawCard() {
+            let rand = Math.random() * 100;
+            let cumulative = 0;
+            let selected = cardPool[0].name;
+            for (let item of cardPool) {
+                cumulative += item.rate;
+                if (rand <= cumulative) {
+                    selected = item.name;
+                    break;
+                }
+            }
+            document.getElementById('gachaResult').innerHTML = `🎉 恭喜抽中：<span style="color: var(--accent-color);">${selected}</span>`;
+        }
+
+        function switchTab(tabId, event) {
+            document.querySelectorAll('.rules-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('#rules .tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            item.classList.toggle('active');
+        }
+
+        function searchFaq() {
+            const query = document.getElementById('faqSearchInput').value.toLowerCase();
+            const items = document.querySelectorAll('#faqList .faq-item');
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function searchChannels() {
+            const query = document.getElementById('channelSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('#channelGrid .channel-card');
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function toggleCmdAccordion() {
+            const acc = document.getElementById('botCmdAccordion');
+            acc.classList.toggle('active');
+        }
+
+        function switchPage(type, targetAnchor = '') {
+            const mainView = document.getElementById('mainPageView');
+            const subView = document.getElementById('subPageView');
+            const mainNav = document.getElementById('mainNavbar');
+            const subNav = document.getElementById('subNavbar');
+
+            if (type === 'sub') {
+                mainView.classList.remove('active');
+                subView.classList.add('active');
+                mainNav.style.display = 'none';
+                subNav.style.display = 'flex';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                subView.classList.remove('active');
+                mainView.classList.add('active');
+                subNav.style.display = 'none';
+                mainNav.style.display = 'flex';
+                
+                if (targetAnchor) {
+                    setTimeout(() => {
+                        const el = document.getElementById(targetAnchor);
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        }
+
+        function openModal(e) {
+            e.preventDefault();
+            document.getElementById('joinModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('joinModal').classList.remove('show');
+        }
+
+        function copyInviteLink() {
+            navigator.clipboard.writeText("https://discord.gg/ie31inviteyou").then(() => {
+                showToast("📋 邀請連結已成功複製！");
+            }).catch(() => {
+                showToast("❌ 複製失敗，請手動複製連結。");
+            });
+        }
+
+        function handleDecline() {
+            showToast("🥺 沒關係，隨時歡迎你再來逛逛！");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('customToast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    
+                    const counter = entry.target.querySelector('[data-counter]');
+                    if (counter && !counter.classList.contains('counted')) {
+                        counter.classList.add('counted');
+                        const targetVal = parseInt(counter.getAttribute('data-counter'));
+                        const suffix = counter.getAttribute('data-suffix') || '';
+                        let current = 0;
+                        const duration = 1500;
+                        const stepTime = 20;
+                        const steps = duration / stepTime;
+                        const increment = targetVal / steps;
+
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= targetVal) {
+                                counter.textContent = targetVal + suffix;
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = Math.floor(current) + suffix;
+                            }
+                        }, stepTime);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
